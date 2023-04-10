@@ -115,10 +115,9 @@ const fetchingData = async () => {
     console.log(ranker.character.name)
 
     const itemDatum = await item.findOne({id:ranker.character.id})
-    // console.log('itemDatum', itemDatum)
-    if (itemDatum){
-        const updatedSince = new Date().getTime() - new Date(itemDatum.createdAt).getTime()
-        const isOver2Hour = updatedSince/1000/60 > 120
+    
+        const updatedSince = itemDatum?new Date().getTime() - new Date(itemDatum.createdAt).getTime():1
+        const isOver2Hour = itemDatum? updatedSince/1000/60 > 120 : true
 
         if(isOver2Hour){
             let items = []
@@ -162,7 +161,7 @@ const fetchingData = async () => {
             item.deleteOne({id:ranker.character.id})
             item.insertOne(charItems)
         }
-    }
+    
     
     await new Promise(r=>setTimeout(()=>r(null),2500))
   }

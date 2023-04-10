@@ -141,6 +141,7 @@ async function GET(request) {
         },
         {
             $project: {
+                rank: "$rank",
                 challenges: "$challenges",
                 Object: "$Object",
                 public: "$public",

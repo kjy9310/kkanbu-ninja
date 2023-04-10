@@ -45,7 +45,7 @@ export default function Page() {
       setOriginal(data.userData)
       setFilter(data.userData)
       const gemSet = await data.userData.reduce((acc:any, user:any)=>{
-        user.items.allGems.forEach((gemName:any)=>{
+        user.items?.allGems.forEach((gemName:any)=>{
           acc.add(gemName)
         })
         
@@ -71,7 +71,7 @@ export default function Page() {
       return
     }else{
       const newFiltered = original.filter(user=>{
-        const gemCheck = filterGem && user.items.allGems.findIndex((gem:any)=>gem===filterGem)>-1
+        const gemCheck = filterGem && user.items?.allGems.findIndex((gem:any)=>gem===filterGem)>-1
         
         const nameCheck = filterName && (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName))
         return Boolean(gemCheck||nameCheck)
@@ -112,12 +112,12 @@ export default function Page() {
           <TableRow>
           <TableCell>순위</TableCell>
             <TableCell>계정명</TableCell>
-            <TableCell>케릭명</TableCell>
+            <TableCell style={{maxWidth:180}}>케릭명</TableCell>
             <TableCell>육개장</TableCell>
             <TableCell>직업</TableCell>
             
             <TableCell align="right">레베루</TableCell>
-            <TableCell align="right">경험치</TableCell>
+            <TableCell align="right" style={{maxWidth:120}}>경험치</TableCell>
             <TableCell align="right">챌린지</TableCell>
             <TableCell>보러가기</TableCell>
             
@@ -135,7 +135,7 @@ export default function Page() {
               <TableCell component="th" scope="row">
                 {row.account}
               </TableCell>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" style={{maxWidth:180}}>
                 {row.name}
               </TableCell>
               <TableCell component="th" scope="row">
@@ -145,7 +145,7 @@ export default function Page() {
                 {row.class}
               </TableCell>
               <TableCell align="right">{row.level}</TableCell>
-              <TableCell align="right">{row.experience}</TableCell>
+              <TableCell align="right" style={{maxWidth:120}}>{row.experience}</TableCell>
               <TableCell align="right">{row.challenges?.completed}</TableCell>
               <TableCell component="th" scope="row">
                 <a target='_blank' href={`https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`}>

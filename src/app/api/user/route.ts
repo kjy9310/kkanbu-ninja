@@ -18,6 +18,7 @@ export async function GET(request: Request) {
                 }
             },{
                 $project:{
+                    rank:'$rank',
                     challenges:'$challenges',
                     Object:'$Object',
                     public:'$public',

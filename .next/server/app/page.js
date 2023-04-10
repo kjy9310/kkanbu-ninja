@@ -293,7 +293,7 @@ function Page() {
             setOriginal(data.userData);
             setFilter(data.userData);
             const gemSet = await data.userData.reduce((acc, user)=>{
-                user.items.allGems.forEach((gemName)=>{
+                user.items?.allGems.forEach((gemName)=>{
                     acc.add(gemName);
                 });
                 return acc;
@@ -314,7 +314,7 @@ function Page() {
             return;
         } else {
             const newFiltered = original.filter((user)=>{
-                const gemCheck = filterGem && user.items.allGems.findIndex((gem)=>gem === filterGem) > -1;
+                const gemCheck = filterGem && user.items?.allGems.findIndex((gem)=>gem === filterGem) > -1;
                 const nameCheck = filterName && (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName));
                 return Boolean(gemCheck || nameCheck);
             });
@@ -385,6 +385,9 @@ function Page() {
                                         children: "계정명"
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                        style: {
+                                            maxWidth: 180
+                                        },
                                         children: "케릭명"
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
@@ -399,6 +402,9 @@ function Page() {
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                         align: "right",
+                                        style: {
+                                            maxWidth: 120
+                                        },
                                         children: "경험치"
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
@@ -432,6 +438,9 @@ function Page() {
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                             component: "th",
                                             scope: "row",
+                                            style: {
+                                                maxWidth: 180
+                                            },
                                             children: row.name
                                         }),
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
@@ -450,6 +459,9 @@ function Page() {
                                         }),
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                             align: "right",
+                                            style: {
+                                                maxWidth: 120
+                                            },
                                             children: row.experience
                                         }),
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
