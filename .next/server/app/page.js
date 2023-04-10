@@ -332,9 +332,54 @@ function Page() {
             children: [
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h2", {
                     style: {
-                        fontSize: 50
+                        fontSize: 50,
+                        textAlign: "center",
+                        color: "white",
+                        backgroundColor: "#28281c"
                     },
-                    children: "깐부?"
+                    children: "깐부찾기"
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                    style: {
+                        backgroundColor: "#b34afb",
+                        color: "white",
+                        display: "inline-block",
+                        margin: "5px",
+                        right: 10,
+                        padding: "2px 10px",
+                        borderRadius: 5
+                    },
+                    target: "_blank",
+                    href: "https://www.twitch.tv/ham_90",
+                    children: "twitch"
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                    style: {
+                        backgroundColor: "#fb4ab0",
+                        color: "white",
+                        display: "inline-block",
+                        margin: "5px",
+                        right: 10,
+                        padding: "2px 10px",
+                        borderRadius: 5
+                    },
+                    target: "_blank",
+                    href: "https://tgd.kr/s/ham_90/",
+                    children: "햄게더"
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                    style: {
+                        backgroundColor: "#626262",
+                        color: "white",
+                        display: "inline-block",
+                        margin: "5px",
+                        right: 10,
+                        padding: "2px 10px",
+                        borderRadius: 5
+                    },
+                    target: "_blank",
+                    href: "https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347",
+                    children: "깐부시트"
                 }),
                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                     style: {
@@ -377,6 +422,9 @@ function Page() {
                     children: [
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_7___default()), {
                             children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
+                                style: {
+                                    backgroundColor: "#626262"
+                                },
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                         children: "순위"
@@ -419,6 +467,9 @@ function Page() {
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_10___default()), {
                             children: filtered.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
+                                    style: {
+                                        backgroundColor: row.dead ? "#a54e5d" : "#5e51af"
+                                    },
                                     sx: {
                                         "&:last-child td, &:last-child th": {
                                             border: 0
@@ -446,7 +497,7 @@ function Page() {
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                             component: "th",
                                             scope: "row",
-                                            children: row.dead ? "쥬금" : "아직안쥬금"
+                                            children: row.dead ? "ㅇㅇ쥬금" : "아직안쥬금"
                                         }),
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                             component: "th",
@@ -472,6 +523,12 @@ function Page() {
                                             component: "th",
                                             scope: "row",
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                                style: {
+                                                    backgroundColor: "white",
+                                                    display: "inline-block",
+                                                    padding: "2px 10px",
+                                                    borderRadius: 5
+                                                },
                                                 target: "_blank",
                                                 href: `https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`,
                                                 children: "POE"
