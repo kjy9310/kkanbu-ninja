@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const LEAGUE_STRING='KKANBU (PL38521)'
+const updateHourLimit =240 //4hour
 console.log('process.env.mongodb',process.env.mongodb)
 ////////////gem//////////
     // verified: false,
@@ -117,9 +118,9 @@ const fetchingData = async () => {
     const itemDatum = await item.findOne({id:ranker.character.id})
     
         const updatedSince = itemDatum?new Date().getTime() - new Date(itemDatum.createdAt).getTime():1
-        const isOver2Hour = itemDatum? updatedSince/1000/60 > 120 : true
+        const isOverTheLimit = itemDatum? updatedSince/1000/60 > updateHourLimit : true
 
-        if(isOver2Hour){
+        if(isOverTheLimit){
             let items = []
             try{
                 const res = await fetch(`https://www.pathofexile.com/character-window/get-items?accountName=${encodeURIComponent(ranker.account.name)}&character=${encodeURIComponent(ranker.character.name)}`, {
