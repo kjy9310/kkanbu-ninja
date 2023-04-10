@@ -45,7 +45,7 @@ export default function Page() {
       setOriginal(data.userData)
       setFilter(data.userData)
       const gemSet = await data.userData.reduce((acc:any, user:any)=>{
-        user.allGems.forEach((gemName:any)=>{
+        user.items.allGems.forEach((gemName:any)=>{
           acc.add(gemName)
         })
         
@@ -71,7 +71,7 @@ export default function Page() {
       return
     }else{
       const newFiltered = original.filter(user=>{
-        const gemCheck = filterGem && user.allGems.findIndex((gem:any)=>gem===filterGem)>-1
+        const gemCheck = filterGem && user.items.allGems.findIndex((gem:any)=>gem===filterGem)>-1
         
         const nameCheck = filterName && (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName))
         return Boolean(gemCheck||nameCheck)
@@ -148,7 +148,7 @@ export default function Page() {
               <TableCell align="right">{row.experience}</TableCell>
               <TableCell align="right">{row.challenges?.completed}</TableCell>
               <TableCell component="th" scope="row">
-                <a href={`https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`}>
+                <a target='_blank' href={`https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`}>
                   POE
                 </a>
               </TableCell>

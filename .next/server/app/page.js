@@ -293,7 +293,7 @@ function Page() {
             setOriginal(data.userData);
             setFilter(data.userData);
             const gemSet = await data.userData.reduce((acc, user)=>{
-                user.allGems.forEach((gemName)=>{
+                user.items.allGems.forEach((gemName)=>{
                     acc.add(gemName);
                 });
                 return acc;
@@ -314,7 +314,7 @@ function Page() {
             return;
         } else {
             const newFiltered = original.filter((user)=>{
-                const gemCheck = filterGem && user.allGems.findIndex((gem)=>gem === filterGem) > -1;
+                const gemCheck = filterGem && user.items.allGems.findIndex((gem)=>gem === filterGem) > -1;
                 const nameCheck = filterName && (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName));
                 return Boolean(gemCheck || nameCheck);
             });
@@ -460,6 +460,7 @@ function Page() {
                                             component: "th",
                                             scope: "row",
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                                target: "_blank",
                                                 href: `https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`,
                                                 children: "POE"
                                             })
