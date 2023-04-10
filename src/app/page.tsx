@@ -84,7 +84,28 @@ export default function Page() {
   return <main className="flex min-h-screen flex-col items-center justify-between p-24">
     
     <TableContainer component={Paper}>
-    <h2 style={{fontSize:50}}>깐부?</h2>
+    <h2 style={{fontSize:50, textAlign: 'center',color:'white',backgroundColor: '#28281c'}}>깐부찾기</h2>
+    <a style={{    backgroundColor: '#b34afb',
+    color:'white',
+    display: 'inline-block',
+    margin:'5px',
+    right:10,
+    padding: '2px 10px',
+    borderRadius: 5}} target='_blank' href="https://www.twitch.tv/ham_90">twitch</a>
+    <a style={{    backgroundColor: '#fb4ab0',
+    color:'white',
+    display: 'inline-block',
+    margin:'5px',
+    right:10,
+    padding: '2px 10px',
+    borderRadius: 5}} target='_blank' href="https://tgd.kr/s/ham_90/">햄게더</a>
+    <a style={{    backgroundColor: '#626262',
+    color:'white',
+    display: 'inline-block',
+    margin:'5px',
+    right:10,
+    padding: '2px 10px',
+    borderRadius: 5}} target='_blank' href="https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347">깐부시트</a>
     <div style={{margin:20}}>
     <TextField id="outlined-basic" label="검색" variant="outlined" onChange={findName} />
     <Autocomplete
@@ -106,7 +127,7 @@ export default function Page() {
       </div>
       <Table sx={{ minWidth: 850 }} aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow style={{backgroundColor:'#626262'}}>
           <TableCell>순위</TableCell>
             <TableCell>계정명</TableCell>
             <TableCell style={{maxWidth:180}}>케릭명</TableCell>
@@ -123,6 +144,7 @@ export default function Page() {
         <TableBody>
           {filtered.map((row:any) => (
             <TableRow
+              style={{backgroundColor:row.dead?'#a54e5d':'#5e51af'}}
               key={row.rank}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
@@ -136,7 +158,7 @@ export default function Page() {
                 {row.name}
               </TableCell>
               <TableCell component="th" scope="row">
-                {row.dead?'쥬금':'아직안쥬금'}
+                {row.dead?'ㅇㅇ쥬금':'아직안쥬금'}
               </TableCell>
               <TableCell component="th" scope="row">
                 {row.class}
@@ -145,7 +167,10 @@ export default function Page() {
               <TableCell align="right" style={{maxWidth:120}}>{row.experience}</TableCell>
               <TableCell align="right">{row.challenges?.completed}</TableCell>
               <TableCell component="th" scope="row">
-                <a target='_blank' href={`https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`}>
+                <a style={{    backgroundColor: 'white',
+    display: 'inline-block',
+    padding: '2px 10px',
+    borderRadius: 5}} target='_blank' href={`https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`}>
                   POE
                 </a>
               </TableCell>
