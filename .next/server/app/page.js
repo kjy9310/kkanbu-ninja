@@ -298,18 +298,17 @@ function Page() {
                 });
                 return acc;
             }, new Set());
-            setGemList(Array.from(gemSet));
+            setGemList([
+                "",
+                ...Array.from(gemSet)
+            ]);
         })();
     }, []);
-    const findGem = (e)=>{
-        const gemName = e.target.value || "";
-        setGem(gemName);
-    };
     const findName = (e)=>{
         setName(e.target.value || "");
     };
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        if (filterName === "" && filterGem === "") {
+        if (filterName === "" && (filterGem === "" || filterGem === null)) {
             setFilter(original);
             return;
         } else {
@@ -317,6 +316,8 @@ function Page() {
                 const gemCheck = filterGem && user.items?.allGems.findIndex((gem)=>gem === filterGem) > -1;
                 const nameCheck = filterName && (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName));
                 return Boolean(gemCheck || nameCheck);
+            }).sort((a, b)=>{
+                return a.rank - b.rank;
             });
             setFilter(newFiltered);
         }
@@ -324,7 +325,6 @@ function Page() {
         filterGem,
         filterName
     ]);
-    console.log("filtered", filtered);
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("main", {
         className: "flex min-h-screen flex-col items-center justify-between p-24",
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2___default()), {
@@ -478,7 +478,7 @@ function Page() {
                                             })
                                         })
                                     ]
-                                }, row.name))
+                                }, row.rank))
                         })
                     ]
                 })

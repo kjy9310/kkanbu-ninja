@@ -52,21 +52,17 @@ export default function Page() {
         return acc
       },new Set())
       
-      setGemList(Array.from(gemSet))
+      setGemList(["",...Array.from(gemSet)])
     })()
   },[])
   
-  const findGem = (e:any)=>{
-    const gemName = e.target.value||''
-    setGem(gemName)
-  }
-
+  
   const findName = (e:any)=>{
     setName(e.target.value||'')
   }
 
   useEffect(()=>{
-    if (filterName==='' && filterGem===''){
+    if (filterName==='' && (filterGem===''||filterGem===null)){
       setFilter(original)
       return
     }else{
@@ -75,6 +71,8 @@ export default function Page() {
         
         const nameCheck = filterName && (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName))
         return Boolean(gemCheck||nameCheck)
+      }).sort((a,b)=>{
+        return a.rank-b.rank
       })
       setFilter(newFiltered)
     }
@@ -83,7 +81,6 @@ export default function Page() {
   },[filterGem, filterName])
   
 
-  console.log('filtered', filtered)
   return <main className="flex min-h-screen flex-col items-center justify-between p-24">
     
     <TableContainer component={Paper}>
@@ -126,7 +123,7 @@ export default function Page() {
         <TableBody>
           {filtered.map((row:any) => (
             <TableRow
-              key={row.name}
+              key={row.rank}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
