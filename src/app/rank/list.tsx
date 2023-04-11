@@ -43,7 +43,7 @@ export default function Page(props:any) {
   }
 
   useEffect(()=>{
-    if (filterName==='' && (filterGem===''||filterGem===null) || filterDeath==='all'){
+    if (filterName==='' && (filterGem===''||filterGem===null) && filterDeath==='all'){
       setFilter(original)
       return
     }else{
