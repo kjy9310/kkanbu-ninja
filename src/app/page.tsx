@@ -8,6 +8,7 @@ async function getData() {
   if (!res.ok) {
     console.log('에러낫다! 스샷찍어주실?')
     console.log(res)
+    return []
   }
 
   return res.json();

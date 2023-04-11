@@ -12,8 +12,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 export default function Page(props:any) {
     const {userData} = props
-  const [original, setOriginal] = useState<any[]>([])
-  const [filtered, setFilter] = useState<any[]>([])
+  const [original, setOriginal] = useState<any[]>(userData)
+  const [filtered, setFilter] = useState<any[]>(userData)
   const [gemList, setGemList] = useState<any[]>([])
   
   const [filterName, setName] = useState<string>('')
@@ -22,7 +22,7 @@ export default function Page(props:any) {
   useEffect(()=>{
     (async () => {
       setOriginal(userData)
-      setFilter(userData)
+      
       const gemSet = await userData?.reduce((acc:any, user:any)=>{
         user.items?.allGems.forEach((gemName:any)=>{
           acc.add(gemName)
@@ -32,6 +32,7 @@ export default function Page(props:any) {
       },new Set())
       
       setGemList(["",...Array.from(gemSet||[])])
+      setFilter(userData)
     })()
   },[userData])
   
