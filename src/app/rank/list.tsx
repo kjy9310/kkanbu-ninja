@@ -120,7 +120,7 @@ export default function Page(props:any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filtered&&filtered.map((row:any) => (
+          {filtered&&filtered.length&&filtered.length>0&&filtered.map((row:any) => (
             <TableRow
               style={{backgroundColor:row.dead?'#a54e5d':'#5e51af'}}
               key={row.rank}
