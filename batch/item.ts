@@ -21,12 +21,9 @@ const user = db.collection('kkanbu_users');
     const startTime = start.getTime()
 
   
-  const userList = await user.find({name:"트릭콜돗"}).toArray()
+  const userList = await user.find().toArray()
 
-  console.log(userList)
   const item = db.collection('kkanbu_items');
-
-
   for (let index = 0; index < userList.length; index++) {
     const user = userList[index];
     
@@ -89,6 +86,7 @@ const user = db.collection('kkanbu_users');
             
             item.deleteOne({id:user.id})
             item.insertOne(charItems)
+            console.log('updated : ',user.name)
         }
     
     
