@@ -454,7 +454,7 @@ function Page(props) {
                         })
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_10___default()), {
-                        children: filtered && filtered.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
+                        children: filtered && filtered.length && filtered.length > 0 && filtered.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
                                 style: {
                                     backgroundColor: row.dead ? "#a54e5d" : "#5e51af"
                                 },
@@ -641,7 +641,7 @@ async function Page() {
     return /*#__PURE__*/ jsx_runtime.jsx("main", {
         className: "flex min-h-screen flex-col items-center justify-between p-24",
         children: /*#__PURE__*/ jsx_runtime.jsx(list, {
-            userData: data
+            userData: data || []
         })
     });
 }
