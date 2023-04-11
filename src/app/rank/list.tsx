@@ -143,11 +143,11 @@ export default function Page(props:any) {
               <TableCell className="whitespace-nowrap px-6 py-4 removeOnMobile" component="th" scope="row">
                 {row.dead?'ㅇㅇ쥬금':'아직안쥬금'}
               </TableCell>
-              <TableCell //style={{width: 45}}
+              <TableCell
                className="whitespace-nowrap px-2 py-4" component="th" scope="row">
                 {row.class}
               </TableCell>
-              <TableCell style={{width: 45}} className="whitespace-nowrap px-2 py-4" component="th" align="right">{row.level}</TableCell>
+              <TableCell style={{width: 45}} className="whitespace-nowrap px-1 py-4" component="th" align="right">{row.level}</TableCell>
               <TableCell className="whitespace-nowrap px-2 py-4 hiddenOnMoblie" component="th" align="right" style={{maxWidth:120}}>{row.experience}</TableCell>
               <TableCell className="whitespace-nowrap px-2 py-2 removeOnMobile" component="th" align="center">{row.challenges?.completed}</TableCell>
               <TableCell className="whitespace-nowrap px-6 py-4 hiddenOnMoblie" component="th" scope="row">

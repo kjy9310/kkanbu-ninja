@@ -111,12 +111,12 @@ const LEAGUE_STRING='KKANBU (PL38521)'
     formattedList.push(formattedUser)
   }
   
-  const bulk = user.initializeUnorderedBulkOp();
+    const bulk = user.initializeUnorderedBulkOp();
     formattedList.forEach((formattedUser)=>{
       bulk.insert(formattedUser)
     })
     user.deleteMany({})
-    bulk.execute();
+    await bulk.execute();
   
     console.log('done!')
     const delta = new Date().getTime() - startTime
