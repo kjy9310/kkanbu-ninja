@@ -16,6 +16,21 @@
   }
 }
 
+@media screen and (-webkit-device-pixel-ratio: 1.5) {
+  /* CSS for high-density screens */
+  #header {
+      background:magenta;
+  }
+}
+
+@media screen and (-webkit-device-pixel-ratio: 0.75) {
+  /* CSS for low-density screens */
+  #header {
+      background:pink;
+  }
+}
+
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -24,4 +39,75 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+.search {
+  display: flex;
+}
+.search > div {
+    margin:5px;
+}
+
+
+@media only screen and (max-width: 1300px) {
+  table{
+    min-width: 480px;
+  }
+  main.p-24 {
+    padding:0
+  }
+  tr {
+    display: flex !important;
+    flex-flow: wrap;
+  }
+  th {
+    overflow: hidden;
+    display: block !important;
+    width: 40%;
+    border-bottom:none !important
+  }
+  th.hiddenOnMoblie {
+    display: none !important;
+  }
+  tr:hover.showOnHover th {
+    overflow: auto;
+    display: block !important;
+    width: 20%
+  }
+  th.removeOnMobile {
+    display: none  !important;
+  }
+  tr:hover.showOnHover th.removeOnMobile {
+    display: none  !important;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  table{
+    min-width: 335px;
+  }
+  .search {
+    display: flex;
+    flex-direction: column;
+  }
+  th {
+    overflow: hidden;
+    display: block !important;
+    width: 30%;
+    border-bottom:none !important
+  }
+  th.hiddenOnMoblie {
+    display: none !important;
+  }
+  tr:hover.showOnHover th {
+    overflow: auto;
+    display: block !important;
+    width: 40%
+  }
+  th.removeOnMobile {
+    display: none  !important;
+  }
+  tr:hover.showOnHover th.removeOnMobile {
+    display: none  !important;
+  }
 }
