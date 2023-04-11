@@ -9,30 +9,50 @@ import Paper from '@mui/material/Paper';
 import React , { useEffect, useState } from 'react';
 import { ButtonGroup , Button, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export default function Page(props:any) {
     const {userData} = props
   const [original, setOriginal] = useState<any[]>(userData)
   const [filtered, setFilter] = useState<any[]>(userData)
   const [gemList, setGemList] = useState<any[]>([])
+  const [uniqueList, setUniqueList] = useState<any[]>([])
   
   const [filterName, setName] = useState<string>('')
+  const [filterLink, setLink] = useState<string>('')
+  
   const [filterGem, setGem] = useState<string>('')
   const [filterGemInput, setGemInput] = useState<string>('')
+  
+  const [filterUnique, setUnique] = useState<string>('')
+  const [filterUniqueInput, setUniqueInput] = useState<string>('')
+
   const [filterDeath, setDeath] = useState<string>('all')
   useEffect(()=>{
     (async () => {
       setOriginal(userData)
       
       const gemSet = await userData?.reduce((acc:any, user:any)=>{
-        user.items?.allGems.forEach((gemName:any)=>{
+        user.items?.allGems?.forEach((gemName:any)=>{
           acc.add(gemName)
         })
         
         return acc
       },new Set())
       
-      setGemList(["",...Array.from(gemSet||[])])
+      setGemList(["",...Array.from(gemSet||[])].sort())
+
+      const uniqueSet = await userData?.reduce((acc:any, user:any)=>{
+        user.items?.allUniques?.forEach((unique:string)=>{
+          acc.add(unique)
+        })
+        
+        return acc
+      },new Set())
+      setUniqueList(["",...Array.from(uniqueSet||[])].sort())
       setFilter(userData)
     })()
   },[userData])
@@ -43,15 +63,23 @@ export default function Page(props:any) {
   }
 
   useEffect(()=>{
-    if (filterName==='' && (filterGem===''||filterGem===null) && filterDeath==='all'){
+    if (filterName==='' && (filterGem===''||filterGem===null) && filterDeath==='all' && filterUnique==='' && filterLink===''){
       setFilter(original)
       return
     }else{
       const newFiltered = original.filter(user=>{
-        const gemCheck = filterGem ? user.items?.allGems.findIndex((gem:any)=>gem===filterGem)>-1 : true
+        const gemCheck = filterGem ? user.items?.allGems?.findIndex((gem:any)=>gem===filterGem)>-1 : true
+        const uniqueCheck = filterUnique ? user.items?.allUniques?.findIndex((unique:any)=>unique===filterUnique)>-1 : true
         const deathCheck = filterDeath === 'all'? true : filterDeath==='dead'?user.dead:!user.dead
         const nameCheck = filterName ? (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName)) : true
-        return Boolean(gemCheck&&nameCheck&&deathCheck)
+        const linkCheck = filterLink ? (
+          filterLink==='6'? user.items?.has6Link : (
+            filterLink==='5'? user.items?.has5Link : (
+              filterLink==='4'? user.items?.has6Link===false&&user.items?.has5Link===false : false
+            )
+          )
+        ): true
+        return Boolean(gemCheck&&nameCheck&&deathCheck&&uniqueCheck&&linkCheck)
       }).sort((a,b)=>{
         return a.rank-b.rank
       })
@@ -59,8 +87,12 @@ export default function Page(props:any) {
     }
 
     
-  },[filterGem, filterName, filterDeath])
+  },[filterGem, filterName, filterDeath, filterUnique,filterLink])
   
+  const handleChange = (event: SelectChangeEvent) => {
+    setLink(event.target.value as string);
+  };
+
 
   return <TableContainer component={Paper} style={{minWidth:335}}>
     <h2 style={{fontSize:50, textAlign: 'center',color:'white',backgroundColor: '#28281c'}}>깐부찾기</h2>
@@ -89,7 +121,7 @@ export default function Page(props:any) {
     <TextField id="outlined-basic" label="검색" variant="outlined" onChange={findName} />
     <Autocomplete
       disablePortal
-      id="combo-box-demo"
+      id="combo-box-gem"
       options={gemList}
       sx={{ width: 300 }}
       value={filterGem}
@@ -102,6 +134,36 @@ export default function Page(props:any) {
         }}
       renderInput={(params) => <TextField {...params} label="쩸" />}
     />
+    <Autocomplete
+      disablePortal
+      id="combo-box-unique"
+      options={uniqueList}
+      sx={{ width: 300 }}
+      value={filterUnique}
+        onChange={(event: any, newValue: string |null) => {
+          setUnique(newValue||'');
+        }}
+        inputValue={filterUniqueInput}
+        onInputChange={(event, newInputValue) => {
+          setUniqueInput(newInputValue);
+        }}
+      renderInput={(params) => <TextField {...params} label="유닠" />}
+    />
+    <FormControl style={{width:150}}>
+        <InputLabel id="demo-simple-select-label">링크</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={filterLink}
+          label="Link"
+          onChange={handleChange}
+        >
+          <MenuItem value={''}>전부</MenuItem>
+          <MenuItem value={'6'}>6링오우너</MenuItem>
+          <MenuItem value={'5'}>5링</MenuItem>
+          <MenuItem value={'4'}>기타</MenuItem>
+        </Select>
+      </FormControl>
       <ButtonGroup variant="contained" aria-label="outlined primary button group">
         <Button style={{backgroundColor:filterDeath==='dead'?'#a54e5d':'gray'}} onClick={()=>setDeath('dead')}>죽음</Button>
         <Button style={{backgroundColor:filterDeath==='all'?'#28281c':'gray'}} onClick={()=>setDeath('all')}>둘다</Button>

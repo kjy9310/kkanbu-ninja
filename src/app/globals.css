@@ -48,13 +48,15 @@ body {
     margin:5px;
 }
 
-
 @media only screen and (max-width: 1300px) {
-  table{
-    min-width: 480px;
-  }
   main.p-24 {
     padding:0
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  table{
+    min-width: 480px;
   }
   tr {
     display: flex !important;
