@@ -81,14 +81,13 @@ const fetchingData = async () => {
   await client.connect();
   const db = client.db(dbName);
   const user = db.collection('kkanbu_users');
-  const item = db.collection('kkanbu_items');
 
-
+  let formattedList:any[] = []
   for (let index = 0; index < rankList.length; index++) {
     const ranker = rankList[index];
     
     const charInfo = ranker.character
-    // 케릭정보 갱신시간체크해서 오래안됬으면 스킵하고 넘어가자 
+    
     const reqData = {
       accountName: ranker.account.name,
       realm: ranker.account.realm
@@ -109,79 +108,18 @@ const fetchingData = async () => {
       challenges: ranker.account.challenges,
       createdAt: new Date()
     };
-
-    user.deleteOne({id:ranker.character.id})
-    user.insertOne(formattedUser)
-    
-    console.log(ranker.character.name)
-
-    const itemDatum = await item.findOne({id:ranker.character.id})
-    
-        const updatedSince = itemDatum?new Date().getTime() - new Date(itemDatum.createdAt).getTime():1
-        const isOverTheLimit = itemDatum? updatedSince/1000/60 > updateHourLimit : true
-
-        if(isOverTheLimit){
-            let items = []
-            try{
-                const res = await fetch(`https://www.pathofexile.com/character-window/get-items?accountName=${encodeURIComponent(ranker.account.name)}&character=${encodeURIComponent(ranker.character.name)}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                });
-            if(res.status===200){
-                const itemData = await res.json()
-                items = itemData?.items || []
-            } else {
-                console.log('request failed',res.status)
-                if (res.status === 429){
-                    // 'retry-after' => '461'
-                    index--
-                    const retryDelay = res.headers.get('retry-after')
-                    const state = res.headers.get('x-rate-limit-ip-state')
-                     
-                    console.log('retryDelay : ', retryDelay, 'state - ',state )
-                    await new Promise(r=>setTimeout(()=>r(null),parseInt(retryDelay||'10')*1000))
-                } else if (res.status !==404 && res.status !== 403){
-                    throw res
-                }
-            }
-            }catch(e){
-                console.log('error!!!',e)
-            }
-            
-            const allGems = items.reduce((acc: any, item:any)=>{
-              const gemList = item.socketedItems?.map((gem:any)=>gem.baseType) || []
-              return [...acc,...gemList]
-            },[])
-        
-            const charItems = {
-                id: ranker.character.id,
-                allGems,
-                createdAt: new Date()
-            }
-            item.deleteOne({id:ranker.character.id})
-            item.insertOne(charItems)
-        }
-    
-    
-    await new Promise(r=>setTimeout(()=>r(null),2500))
+    formattedList.push(formattedUser)
   }
-  // console.log(formattedList.length)
-  // console.log('get : ', formattedList)
-  // const data = await res.json();
   
+  const bulk = user.initializeUnorderedBulkOp();
+    formattedList.forEach((formattedUser)=>{
+      bulk.insert(formattedUser)
+    })
+    user.deleteMany({})
+    bulk.execute();
   
-  
-//   const bulk = user.initializeUnorderedBulkOp();
-//   formattedList.forEach((formattedUser)=>{
-//     bulk.insert(formattedUser)
-//   })
-//   user.deleteMany({})
-//   bulk.execute();
-
-
-  console.log('done!')
-  const delta = new Date().getTime() - start.getTime()
+    console.log('done!')
+    const delta = new Date().getTime() - start.getTime()
     console.log('delta time : ', delta)
 }
 fetchingData()
