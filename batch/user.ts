@@ -1,10 +1,3 @@
-const { MongoClient } = require('mongodb');
-const dotenv = require('dotenv');
-dotenv.config();
-
-const LEAGUE_STRING='KKANBU (PL38521)'
-const updateHourLimit =240 //4hour
-console.log('process.env.mongodb',process.env.mongodb)
 ////////////gem//////////
     // verified: false,
     // w: 1,
@@ -50,13 +43,20 @@ type charInfo={
   league?: string;
 }
 
-const start = new Date()
-console.log(start)
-const startTime = start.getTime()
 
 
-const fetchingData = async () => {
-  
+const fetchingUserData = async () => {
+  const { MongoClient } = require('mongodb');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const LEAGUE_STRING='KKANBU (PL38521)'
+
+
+  const start = new Date()
+  console.log(start)
+  const startTime = start.getTime()
+
   let rankList:rankObj[]=[]
   let maxCount=1
   let offset = 0
@@ -119,7 +119,9 @@ const fetchingData = async () => {
     bulk.execute();
   
     console.log('done!')
-    const delta = new Date().getTime() - start.getTime()
+    const delta = new Date().getTime() - startTime
     console.log('delta time : ', delta)
+    process.exit(0)
 }
-fetchingData()
+
+fetchingUserData()
