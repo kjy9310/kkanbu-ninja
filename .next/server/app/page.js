@@ -537,8 +537,7 @@ function Page(props) {
                                         scope: "row",
                                         children: row.dead ? "ㅇㅇ쥬금" : "아직안쥬금"
                                     }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()) //style={{width: 45}}
-                                    , {
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                         className: "whitespace-nowrap px-2 py-4",
                                         component: "th",
                                         scope: "row",
@@ -548,7 +547,7 @@ function Page(props) {
                                         style: {
                                             width: 45
                                         },
-                                        className: "whitespace-nowrap px-2 py-4",
+                                        className: "whitespace-nowrap px-1 py-4",
                                         component: "th",
                                         align: "right",
                                         children: row.level
@@ -596,14 +595,14 @@ function Page(props) {
 
 /***/ }),
 
-/***/ 17409:
+/***/ 19274:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 67144, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 77914, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 65110, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 23682, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 31390, 23))
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 31390, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 23682, 23))
 
 /***/ }),
 
