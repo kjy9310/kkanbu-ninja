@@ -89,7 +89,7 @@ module.exports = require("stream");
 
 /***/ }),
 
-/***/ 93440:
+/***/ 78099:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -109,7 +109,8 @@ __webpack_require__.d(__webpack_exports__, {
 var route_namespaceObject = {};
 __webpack_require__.r(route_namespaceObject);
 __webpack_require__.d(route_namespaceObject, {
-  "GET": () => (GET)
+  "GET": () => (GET),
+  "revalidate": () => (revalidate)
 });
 
 // EXTERNAL MODULE: ./node_modules/next/dist/server/node-polyfill-headers.js
@@ -120,10 +121,10 @@ var app_route_module = __webpack_require__(19532);
 var next_response = __webpack_require__(83804);
 ;// CONCATENATED MODULE: external "mongodb"
 const external_mongodb_namespaceObject = require("mongodb");
-;// CONCATENATED MODULE: ./src/app/api/user/route.ts
+;// CONCATENATED MODULE: ./src/app/api/user/controller.ts
 
-
-async function GET(request) {
+const getUsers = async ()=>{
+    console.log("controller called");
     const client = new external_mongodb_namespaceObject.MongoClient(process.env.mongodb || "no db env");
     // Database Name
     const dbName = "MakkaKim-M0";
@@ -164,10 +165,18 @@ async function GET(request) {
     ]).sort({
         experience: -1
     }).toArray();
-    // const userData = await collection.find().sort( { experience: -1 } ).toArray()
-    return next_response/* default.json */.Z.json({
-        userData
-    });
+    return userData;
+};
+/* harmony default export */ const controller = (getUsers);
+
+;// CONCATENATED MODULE: ./src/app/api/user/route.ts
+
+
+const revalidate = 30;
+async function GET(request, param) {
+    const userData = await controller();
+    console.log("userData", userData[0]);
+    return next_response/* default.json */.Z.json(userData);
 } //https://www.pathofexile.com/api/ladders?offset=0&limit=200&id=KKANBU+(PL38521)&type=league
 
 ;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?page=%2Fapi%2Fuser%2Froute&name=app%2Fapi%2Fuser%2Froute&pagePath=private-next-app-dir%2Fapi%2Fuser%2Froute.ts&appDir=%2Fhome%2Faa019%2Fdev%2Fkkanbu-ninja%2Fsrc%2Fapp&appPaths=%2Fapi%2Fuser%2Froute&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&assetPrefix=&nextConfigOutput=!
@@ -226,7 +235,7 @@ var _response = __webpack_require__(66843); //# sourceMappingURL=next-response.j
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [961,616], () => (__webpack_exec__(93440)));
+var __webpack_exports__ = __webpack_require__.X(0, [961,616], () => (__webpack_exec__(78099)));
 module.exports = __webpack_exports__;
 
 })();

@@ -189,7 +189,7 @@ __webpack_require__.r(__webpack_exports__);
         '',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 23367)), "/home/aa019/dev/kkanbu-ninja/src/app/page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 79046)), "/home/aa019/dev/kkanbu-ninja/src/app/page.tsx"],
           
         }]
       },
@@ -227,7 +227,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 8244:
+/***/ 21891:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -268,19 +268,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-async function getData() {
-    const res = await fetch(`api/user`); //10 min cache
-    // The return value is *not* serialized
-    // You can return Date, Map, Set, etc.
-    // Recommendation: handle errors
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        alert("아 에러낫삼 걍 다시해보셈 그래도 안되면 아몰랑");
-        throw new Error("Failed to fetch data");
-    }
-    return res.json();
-}
-function Page() {
+function Page(props) {
+    const { userData  } = props;
     const [original, setOriginal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
     const [filtered, setFilter] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
     const [gemList, setGemList] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
@@ -289,10 +278,9 @@ function Page() {
     const [filterGemInput, setGemInput] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         (async ()=>{
-            const data = await getData();
-            setOriginal(data.userData);
-            setFilter(data.userData);
-            const gemSet = await data.userData.reduce((acc, user)=>{
+            setOriginal(userData);
+            setFilter(userData);
+            const gemSet = await userData?.reduce((acc, user)=>{
                 user.items?.allGems.forEach((gemName)=>{
                     acc.add(gemName);
                 });
@@ -300,10 +288,12 @@ function Page() {
             }, new Set());
             setGemList([
                 "",
-                ...Array.from(gemSet)
+                ...Array.from(gemSet || [])
             ]);
         })();
-    }, []);
+    }, [
+        userData
+    ]);
     const findName = (e)=>{
         setName(e.target.value || "");
     };
@@ -325,222 +315,219 @@ function Page() {
         filterGem,
         filterName
     ]);
-    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("main", {
-        className: "flex min-h-screen flex-col items-center justify-between p-24",
-        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2___default()), {
-            component: (_mui_material_Paper__WEBPACK_IMPORTED_MODULE_3___default()),
-            children: [
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h2", {
-                    style: {
-                        fontSize: 50,
-                        textAlign: "center",
-                        color: "white",
-                        backgroundColor: "#28281c"
-                    },
-                    children: "깐부찾기"
-                }),
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                    style: {
-                        backgroundColor: "#b34afb",
-                        color: "white",
-                        display: "inline-block",
-                        margin: "5px",
-                        right: 10,
-                        padding: "2px 10px",
-                        borderRadius: 5
-                    },
-                    target: "_blank",
-                    href: "https://www.twitch.tv/ham_90",
-                    children: "twitch"
-                }),
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                    style: {
-                        backgroundColor: "#fb4ab0",
-                        color: "white",
-                        display: "inline-block",
-                        margin: "5px",
-                        right: 10,
-                        padding: "2px 10px",
-                        borderRadius: 5
-                    },
-                    target: "_blank",
-                    href: "https://tgd.kr/s/ham_90/",
-                    children: "햄게더"
-                }),
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                    style: {
-                        backgroundColor: "#626262",
-                        color: "white",
-                        display: "inline-block",
-                        margin: "5px",
-                        right: 10,
-                        padding: "2px 10px",
-                        borderRadius: 5
-                    },
-                    target: "_blank",
-                    href: "https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347",
-                    children: "깐부시트"
-                }),
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    style: {
-                        margin: 20
-                    },
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.TextField, {
-                            id: "outlined-basic",
-                            label: "검색",
-                            variant: "outlined",
-                            onChange: findName
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_5___default()), {
-                            disablePortal: true,
-                            id: "combo-box-demo",
-                            options: gemList,
-                            sx: {
-                                width: 300
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2___default()), {
+        component: (_mui_material_Paper__WEBPACK_IMPORTED_MODULE_3___default()),
+        children: [
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h2", {
+                style: {
+                    fontSize: 50,
+                    textAlign: "center",
+                    color: "white",
+                    backgroundColor: "#28281c"
+                },
+                children: "깐부찾기"
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                style: {
+                    backgroundColor: "#b34afb",
+                    color: "white",
+                    display: "inline-block",
+                    margin: "5px",
+                    right: 10,
+                    padding: "2px 10px",
+                    borderRadius: 5
+                },
+                target: "_blank",
+                href: "https://www.twitch.tv/ham_90",
+                children: "twitch"
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                style: {
+                    backgroundColor: "#fb4ab0",
+                    color: "white",
+                    display: "inline-block",
+                    margin: "5px",
+                    right: 10,
+                    padding: "2px 10px",
+                    borderRadius: 5
+                },
+                target: "_blank",
+                href: "https://tgd.kr/s/ham_90/",
+                children: "햄게더"
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                style: {
+                    backgroundColor: "#626262",
+                    color: "white",
+                    display: "inline-block",
+                    margin: "5px",
+                    right: 10,
+                    padding: "2px 10px",
+                    borderRadius: 5
+                },
+                target: "_blank",
+                href: "https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347",
+                children: "깐부시트"
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                style: {
+                    margin: 20
+                },
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.TextField, {
+                        id: "outlined-basic",
+                        label: "검색",
+                        variant: "outlined",
+                        onChange: findName
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_5___default()), {
+                        disablePortal: true,
+                        id: "combo-box-demo",
+                        options: gemList,
+                        sx: {
+                            width: 300
+                        },
+                        value: filterGem,
+                        onChange: (event, newValue)=>{
+                            setGem(newValue || "");
+                        },
+                        inputValue: filterGemInput,
+                        onInputChange: (event, newInputValue)=>{
+                            setGemInput(newInputValue);
+                        },
+                        renderInput: (params)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.TextField, {
+                                ...params,
+                                label: "쩸"
+                            })
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Table__WEBPACK_IMPORTED_MODULE_6___default()), {
+                sx: {
+                    minWidth: 850
+                },
+                "aria-label": "simple table",
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_7___default()), {
+                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
+                            style: {
+                                backgroundColor: "#626262"
                             },
-                            value: filterGem,
-                            onChange: (event, newValue)=>{
-                                setGem(newValue || "");
-                            },
-                            inputValue: filterGemInput,
-                            onInputChange: (event, newInputValue)=>{
-                                setGemInput(newInputValue);
-                            },
-                            renderInput: (params)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.TextField, {
-                                    ...params,
-                                    label: "쩸"
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    children: "순위"
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    children: "계정명"
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    style: {
+                                        maxWidth: 180
+                                    },
+                                    children: "케릭명"
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    children: "육개장"
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    children: "직업"
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    align: "right",
+                                    children: "레베루"
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    align: "right",
+                                    style: {
+                                        maxWidth: 120
+                                    },
+                                    children: "경험치"
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    align: "right",
+                                    children: "챌린지"
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    children: "보러가기"
                                 })
+                            ]
                         })
-                    ]
-                }),
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Table__WEBPACK_IMPORTED_MODULE_6___default()), {
-                    sx: {
-                        minWidth: 850
-                    },
-                    "aria-label": "simple table",
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_7___default()), {
-                            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_10___default()), {
+                        children: filtered && filtered.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
                                 style: {
-                                    backgroundColor: "#626262"
+                                    backgroundColor: row.dead ? "#a54e5d" : "#5e51af"
+                                },
+                                sx: {
+                                    "&:last-child td, &:last-child th": {
+                                        border: 0
+                                    }
                                 },
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        children: "순위"
+                                        component: "th",
+                                        scope: "row",
+                                        children: row.rank
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        children: "계정명"
+                                        component: "th",
+                                        scope: "row",
+                                        children: row.account
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                        component: "th",
+                                        scope: "row",
                                         style: {
                                             maxWidth: 180
                                         },
-                                        children: "케릭명"
+                                        children: row.name
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        children: "육개장"
+                                        component: "th",
+                                        scope: "row",
+                                        children: row.dead ? "ㅇㅇ쥬금" : "아직안쥬금"
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        children: "직업"
+                                        component: "th",
+                                        scope: "row",
+                                        children: row.class
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                         align: "right",
-                                        children: "레베루"
+                                        children: row.level
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                         align: "right",
                                         style: {
                                             maxWidth: 120
                                         },
-                                        children: "경험치"
+                                        children: row.experience
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
                                         align: "right",
-                                        children: "챌린지"
+                                        children: row.challenges?.completed
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        children: "보러가기"
+                                        component: "th",
+                                        scope: "row",
+                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                            style: {
+                                                backgroundColor: "white",
+                                                display: "inline-block",
+                                                padding: "2px 10px",
+                                                borderRadius: 5
+                                            },
+                                            target: "_blank",
+                                            href: `https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`,
+                                            children: "POE"
+                                        })
                                     })
                                 ]
-                            })
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_10___default()), {
-                            children: filtered.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
-                                    style: {
-                                        backgroundColor: row.dead ? "#a54e5d" : "#5e51af"
-                                    },
-                                    sx: {
-                                        "&:last-child td, &:last-child th": {
-                                            border: 0
-                                        }
-                                    },
-                                    children: [
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                            component: "th",
-                                            scope: "row",
-                                            children: row.rank
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                            component: "th",
-                                            scope: "row",
-                                            children: row.account
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                            component: "th",
-                                            scope: "row",
-                                            style: {
-                                                maxWidth: 180
-                                            },
-                                            children: row.name
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                            component: "th",
-                                            scope: "row",
-                                            children: row.dead ? "ㅇㅇ쥬금" : "아직안쥬금"
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                            component: "th",
-                                            scope: "row",
-                                            children: row.class
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                            align: "right",
-                                            children: row.level
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                            align: "right",
-                                            style: {
-                                                maxWidth: 120
-                                            },
-                                            children: row.experience
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                            align: "right",
-                                            children: row.challenges?.completed
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                            component: "th",
-                                            scope: "row",
-                                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                                style: {
-                                                    backgroundColor: "white",
-                                                    display: "inline-block",
-                                                    padding: "2px 10px",
-                                                    borderRadius: 5
-                                                },
-                                                target: "_blank",
-                                                href: `https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`,
-                                                children: "POE"
-                                            })
-                                        })
-                                    ]
-                                }, row.rank))
-                        })
-                    ]
-                })
-            ]
-        })
+                            }, row.rank))
+                    })
+                ]
+            })
+        ]
     });
 }
 
@@ -565,10 +552,10 @@ Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_
 
 /***/ }),
 
-/***/ 44686:
+/***/ 22305:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 8244))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 21891))
 
 /***/ }),
 
@@ -602,26 +589,61 @@ function RootLayout({ children  }) {
 
 /***/ }),
 
-/***/ 23367:
+/***/ 79046:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "$$typeof": () => (/* binding */ $$typeof),
-/* harmony export */   "__esModule": () => (/* binding */ __esModule),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35985);
 
-const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)("/home/aa019/dev/kkanbu-ninja/src/app/page.tsx")
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ Page)
+});
+
+// EXTERNAL MODULE: ./node_modules/next/dist/compiled/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(83146);
+// EXTERNAL MODULE: ./node_modules/next/dist/compiled/react/react.shared-subset.js
+var react_shared_subset = __webpack_require__(34212);
+// EXTERNAL MODULE: ./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js
+var module_proxy = __webpack_require__(35985);
+;// CONCATENATED MODULE: ./src/app/rank/list.tsx
+
+const proxy = (0,module_proxy.createProxy)("/home/aa019/dev/kkanbu-ninja/src/app/rank/list.tsx")
 
 // Accessing the __esModule property and exporting $$typeof are required here.
 // The __esModule getter forces the proxy target to create the default export
 // and the $$typeof value is for rendering logic to determine if the module
 // is a client boundary.
 const { __esModule, $$typeof } = proxy;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (proxy.default);
+/* harmony default export */ const list = (proxy.default);
+
+;// CONCATENATED MODULE: ./src/app/page.tsx
+
+
+
+async function getData() {
+    console.log("getData called");
+    const res = await fetch(`${process.env.host}/api/user`, {
+        next: {
+            revalidate: 10
+        }
+    }); //10 min cache
+    if (!res.ok) {
+        console.log("에러낫다! 스샷찍어주실?");
+        console.log(res);
+    }
+    return res.json();
+}
+async function Page() {
+    const data = await getData();
+    return /*#__PURE__*/ jsx_runtime.jsx("main", {
+        className: "flex min-h-screen flex-col items-center justify-between p-24",
+        children: /*#__PURE__*/ jsx_runtime.jsx(list, {
+            userData: data
+        })
+    });
+}
 
 
 /***/ }),
