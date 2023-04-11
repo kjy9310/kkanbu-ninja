@@ -1,5 +1,5 @@
 {
   "/api/user/route": "/api/user",
-  "/page": "/",
-  "/favicon.ico/route": "/favicon.ico"
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
 }

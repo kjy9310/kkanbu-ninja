@@ -270,8 +270,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function Page(props) {
     const { userData  } = props;
-    const [original, setOriginal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
-    const [filtered, setFilter] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [original, setOriginal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(userData);
+    const [filtered, setFilter] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(userData);
     const [gemList, setGemList] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
     const [filterName, setName] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [filterGem, setGem] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
@@ -279,7 +279,6 @@ function Page(props) {
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         (async ()=>{
             setOriginal(userData);
-            setFilter(userData);
             const gemSet = await userData?.reduce((acc, user)=>{
                 user.items?.allGems.forEach((gemName)=>{
                     acc.add(gemName);
@@ -290,6 +289,7 @@ function Page(props) {
                 "",
                 ...Array.from(gemSet || [])
             ]);
+            setFilter(userData);
         })();
     }, [
         userData
@@ -632,6 +632,7 @@ async function getData() {
     if (!res.ok) {
         console.log("에러낫다! 스샷찍어주실?");
         console.log(res);
+        return [];
     }
     return res.json();
 }
