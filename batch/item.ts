@@ -6,8 +6,6 @@ const fetchingItemData = async () => {
 const dotenv = require('dotenv');
 dotenv.config();
 
-const LEAGUE_STRING='KKANBU (PL38521)'
-
 const updateHourLimit =240 //4hour
 
 // Connection URL
@@ -19,13 +17,13 @@ const db = client.db(dbName);
 const user = db.collection('kkanbu_users');
 
     const start = new Date()
-console.log(start)
-const startTime = start.getTime()
+    console.log(start)
+    const startTime = start.getTime()
 
   
-  const userList = await user.find()
+  const userList = await user.find({name:"트릭콜돗"}).toArray()
 
-  
+  console.log(userList)
   const item = db.collection('kkanbu_items');
 
 
@@ -54,6 +52,10 @@ const startTime = start.getTime()
             if(res.status===200){
                 const itemData = await res.json()
                 items = itemData?.items || []
+                // const oneunique = items.find((item:any)=>{item.name==='Elevore'})
+                // console.log(oneunique)
+                // console.log(oneunique)
+                // process.exit(0)
             } else {
                 console.log('request failed',res.status)
                 if (res.status === 429){
@@ -73,13 +75,18 @@ const startTime = start.getTime()
             
             // get info
             const allGems = getGemFromItems(items)
-
+            const allUniques = getUniqueFromItems(items)
+            const {has5Link, has6Link} = getLinkedItemFromItems(items)
             
             const charItems = {
                 id: user.id,
                 allGems,
+                allUniques,
+                has5Link,
+                has6Link,
                 createdAt: new Date()
             }
+            
             item.deleteOne({id:user.id})
             item.insertOne(charItems)
         }
@@ -96,8 +103,39 @@ const startTime = start.getTime()
 fetchingItemData()
 
 const getGemFromItems = (items:any) =>{
-    items.reduce((acc: any, item:any)=>{
+    return items.reduce((acc: any, item:any)=>{
         const gemList = item.socketedItems?.map((gem:any)=>gem.baseType) || []
         return [...acc,...gemList]
       },[])
+}
+
+const getUniqueFromItems = (items:any) =>{
+    // frameType: 3
+    return items.reduce((acc: any, item:any)=>{
+        if(item.frameType===3){
+            return [...acc, item.name]
+        }
+        return acc
+      },[])
+}
+
+const getLinkedItemFromItems = (items:any):{has5Link:boolean, has6Link:boolean} => {
+    //sockets group 0 or 1
+    return items.reduce((acc: {has5Link:boolean, has6Link:boolean}, item:any)=>{
+        const is56Link = item.sockets?.reduce(
+            (acc:{group0Count:number; group1Count:number}, socket:{group:number; attr:string, sColour:string})=>{
+                if (socket.group===0){
+                    acc.group0Count+=1
+                } else if (socket.group===1){
+                    acc.group1Count+=1
+                }
+                return acc
+            },{group0Count:0, group1Count:0})||{}
+        const has5Link = (is56Link.group0Count===5||is56Link.group1Count===5)
+        const has6Link = (is56Link.group0Count===6||is56Link.group1Count===6)
+        return {
+            has5Link: acc.has5Link|| has5Link,
+            has6Link: acc.has6Link|| has6Link
+        }
+      },{has5Link:false, has6Link:false})
 }

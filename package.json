@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "batch": "ts-node ./batch/user.ts"
+    "batch:users": "ts-node ./batch/user.ts > userbatch.log",
+    "batch:items": "ts-node ./batch/item.ts > itembatch.log"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
