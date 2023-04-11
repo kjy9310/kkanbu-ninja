@@ -70607,7 +70607,7 @@ function q(c, a, g) {
 }
 __webpack_unused_export__ = l;
 exports.jsx = q;
-__webpack_unused_export__ = q;
+exports.jsxs = q;
 
 
 /***/ }),

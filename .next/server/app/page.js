@@ -276,6 +276,7 @@ function Page(props) {
     const [filterName, setName] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [filterGem, setGem] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [filterGemInput, setGemInput] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [filterDeath, setDeath] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("all");
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         (async ()=>{
             setOriginal(userData);
@@ -298,14 +299,15 @@ function Page(props) {
         setName(e.target.value || "");
     };
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        if (filterName === "" && (filterGem === "" || filterGem === null)) {
+        if (filterName === "" && (filterGem === "" || filterGem === null) || filterDeath === "all") {
             setFilter(original);
             return;
         } else {
             const newFiltered = original.filter((user)=>{
-                const gemCheck = filterGem && user.items?.allGems.findIndex((gem)=>gem === filterGem) > -1;
-                const nameCheck = filterName && (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName));
-                return Boolean(gemCheck || nameCheck);
+                const gemCheck = filterGem ? user.items?.allGems.findIndex((gem)=>gem === filterGem) > -1 : true;
+                const deathCheck = filterDeath === "all" ? true : filterDeath === "dead" ? user.dead : !user.dead;
+                const nameCheck = filterName ? user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName) : true;
+                return Boolean(gemCheck && nameCheck && deathCheck);
             }).sort((a, b)=>{
                 return a.rank - b.rank;
             });
@@ -313,10 +315,14 @@ function Page(props) {
         }
     }, [
         filterGem,
-        filterName
+        filterName,
+        filterDeath
     ]);
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2___default()), {
         component: (_mui_material_Paper__WEBPACK_IMPORTED_MODULE_3___default()),
+        style: {
+            minWidth: 335
+        },
         children: [
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h2", {
                 style: {
@@ -370,6 +376,7 @@ function Page(props) {
                 children: "깐부시트"
             }),
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "search",
                 style: {
                     margin: 20
                 },
@@ -399,44 +406,80 @@ function Page(props) {
                                 ...params,
                                 label: "쩸"
                             })
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_4__.ButtonGroup, {
+                        variant: "contained",
+                        "aria-label": "outlined primary button group",
+                        children: [
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.Button, {
+                                style: {
+                                    backgroundColor: filterDeath === "dead" ? "#a54e5d" : "gray"
+                                },
+                                onClick: ()=>setDeath("dead"),
+                                children: "죽음"
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.Button, {
+                                style: {
+                                    backgroundColor: filterDeath === "all" ? "#28281c" : "gray"
+                                },
+                                onClick: ()=>setDeath("all"),
+                                children: "둘다"
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.Button, {
+                                style: {
+                                    backgroundColor: filterDeath === "alive" ? "#5e51af" : "gray"
+                                },
+                                onClick: ()=>setDeath("alive"),
+                                children: "덜죽음"
+                            })
+                        ]
                     })
                 ]
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Table__WEBPACK_IMPORTED_MODULE_6___default()), {
-                sx: {
-                    minWidth: 850
-                },
-                "aria-label": "simple table",
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Table__WEBPACK_IMPORTED_MODULE_6___default()) //aria-label="simple table" 
+            , {
+                className: "text-left text-sm font-light",
                 children: [
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_7___default()), {
+                        className: "border-b font-medium dark:border-neutral-500",
                         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
                             style: {
                                 backgroundColor: "#626262"
                             },
                             children: [
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    className: "px-2 py-4",
+                                    style: {
+                                        width: 45
+                                    },
                                     children: "순위"
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    className: "px-6 py-4 hiddenOnMoblie",
                                     children: "계정명"
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                    style: {
-                                        maxWidth: 180
-                                    },
+                                    className: "px-6 py-4",
                                     children: "케릭명"
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    className: "px-6 py-4 removeOnMobile",
                                     children: "육개장"
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    className: "px-2 py-4",
                                     children: "직업"
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    className: "px-6 py-4",
+                                    style: {
+                                        width: 45
+                                    },
                                     align: "right",
-                                    children: "레베루"
+                                    children: "LvL"
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    className: "px-6 py-4 hiddenOnMoblie",
                                     align: "right",
                                     style: {
                                         maxWidth: 120
@@ -444,10 +487,11 @@ function Page(props) {
                                     children: "경험치"
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                    align: "right",
+                                    className: "px-2 py-2 removeOnMobile",
                                     children: "챌린지"
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    className: "px-6 py-4 hiddenOnMoblie",
                                     children: "보러가기"
                                 })
                             ]
@@ -455,6 +499,7 @@ function Page(props) {
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_10___default()), {
                         children: filtered && filtered.length && filtered.length > 0 && filtered.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
+                                className: "border-b dark:border-neutral-500 showOnHover",
                                 style: {
                                     backgroundColor: row.dead ? "#a54e5d" : "#5e51af"
                                 },
@@ -465,38 +510,52 @@ function Page(props) {
                                 },
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                        style: {
+                                            width: 45
+                                        },
+                                        className: "whitespace-nowrap px-2 py-2",
+                                        align: "center",
                                         component: "th",
                                         scope: "row",
                                         children: row.rank
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                        className: "whitespace-nowrap px-6 py-4 hiddenOnMoblie",
                                         component: "th",
                                         scope: "row",
                                         children: row.account
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                        className: "whitespace-nowrap px-6 py-4",
                                         component: "th",
                                         scope: "row",
-                                        style: {
-                                            maxWidth: 180
-                                        },
                                         children: row.name
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                        className: "whitespace-nowrap px-6 py-4 removeOnMobile",
                                         component: "th",
                                         scope: "row",
                                         children: row.dead ? "ㅇㅇ쥬금" : "아직안쥬금"
                                     }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()) //style={{width: 45}}
+                                    , {
+                                        className: "whitespace-nowrap px-2 py-4",
                                         component: "th",
                                         scope: "row",
                                         children: row.class
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                        style: {
+                                            width: 45
+                                        },
+                                        className: "whitespace-nowrap px-2 py-4",
+                                        component: "th",
                                         align: "right",
                                         children: row.level
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                        className: "whitespace-nowrap px-2 py-4 hiddenOnMoblie",
+                                        component: "th",
                                         align: "right",
                                         style: {
                                             maxWidth: 120
@@ -504,10 +563,13 @@ function Page(props) {
                                         children: row.experience
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        align: "right",
+                                        className: "whitespace-nowrap px-2 py-2 removeOnMobile",
+                                        component: "th",
+                                        align: "center",
                                         children: row.challenges?.completed
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                        className: "whitespace-nowrap px-6 py-4 hiddenOnMoblie",
                                         component: "th",
                                         scope: "row",
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
@@ -578,11 +640,17 @@ const metadata = {
     description: "KKANBU 1 han da"
 };
 function RootLayout({ children  }) {
-    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("html", {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("html", {
         lang: "en",
-        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("body", {
-            children: children
-        })
+        children: [
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("meta", {
+                name: "viewport",
+                content: "width=device-width, initial-scale=1"
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("body", {
+                children: children
+            })
+        ]
     });
 }
 
