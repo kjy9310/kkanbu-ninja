@@ -174,12 +174,12 @@ export default function Page(props:any) {
       className="text-left text-sm font-light">
         <TableHead className="border-b font-medium dark:border-neutral-500">
           <TableRow style={{backgroundColor:'#626262'}}>
-            <TableCell className="px-2 py-4" style={{width: 45}}>순위</TableCell>
+            <TableCell className="px-2 py-4" style={{width: 56}}>순위</TableCell>
             <TableCell className="px-6 py-4 hiddenOnMoblie">계정명</TableCell>
             <TableCell className="px-6 py-4">케릭명</TableCell>
             <TableCell className="px-6 py-4 removeOnMobile">육개장</TableCell>
             <TableCell className="px-2 py-4" >직업</TableCell>
-            <TableCell className="px-6 py-4" style={{width: 45}} align="right">LvL</TableCell>
+            <TableCell className="px-6 py-4" style={{width: 48}} align="right">LvL</TableCell>
             <TableCell className="px-6 py-4 hiddenOnMoblie" align="right" style={{maxWidth:120}}>경험치</TableCell>
             <TableCell className="px-2 py-2 removeOnMobile">챌린지</TableCell>
             <TableCell className="px-6 py-4 hiddenOnMoblie">보러가기</TableCell>
@@ -193,7 +193,7 @@ export default function Page(props:any) {
               key={row.rank}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell style={{width: 45}} className="whitespace-nowrap px-2 py-2" align="center" component="th" scope="row">
+              <TableCell style={{width: 56}} className="whitespace-nowrap px-2 py-2" align="center" component="th" scope="row">
                 {row.rank}
               </TableCell>
               <TableCell className="whitespace-nowrap px-6 py-4 hiddenOnMoblie" component="th" scope="row">
@@ -209,7 +209,7 @@ export default function Page(props:any) {
                className="whitespace-nowrap px-2 py-4" component="th" scope="row">
                 {row.class}
               </TableCell>
-              <TableCell style={{width: 45}} className="whitespace-nowrap px-1 py-4" component="th" align="right">{row.level}</TableCell>
+              <TableCell style={{width: 48}} className="whitespace-nowrap px-1 py-4" component="th" align="right">{row.level}</TableCell>
               <TableCell className="whitespace-nowrap px-2 py-4 hiddenOnMoblie" component="th" align="right" style={{maxWidth:120}}>{row.experience}</TableCell>
               <TableCell className="whitespace-nowrap px-2 py-2 removeOnMobile" component="th" align="center">{row.challenges?.completed}</TableCell>
               <TableCell className="whitespace-nowrap px-6 py-4 hiddenOnMoblie" component="th" scope="row">

@@ -5,8 +5,6 @@ export const revalidate = 30
 
 export async function GET(request: Request, param:any) {
     const userData = await getUsers()
-    console.log('userData', userData[0])
-    
   return NextResponse.json(userData)
 }
 
