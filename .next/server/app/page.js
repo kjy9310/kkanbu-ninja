@@ -539,7 +539,7 @@ function Page(props) {
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
                                     className: "px-2 py-4",
                                     style: {
-                                        width: 45
+                                        width: 56
                                     },
                                     children: "순위"
                                 }),
@@ -562,7 +562,7 @@ function Page(props) {
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
                                     className: "px-6 py-4",
                                     style: {
-                                        width: 45
+                                        width: 48
                                     },
                                     align: "right",
                                     children: "LvL"
@@ -600,7 +600,7 @@ function Page(props) {
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
                                         style: {
-                                            width: 45
+                                            width: 56
                                         },
                                         className: "whitespace-nowrap px-2 py-2",
                                         align: "center",
@@ -634,7 +634,7 @@ function Page(props) {
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
                                         style: {
-                                            width: 45
+                                            width: 48
                                         },
                                         className: "whitespace-nowrap px-1 py-4",
                                         component: "th",

@@ -175,7 +175,6 @@ const getUsers = async ()=>{
 const revalidate = 30;
 async function GET(request, param) {
     const userData = await controller();
-    console.log("userData", userData[0]);
     return next_response/* default.json */.Z.json(userData);
 } //https://www.pathofexile.com/api/ladders?offset=0&limit=200&id=KKANBU+(PL38521)&type=league
 
