@@ -299,7 +299,7 @@ function Page(props) {
         setName(e.target.value || "");
     };
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        if (filterName === "" && (filterGem === "" || filterGem === null) || filterDeath === "all") {
+        if (filterName === "" && (filterGem === "" || filterGem === null) && filterDeath === "all") {
             setFilter(original);
             return;
         } else {
