@@ -5,6 +5,13 @@ exports.id = 356;
 exports.ids = [356];
 exports.modules = {
 
+/***/ 38013:
+/***/ ((module) => {
+
+module.exports = require("mongodb");
+
+/***/ }),
+
 /***/ 97783:
 /***/ ((module) => {
 
@@ -89,7 +96,7 @@ module.exports = require("stream");
 
 /***/ }),
 
-/***/ 78099:
+/***/ 65780:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -119,13 +126,12 @@ var node_polyfill_headers = __webpack_require__(76145);
 var app_route_module = __webpack_require__(19532);
 // EXTERNAL MODULE: ./node_modules/next/dist/server/web/exports/next-response.js
 var next_response = __webpack_require__(83804);
-;// CONCATENATED MODULE: external "mongodb"
-const external_mongodb_namespaceObject = require("mongodb");
+// EXTERNAL MODULE: external "mongodb"
+var external_mongodb_ = __webpack_require__(38013);
 ;// CONCATENATED MODULE: ./src/app/api/user/controller.ts
 
 const getUsers = async ()=>{
-    console.log("controller called");
-    const client = new external_mongodb_namespaceObject.MongoClient(process.env.mongodb || "no db env");
+    const client = new external_mongodb_.MongoClient(process.env.mongodb || "no db env");
     // Database Name
     const dbName = "MakkaKim-M0";
     await client.connect();
@@ -165,6 +171,7 @@ const getUsers = async ()=>{
     ]).sort({
         experience: -1
     }).toArray();
+    client.close();
     return userData;
 };
 /* harmony default export */ const controller = (getUsers);
@@ -234,7 +241,7 @@ var _response = __webpack_require__(66843); //# sourceMappingURL=next-response.j
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [961,616], () => (__webpack_exec__(78099)));
+var __webpack_exports__ = __webpack_require__.X(0, [961,616], () => (__webpack_exec__(65780)));
 module.exports = __webpack_exports__;
 
 })();

@@ -84,6 +84,14 @@ module.exports = require("next/dist/shared/lib/hooks-client-context.js");
 
 /***/ }),
 
+/***/ 23854:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("next/dist/shared/lib/isomorphic/path");
+
+/***/ }),
+
 /***/ 11751:
 /***/ ((module) => {
 
@@ -121,6 +129,14 @@ module.exports = require("next/dist/shared/lib/router/utils/parse-path.js");
 
 "use strict";
 module.exports = require("next/dist/shared/lib/router/utils/remove-trailing-slash.js");
+
+/***/ }),
+
+/***/ 93869:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("next/dist/shared/lib/router/utils/route-regex");
 
 /***/ }),
 
@@ -196,7 +212,7 @@ __webpack_require__.r(__webpack_exports__);
         {
           'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 64180)), "/home/aa019/dev/kkanbu-ninja/src/app/layout.tsx"],
           metadata: {
-    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 31323))).default(props))],
+    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 11193))).default(props))],
     apple: [],
     openGraph: [],
     twitter: [],
@@ -357,57 +373,6 @@ function Page(props) {
             minWidth: 335
         },
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h2", {
-                style: {
-                    fontSize: 50,
-                    textAlign: "center",
-                    color: "white",
-                    backgroundColor: "#28281c"
-                },
-                children: "깐부찾기"
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                style: {
-                    backgroundColor: "#b34afb",
-                    color: "white",
-                    display: "inline-block",
-                    margin: "5px",
-                    right: 10,
-                    padding: "2px 10px",
-                    borderRadius: 5
-                },
-                target: "_blank",
-                href: "https://www.twitch.tv/ham_90",
-                children: "twitch"
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                style: {
-                    backgroundColor: "#fb4ab0",
-                    color: "white",
-                    display: "inline-block",
-                    margin: "5px",
-                    right: 10,
-                    padding: "2px 10px",
-                    borderRadius: 5
-                },
-                target: "_blank",
-                href: "https://tgd.kr/s/ham_90/",
-                children: "햄게더"
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                style: {
-                    backgroundColor: "#626262",
-                    color: "white",
-                    display: "inline-block",
-                    margin: "5px",
-                    right: 10,
-                    padding: "2px 10px",
-                    borderRadius: 5
-                },
-                target: "_blank",
-                href: "https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347",
-                children: "깐부시트"
-            }),
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                 className: "search",
                 style: {
@@ -684,21 +649,14 @@ function Page(props) {
 
 /***/ }),
 
-/***/ 17409:
+/***/ 72560:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 67144, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 77914, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 65110, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 67144, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 23682, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 77914, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 31390, 23))
-
-/***/ }),
-
-/***/ 43620:
-/***/ (() => {
-
-
 
 /***/ }),
 
@@ -706,42 +664,6 @@ Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 21891))
-
-/***/ }),
-
-/***/ 64180:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ RootLayout),
-/* harmony export */   "metadata": () => (/* binding */ metadata)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83146);
-/* harmony import */ var _globals_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(75553);
-/* harmony import */ var _globals_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_globals_css__WEBPACK_IMPORTED_MODULE_1__);
-
-
-const metadata = {
-    title: "KKANBU - ninja?",
-    description: "KKANBU 1 han da"
-};
-function RootLayout({ children  }) {
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("html", {
-        lang: "en",
-        children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("meta", {
-                name: "viewport",
-                content: "width=device-width, initial-scale=1"
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("body", {
-                children: children
-            })
-        ]
-    });
-}
-
 
 /***/ }),
 
@@ -779,7 +701,6 @@ const { __esModule, $$typeof } = proxy;
 
 
 async function getData() {
-    console.log("getData called");
     const res = await fetch(`${process.env.host}/api/user`, {
         next: {
             revalidate: 10
@@ -803,52 +724,6 @@ async function Page() {
 }
 
 
-/***/ }),
-
-/***/ 31323:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ favicon_next_metadata)
-});
-
-;// CONCATENATED MODULE: external "next/dist/shared/lib/isomorphic/path"
-const path_namespaceObject = require("next/dist/shared/lib/isomorphic/path");
-var path_default = /*#__PURE__*/__webpack_require__.n(path_namespaceObject);
-// EXTERNAL MODULE: ./node_modules/next/dist/server/server-utils.js
-var server_utils = __webpack_require__(20459);
-;// CONCATENATED MODULE: external "next/dist/shared/lib/router/utils/route-regex"
-const route_regex_namespaceObject = require("next/dist/shared/lib/router/utils/route-regex");
-;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-metadata-image-loader.js?type=favicon&segment=&route=%2F&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata
-  
-  
-  
-
-  /* harmony default export */ const favicon_next_metadata = ((props) => {
-    const pathname = "/"
-    const routeRegex = (0,route_regex_namespaceObject.getNamedRouteRegex)(pathname, false)
-    const route = (0,server_utils/* interpolateDynamicPath */.oE)(pathname, props.params, routeRegex)
-
-    const imageData = {"type":"image/x-icon","sizes":"any"};
-
-    return {
-      ...imageData,
-      url: path_default().join(route, "favicon.ico" + ""),
-    }
-  });
-
-/***/ }),
-
-/***/ 75553:
-/***/ (() => {
-
-
-
 /***/ })
 
 };
@@ -858,7 +733,7 @@ const route_regex_namespaceObject = require("next/dist/shared/lib/router/utils/r
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [961,277], () => (__webpack_exec__(55296)));
+var __webpack_exports__ = __webpack_require__.X(0, [961,277,503], () => (__webpack_exec__(55296)));
 module.exports = __webpack_exports__;
 
 })();
