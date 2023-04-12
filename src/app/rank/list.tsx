@@ -95,28 +95,6 @@ export default function Page(props:any) {
 
 
   return <TableContainer component={Paper} style={{minWidth:335}}>
-    <h2 style={{fontSize:50, textAlign: 'center',color:'white',backgroundColor: '#28281c'}}>깐부찾기</h2>
-    <a style={{    backgroundColor: '#b34afb',
-    color:'white',
-    display: 'inline-block',
-    margin:'5px',
-    right:10,
-    padding: '2px 10px',
-    borderRadius: 5}} target='_blank' href="https://www.twitch.tv/ham_90">twitch</a>
-    <a style={{    backgroundColor: '#fb4ab0',
-    color:'white',
-    display: 'inline-block',
-    margin:'5px',
-    right:10,
-    padding: '2px 10px',
-    borderRadius: 5}} target='_blank' href="https://tgd.kr/s/ham_90/">햄게더</a>
-    <a style={{    backgroundColor: '#626262',
-    color:'white',
-    display: 'inline-block',
-    margin:'5px',
-    right:10,
-    padding: '2px 10px',
-    borderRadius: 5}} target='_blank' href="https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347">깐부시트</a>
     <div className="search" style={{margin:20}}>
     <TextField id="outlined-basic" label="검색" variant="outlined" onChange={findName} />
     <Autocomplete
