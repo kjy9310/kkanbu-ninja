@@ -2,7 +2,6 @@ import React from 'react';
 import RankList from './rank/list'
 
 async function getData() {
-  console.log('getData called')
   const res = await fetch(`${process.env.host}/api/user`,{ next: { revalidate: 10 } }); //10 min cache
 
   if (!res.ok) {
@@ -17,6 +16,7 @@ async function getData() {
 export default async function Page() {
     const data = await getData()
     return <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      
     <RankList userData={data||[]}/>
   </main>
 }

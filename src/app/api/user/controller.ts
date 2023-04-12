@@ -1,6 +1,5 @@
 import { MongoClient } from 'mongodb';
 const getUsers = async () =>{
-    console.log('controller called')
     const client = new MongoClient(process.env.mongodb||'no db env');
     // Database Name
     const dbName = 'MakkaKim-M0';
@@ -34,6 +33,7 @@ const getUsers = async () =>{
             }
 
     ]).sort( { experience: -1 } ).toArray()
+    client.close()
     return userData
 }
 export default getUsers
