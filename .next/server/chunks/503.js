@@ -27,7 +27,7 @@ const metadata = {
     title: "KKANBU - ninja?",
     description: "KKANBU 1 han da"
 };
-function RootLayout({ children  }) {
+function RootLayout({ children , params  }) {
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("html", {
         lang: "en",
         children: [
@@ -59,7 +59,8 @@ function RootLayout({ children  }) {
                     }),
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                         style: {
-                            padding: "0 0 10px"
+                            padding: "0 0 10px",
+                            textAlign: "center"
                         },
                         children: [
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {

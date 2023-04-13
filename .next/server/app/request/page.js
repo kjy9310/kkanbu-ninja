@@ -4,6 +4,22 @@ exports.id = 968;
 exports.ids = [968];
 exports.modules = {
 
+/***/ 38013:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("mongodb");
+
+/***/ }),
+
+/***/ 97783:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("next/dist/compiled/@edge-runtime/cookies");
+
+/***/ }),
+
 /***/ 40252:
 /***/ ((module) => {
 
@@ -28,7 +44,7 @@ module.exports = require("next/dist/compiled/react");
 
 /***/ }),
 
-/***/ 98704:
+/***/ 83743:
 /***/ ((module) => {
 
 "use strict";
@@ -148,11 +164,83 @@ module.exports = require("next/dist/shared/lib/server-inserted-html.js");
 
 /***/ }),
 
+/***/ 39491:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("assert");
+
+/***/ }),
+
+/***/ 14300:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("buffer");
+
+/***/ }),
+
+/***/ 6113:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("crypto");
+
+/***/ }),
+
+/***/ 82361:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("events");
+
+/***/ }),
+
+/***/ 13685:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("http");
+
+/***/ }),
+
+/***/ 95687:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("https");
+
+/***/ }),
+
+/***/ 63477:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("querystring");
+
+/***/ }),
+
 /***/ 57310:
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("url");
+
+/***/ }),
+
+/***/ 73837:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("util");
+
+/***/ }),
+
+/***/ 59796:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("zlib");
 
 /***/ }),
 
@@ -252,36 +340,94 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 29757:
+/***/ 45526:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Page)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(56786);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _mui_material_Table__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20390);
-/* harmony import */ var _mui_material_Table__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Table__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _mui_material_TableBody__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(43606);
-/* harmony import */ var _mui_material_TableBody__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(40514);
-/* harmony import */ var _mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20475);
-/* harmony import */ var _mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _mui_material_TableHead__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(30092);
-/* harmony import */ var _mui_material_TableHead__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(93761);
-/* harmony import */ var _mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _mui_material_Paper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27561);
-/* harmony import */ var _mui_material_Paper__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Paper__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18038);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(64085);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mui_material__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(90039);
-/* harmony import */ var _mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_4__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ Page)
+});
+
+// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
+var jsx_runtime_ = __webpack_require__(56786);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/Table/index.js
+var Table = __webpack_require__(20390);
+var Table_default = /*#__PURE__*/__webpack_require__.n(Table);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/TableBody/index.js
+var TableBody = __webpack_require__(43606);
+var TableBody_default = /*#__PURE__*/__webpack_require__.n(TableBody);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/TableCell/index.js
+var TableCell = __webpack_require__(40514);
+var TableCell_default = /*#__PURE__*/__webpack_require__.n(TableCell);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/TableContainer/index.js
+var TableContainer = __webpack_require__(20475);
+var TableContainer_default = /*#__PURE__*/__webpack_require__.n(TableContainer);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/TableHead/index.js
+var TableHead = __webpack_require__(30092);
+var TableHead_default = /*#__PURE__*/__webpack_require__.n(TableHead);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/TableRow/index.js
+var TableRow = __webpack_require__(93761);
+var TableRow_default = /*#__PURE__*/__webpack_require__.n(TableRow);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/Paper/index.js
+var Paper = __webpack_require__(27561);
+var Paper_default = /*#__PURE__*/__webpack_require__.n(Paper);
+// EXTERNAL MODULE: external "next/dist/compiled/react"
+var react_ = __webpack_require__(18038);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/index.js
+var node = __webpack_require__(64085);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/Autocomplete/index.js
+var Autocomplete = __webpack_require__(90039);
+var Autocomplete_default = /*#__PURE__*/__webpack_require__.n(Autocomplete);
+// EXTERNAL MODULE: ./node_modules/next-auth/react/index.js
+var react = __webpack_require__(63370);
+;// CONCATENATED MODULE: ./src/app/sign/button.tsx
+
+
+function SignButton() {
+    const { data: session  } = (0,react.useSession)();
+    if (session) {
+        return /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
+            children: [
+                "관리모드 ",
+                session.user?.name,
+                " ",
+                /*#__PURE__*/ jsx_runtime_.jsx("br", {}),
+                /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                    style: {
+                        backgroundColor: "#fb4ab0",
+                        color: "white",
+                        margin: 5,
+                        padding: 5,
+                        borderRadius: 5
+                    },
+                    onClick: ()=>(0,react.signOut)(),
+                    children: "햄 아웃"
+                })
+            ]
+        });
+    }
+    return /*#__PURE__*/ jsx_runtime_.jsx(jsx_runtime_.Fragment, {
+        children: /*#__PURE__*/ jsx_runtime_.jsx("button", {
+            style: {
+                backgroundColor: "#fb4ab0",
+                color: "white",
+                margin: 5,
+                padding: 5,
+                borderRadius: 5
+            },
+            onClick: ()=>(0,react.signIn)(),
+            children: "햄 인"
+        })
+    });
+}
+
+;// CONCATENATED MODULE: ./src/app/request/list.tsx
+
+
 
 
 
@@ -335,12 +481,24 @@ async function getRequestData() {
     }
     return res.json();
 }
+const miliduration2date = (deltaTime)=>{
+    const min = Math.floor(deltaTime / 60000);
+    if (min < 60) {
+        return `${min}분전`;
+    }
+    const hour = Math.floor(min / 60);
+    if (hour < 24) {
+        return `${hour}시간전`;
+    }
+    const day = Math.floor(hour / 24);
+    return `${day}일전`;
+};
 function Page(props) {
-    const { userData , requestData  } = props;
-    const [requestList, setRequestList] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(requestData);
-    const [request, setRequest] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
-    const [password, setPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
-    const [requester, setRequester] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const { userData , requestData , session  } = props;
+    const [requestList, setRequestList] = (0,react_.useState)(requestData);
+    const [request, setRequest] = (0,react_.useState)("");
+    const [password, setPassword] = (0,react_.useState)("");
+    const [requester, setRequester] = (0,react_.useState)("");
     const userNames = userData.map((user)=>user.name);
     const onChangeRequest = (e)=>{
         setRequest(e.target.value.slice(0, 50));
@@ -353,6 +511,9 @@ function Page(props) {
         setRequestList(newList);
     };
     const sendRequest = async ()=>{
+        if (!requester || !request) {
+            return;
+        }
         const id = await addRequest({
             requester,
             request,
@@ -383,7 +544,7 @@ function Page(props) {
             await getNewList();
         }
     };
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+    (0,react_.useEffect)(()=>{
         const interval = setInterval(()=>{
             getNewList();
         }, 3 * 60 * 1000);
@@ -391,82 +552,88 @@ function Page(props) {
             clearInterval(interval);
         };
     }, []);
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2___default()), {
-        component: (_mui_material_Paper__WEBPACK_IMPORTED_MODULE_3___default()),
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)((TableContainer_default()), {
+        component: (Paper_default()),
         style: {
             minWidth: 335
         },
         children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "search",
-                style: {
-                    margin: 20
-                },
+            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react.SessionProvider, {
+                session: session,
                 children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_4___default()), {
-                        disablePortal: true,
-                        id: "combo-box-gem",
-                        options: userNames,
-                        sx: {
-                            width: 300
+                    /*#__PURE__*/ jsx_runtime_.jsx(SignButton, {}),
+                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                        className: "search",
+                        style: {
+                            margin: 20
                         },
-                        value: requester,
-                        onChange: (event, newValue)=>{
-                            setRequester(newValue || "");
-                        },
-                        renderInput: (params)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
-                                ...params,
-                                label: "케릭명"
+                        children: [
+                            /*#__PURE__*/ jsx_runtime_.jsx((Autocomplete_default()), {
+                                disablePortal: true,
+                                id: "combo-box-gem",
+                                options: userNames,
+                                sx: {
+                                    width: 300
+                                },
+                                value: requester,
+                                onChange: (event, newValue)=>{
+                                    setRequester(newValue || "");
+                                },
+                                renderInput: (params)=>/*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                        ...params,
+                                        label: "케릭명"
+                                    })
+                            }),
+                            /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                style: {
+                                    width: "100%"
+                                },
+                                multiline: true,
+                                maxRows: "3",
+                                label: "해줘내용",
+                                variant: "outlined",
+                                value: request,
+                                onChange: onChangeRequest
+                            }),
+                            /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                style: {
+                                    width: "250px"
+                                },
+                                label: "비번",
+                                type: "password",
+                                variant: "outlined",
+                                onChange: onChangePassword
+                            }),
+                            /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                onClick: sendRequest,
+                                children: "요청"
                             })
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
-                        style: {
-                            width: "100%"
-                        },
-                        multiline: true,
-                        maxRows: "3",
-                        label: "해줘내용",
-                        variant: "outlined",
-                        value: request,
-                        onChange: onChangeRequest
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
-                        style: {
-                            width: "250px"
-                        },
-                        label: "비번",
-                        type: "password",
-                        variant: "outlined",
-                        onChange: onChangePassword
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
-                        onClick: sendRequest,
-                        children: "요청"
+                        ]
                     })
                 ]
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Table__WEBPACK_IMPORTED_MODULE_6___default()), {
+            /*#__PURE__*/ (0,jsx_runtime_.jsxs)((Table_default()), {
                 className: "text-left text-sm font-light",
                 children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_7___default()), {
+                    /*#__PURE__*/ jsx_runtime_.jsx((TableHead_default()), {
                         className: "border-b font-medium dark:border-neutral-500",
-                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
+                        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)((TableRow_default()), {
                             style: {
                                 backgroundColor: "#626262"
                             },
                             children: [
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
                                     style: {
                                         maxWidth: 250
                                     },
                                     className: "px-2 py-4",
                                     children: "케릭명"
                                 }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
                                     className: "px-6 py-4",
                                     children: `"해줘"`
                                 }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
                                     className: "px-2 py-4",
                                     style: {
                                         width: 150
@@ -476,8 +643,11 @@ function Page(props) {
                             ]
                         })
                     }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_10___default()), {
-                        children: requestList.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8___default()), {
+                    /*#__PURE__*/ jsx_runtime_.jsx((TableBody_default()), {
+                        children: requestList.map((row)=>{
+                            const created = new Date(row.createdAt).getTime();
+                            const deltaTime = new Date().getTime() - created;
+                            return /*#__PURE__*/ (0,jsx_runtime_.jsxs)((TableRow_default()), {
                                 className: "border-b dark:border-neutral-500",
                                 sx: {
                                     "&:last-child td, &:last-child th": {
@@ -485,7 +655,7 @@ function Page(props) {
                                     }
                                 },
                                 children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
                                         style: {
                                             maxWidth: 250
                                         },
@@ -494,7 +664,7 @@ function Page(props) {
                                         scope: "row",
                                         children: row.requester
                                     }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
                                         style: {
                                             maxHeight: 150,
                                             overflowY: "scroll"
@@ -502,51 +672,57 @@ function Page(props) {
                                         className: "px-6 py-4 ",
                                         component: "th",
                                         scope: "row",
-                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("pre", {
+                                        children: /*#__PURE__*/ jsx_runtime_.jsx("pre", {
                                             style: {
                                                 whiteSpace: "break-spaces"
                                             },
                                             children: row.request
                                         })
                                     }),
-                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
                                         style: {
                                             maxWidth: 250
                                         },
                                         className: "px-2 py-4",
                                         component: "th",
                                         scope: "row",
-                                        children: [
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
-                                                variant: "outlined",
-                                                onClick: ()=>{
-                                                    const text = `@${row.requester} 당신의 해줘:${row.request} 내가 해줌!`;
-                                                    navigator.clipboard.writeText(text).then(function() {
-                                                        alert("복사완료 : " + text);
-                                                    }, function(err) {
-                                                        alert("복사가 안됬어요. 직접연락해주세요.");
-                                                    });
-                                                },
-                                                children: "귓말복사"
-                                            }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
-                                                variant: "outlined",
-                                                onClick: ()=>{
-                                                    const password = prompt("삭제할거에요? 비번적어주세요");
-                                                    if (password !== null) {
-                                                        console.log("row", row);
-                                                        deleteConfirm({
-                                                            ...row,
-                                                            password
+                                        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                            children: [
+                                                /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                                    variant: "outlined",
+                                                    onClick: ()=>{
+                                                        const text = `@${row.requester} 당신의 해줘:${row.request} 내가 해줌!`;
+                                                        navigator.clipboard.writeText(text).then(function() {
+                                                            alert("복사완료 : " + text);
+                                                        }, function(err) {
+                                                            alert("복사가 안됬어요. 직접연락해주세요.");
                                                         });
-                                                    }
-                                                },
-                                                children: "삭제"
-                                            })
-                                        ]
+                                                    },
+                                                    children: "귓말복사"
+                                                }),
+                                                /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                                    variant: "outlined",
+                                                    onClick: ()=>{
+                                                        const password = prompt("삭제할거에요? 비번적어주세요");
+                                                        if (password !== null) {
+                                                            console.log("row", row);
+                                                            deleteConfirm({
+                                                                ...row,
+                                                                password
+                                                            });
+                                                        }
+                                                    },
+                                                    children: "삭제"
+                                                }),
+                                                /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                                                    children: miliduration2date(deltaTime)
+                                                })
+                                            ]
+                                        })
                                     })
                                 ]
-                            }, row._id))
+                            }, row._id);
+                        })
                     })
                 ]
             })
@@ -571,7 +747,7 @@ Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_
 /***/ 17198:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 29757))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 45526))
 
 /***/ }),
 
@@ -604,7 +780,13 @@ const proxy = (0,module_proxy.createProxy)("/home/aa019/dev/kkanbu-ninja/src/app
 const { __esModule, $$typeof } = proxy;
 /* harmony default export */ const list = (proxy.default);
 
+// EXTERNAL MODULE: ./node_modules/next-auth/next/index.js
+var next = __webpack_require__(91071);
+// EXTERNAL MODULE: ./src/app/api/auth/[...nextauth]/route.ts
+var route = __webpack_require__(3223);
 ;// CONCATENATED MODULE: ./src/app/request/page.tsx
+
+
 
 
 
@@ -637,11 +819,14 @@ async function getRequestData() {
 async function Page() {
     const userData = await getUserData();
     const requestData = await getRequestData();
+    const session = await (0,next.getServerSession)(route.authOptions);
+    console.log("session", session);
     return /*#__PURE__*/ jsx_runtime.jsx("main", {
         className: "flex min-h-screen flex-col items-center justify-between p-24",
         children: /*#__PURE__*/ jsx_runtime.jsx(list, {
             userData: userData || [],
-            requestData: requestData || []
+            requestData: requestData || [],
+            session: session
         })
     });
 }
@@ -656,7 +841,7 @@ async function Page() {
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [961,277,503], () => (__webpack_exec__(42843)));
+var __webpack_exports__ = __webpack_require__.X(0, [961,904,700,277,370,223,503], () => (__webpack_exec__(42843)));
 module.exports = __webpack_exports__;
 
 })();

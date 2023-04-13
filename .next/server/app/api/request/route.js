@@ -75,10 +75,45 @@ module.exports = require("next/dist/compiled/raw-body");
 
 /***/ }),
 
+/***/ 39491:
+/***/ ((module) => {
+
+module.exports = require("assert");
+
+/***/ }),
+
+/***/ 14300:
+/***/ ((module) => {
+
+module.exports = require("buffer");
+
+/***/ }),
+
 /***/ 6113:
 /***/ ((module) => {
 
 module.exports = require("crypto");
+
+/***/ }),
+
+/***/ 82361:
+/***/ ((module) => {
+
+module.exports = require("events");
+
+/***/ }),
+
+/***/ 13685:
+/***/ ((module) => {
+
+module.exports = require("http");
+
+/***/ }),
+
+/***/ 95687:
+/***/ ((module) => {
+
+module.exports = require("https");
 
 /***/ }),
 
@@ -93,6 +128,27 @@ module.exports = require("querystring");
 /***/ ((module) => {
 
 module.exports = require("stream");
+
+/***/ }),
+
+/***/ 57310:
+/***/ ((module) => {
+
+module.exports = require("url");
+
+/***/ }),
+
+/***/ 73837:
+/***/ ((module) => {
+
+module.exports = require("util");
+
+/***/ }),
+
+/***/ 59796:
+/***/ ((module) => {
+
+module.exports = require("zlib");
 
 /***/ }),
 
@@ -132,7 +188,13 @@ var next_response = __webpack_require__(83804);
 var external_mongodb_ = __webpack_require__(38013);
 // EXTERNAL MODULE: external "querystring"
 var external_querystring_ = __webpack_require__(63477);
+// EXTERNAL MODULE: ./src/app/api/auth/[...nextauth]/route.ts
+var route = __webpack_require__(3223);
+// EXTERNAL MODULE: ./node_modules/next-auth/next/index.js
+var next = __webpack_require__(91071);
 ;// CONCATENATED MODULE: ./src/app/api/request/route.ts
+
+
 
 
 
@@ -168,6 +230,7 @@ async function POST(request) {
     return next_response/* default.json */.Z.json(obj.insertedId);
 }
 async function DELETE(request, param) {
+    const session = await (0,next.getServerSession)(route.authOptions);
     const query = request.url.split("?")[1];
     if (query) {
         const params = (0,external_querystring_.parse)(query);
@@ -177,7 +240,9 @@ async function DELETE(request, param) {
         const db = client.db(dbName);
         const collection = db.collection("kkanbu_requests");
         const { id , password  } = params;
-        const res = await collection.deleteOne({
+        const res = await collection.deleteOne((session?.kkanbu?.admin) ? {
+            _id: new external_mongodb_.ObjectId(id)
+        } : {
             _id: new external_mongodb_.ObjectId(id),
             password
         });
@@ -245,7 +310,7 @@ var _response = __webpack_require__(66843); //# sourceMappingURL=next-response.j
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [961,616], () => (__webpack_exec__(77119)));
+var __webpack_exports__ = __webpack_require__.X(0, [961,904,601,700,843,223], () => (__webpack_exec__(77119)));
 module.exports = __webpack_exports__;
 
 })();
