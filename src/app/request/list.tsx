@@ -7,12 +7,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import React , { useEffect, useState } from 'react';
-import { ButtonGroup , Button, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import SignButton from '../sign/button'
+import { SessionProvider } from "next-auth/react"
 
 const addRequest = async (objectWithData:any)=>{
     const res = await fetch('/api/request', {
@@ -57,8 +55,20 @@ async function getRequestData() {
     return res.json();
   }
 
+  const miliduration2date = (deltaTime:number)=>{
+    const min = Math.floor(deltaTime/60000)
+    if (min<60){
+      return `${min}분전`
+    }
+    const hour = Math.floor(min/60)
+    if (hour<24){
+      return `${hour}시간전`
+    }
+    const day = Math.floor(hour/24)
+    return `${day}일전`
+  }
 export default function Page(props:any) {
-    const {userData, requestData} = props
+    const {userData, requestData, session} = props
 
     const [requestList, setRequestList] = useState<any>(requestData)
     const [request, setRequest] = useState<string>('')
@@ -78,6 +88,9 @@ export default function Page(props:any) {
         setRequestList(newList)
     }
     const sendRequest = async ()=>{
+        if (!requester || !request){
+            return
+        }
         const id = await addRequest({
             requester,
             request,
@@ -111,6 +124,8 @@ export default function Page(props:any) {
         }
     },[])
   return <TableContainer component={Paper} style={{minWidth:335}}>
+    <SessionProvider session={session}>
+    <SignButton/>
     <div className="search" style={{margin:20}}>
     <Autocomplete
       disablePortal
@@ -127,6 +142,7 @@ export default function Page(props:any) {
     <TextField style={{width:'250px'}} label="비번" type="password" variant="outlined" onChange={onChangePassword} />
     <Button onClick={sendRequest}>요청</Button>
     </div>
+    </SessionProvider>
       <Table className="text-left text-sm font-light">
         <TableHead className="border-b font-medium dark:border-neutral-500">
           <TableRow style={{backgroundColor:'#626262'}}>
@@ -136,8 +152,10 @@ export default function Page(props:any) {
           </TableRow>
         </TableHead>
         <TableBody>
-        {requestList.map((row:any) => (
-            <TableRow
+        {requestList.map((row:any) => {
+          const created = new Date(row.createdAt).getTime()
+          const deltaTime = new Date().getTime() - created
+            return <TableRow
             className="border-b dark:border-neutral-500"
               key={row._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -149,6 +167,7 @@ export default function Page(props:any) {
                 <pre style={{whiteSpace: 'break-spaces'}}>{row.request}</pre>
               </TableCell>
               <TableCell  style={{maxWidth: 250}} className="px-2 py-4" component="th" scope="row">
+                  <div>
                     <Button variant="outlined" onClick={()=>{
                         const text = `@${row.requester} 당신의 해줘:${row.request} 내가 해줌!`
                         navigator.clipboard.writeText(text).then(function() {
@@ -165,9 +184,11 @@ export default function Page(props:any) {
                             deleteConfirm({...row, password})
                         }                        
                     }}>삭제</Button>
+                    <div>{miliduration2date(deltaTime)}</div>
+                  </div>
               </TableCell>
             </TableRow>
-        ))}
+})}
         </TableBody>
       </Table>
     </TableContainer>

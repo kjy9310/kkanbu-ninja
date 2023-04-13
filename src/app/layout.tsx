@@ -6,17 +6,17 @@ export const metadata = {
 }
 
 export default function RootLayout({
-  children,
+  children, params
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  params: any
 }) {
   return (
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <body>
-    
       <h2 style={{fontSize:50, marginBottom:10, textAlign: 'center',color:'white'}}>깐부 Ha<span style={{fontSize: 38,letterSpacing: '-0.14em'}}>nin</span>{' '}ja</h2>
-      <div style={{padding: '0 0 10px'}}>
+      <div style={{padding: '0 0 10px', textAlign: 'center'}}>
         <a className="topButton"  style={{    backgroundColor: '#b34afb',
         }} target='_blank' href="https://www.twitch.tv/ham_90">twitch</a>
         <a className="topButton" style={{    backgroundColor: '#fb4ab0',
