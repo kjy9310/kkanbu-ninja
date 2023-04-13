@@ -20,12 +20,13 @@ export const authOptions: NextAuthOptions = {
       const db = client.db(dbName);
       const collection = db.collection('kkanbu');
       const kkanbuInfo = await collection.findOne({twitch:session.user.name})
+      client.close()
       if (kkanbuInfo){
         session.token = token.token
         session.kkanbu = kkanbuInfo
       return session // The return type will match the one returned in `useSession()`
       }
-        return null
+      return null
     },
   },
 };
