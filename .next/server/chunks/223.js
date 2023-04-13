@@ -40,6 +40,7 @@ const authOptions = {
             const kkanbuInfo = await collection.findOne({
                 twitch: session.user.name
             });
+            client.close();
             if (kkanbuInfo) {
                 session.token = token.token;
                 session.kkanbu = kkanbuInfo;
