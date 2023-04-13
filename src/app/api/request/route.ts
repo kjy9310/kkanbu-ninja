@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MongoClient, ObjectId } from 'mongodb';
 import { parse } from 'querystring';
+import { authOptions } from '../auth/[...nextauth]/route'
+import { getServerSession } from "next-auth/next"
 
 export const revalidate = 1
 
@@ -29,6 +31,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest, param:any) {
+    const session:any = await getServerSession(authOptions)
+    
     const query = request.url.split('?')[1]
     if (query){
         const params = parse(query)
@@ -39,7 +43,11 @@ export async function DELETE(request: NextRequest, param:any) {
         const db = client.db(dbName);
         const collection = db.collection('kkanbu_requests');
         const {id, password} = params
-        const res = await collection.deleteOne({_id:new ObjectId(id as string), password})
+        const res = await collection.deleteOne(
+            (session?.kkanbu?.admin)?
+            {_id:new ObjectId(id as string)}
+            :{_id:new ObjectId(id as string), password}
+        )
         
         client.close()
         if (res.deletedCount===1){
