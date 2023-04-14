@@ -1,5 +1,6 @@
 
-
+const POEHOST = 'https://poe.game.daum.net/'
+// const POEHOST = 'https://www.pathofexile.com/'
 
 const fetchingItemData = async () => {
     const { MongoClient } = require('mongodb');
@@ -38,10 +39,10 @@ const user = db.collection('kkanbu_users');
         const updatedSince = itemDatum?new Date().getTime() - new Date(itemDatum.createdAt).getTime():1
         const isOverTheLimit = itemDatum? updatedSince/1000/60 > updateHourLimit : true
 
-        if(isOverTheLimit){
+        if(!itemDatum.isDead && isOverTheLimit){
             let items = []
             try{
-                const res = await fetch(`https://www.pathofexile.com/character-window/get-items?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`, {
+                const res = await fetch(`${POEHOST}character-window/get-items?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -73,7 +74,7 @@ const user = db.collection('kkanbu_users');
             // get info
             const allGems = getGemFromItems(items)
             const allUniques = getUniqueFromItems(items)
-            const {has5Link, has6Link} = getLinkedItemFromItems(items)
+            const {has5Link, has6Link, mainSkills} = getLinkedItemFromItems(items)
             
             const charItems = {
                 id: user.id,
@@ -81,7 +82,9 @@ const user = db.collection('kkanbu_users');
                 allUniques,
                 has5Link,
                 has6Link,
-                createdAt: new Date()
+                mainSkills,
+                createdAt: new Date(),
+                isDead:user.dead
             }
             
             item.deleteOne({id:user.id})
@@ -101,8 +104,9 @@ const user = db.collection('kkanbu_users');
 fetchingItemData()
 
 const getGemFromItems = (items:any) =>{
+    // frameType:4
     return items.reduce((acc: any, item:any)=>{
-        const gemList = item.socketedItems?.map((gem:any)=>gem.baseType) || []
+        const gemList = item.socketedItems?.filter((gem:any)=>gem.frameType===4).map((gem:any)=>gem.baseType) || []
         return [...acc,...gemList]
       },[])
 }
@@ -117,9 +121,9 @@ const getUniqueFromItems = (items:any) =>{
       },[])
 }
 
-const getLinkedItemFromItems = (items:any):{has5Link:boolean, has6Link:boolean} => {
+const getLinkedItemFromItems = (items:any):{has5Link:boolean, has6Link:boolean,mainSkills:any[]} => {
     //sockets group 0 or 1
-    return items.reduce((acc: {has5Link:boolean, has6Link:boolean}, item:any)=>{
+    return items.reduce((acc: {has5Link:boolean, has6Link:boolean, mainSkills:any[]}, item:any)=>{
         const is56Link = item.sockets?.reduce(
             (acc:{group0Count:number; group1Count:number}, socket:{group:number; attr:string, sColour:string})=>{
                 if (socket.group===0){
@@ -130,10 +134,18 @@ const getLinkedItemFromItems = (items:any):{has5Link:boolean, has6Link:boolean} 
                 return acc
             },{group0Count:0, group1Count:0})||{}
         const has5Link = (is56Link.group0Count===5||is56Link.group1Count===5)
-        const has6Link = (is56Link.group0Count===6||is56Link.group1Count===6)
+        const has6Link = (is56Link.group0Count===6)
+        if (is56Link.group0Count===5){
+            acc.mainSkills = [...acc.mainSkills,...item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false && gem.socket<5)]
+        } else if (is56Link.group1Count===5){
+            acc.mainSkills = [...acc.mainSkills,...item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false && gem.socket>0)]
+        } else if (is56Link.group0Count===6){
+            acc.mainSkills = [...acc.mainSkills, ...item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false)]
+        }
         return {
             has5Link: acc.has5Link|| has5Link,
-            has6Link: acc.has6Link|| has6Link
+            has6Link: acc.has6Link|| has6Link,
+            mainSkills: acc.mainSkills
         }
-      },{has5Link:false, has6Link:false})
+      },{has5Link:false, has6Link:false, mainSkills:[]})
 }
