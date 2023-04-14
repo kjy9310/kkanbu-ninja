@@ -182,7 +182,7 @@ export default function Page(props:any) {
       </ButtonGroup>
       </div>
       <div className='classes'>{Object.keys(CLASS).map(className=>{
-        return <div onClick={()=>setClass(filterClass===className?'':className)} style={{border:filterClass===className?'3px solid #50dd33':'none'}} className='classBox'>
+        return <div key={`search-${className}`} onClick={()=>setClass(filterClass===className?'':className)} style={{border:filterClass===className?'3px solid #50dd33':'none'}} className='classBox'>
           <img src={CLASS[className]} />
         </div>
       })}</div>

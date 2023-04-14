@@ -296,12 +296,43 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const POEHOST = "https://poe.game.daum.net/";
+// const POEHOST = 'https://www.pathofexile.com/'
+const CLASS = {
+    Marauder: "https://i.imgur.com/UWvvGKZ.png",
+    Duelist: "https://i.imgur.com/c8vB7OX.png",
+    Ranger: "https://i.imgur.com/qtdp8Jh.png",
+    Shadow: "https://i.imgur.com/nWahbNR.png",
+    Witch: "https://i.imgur.com/XSqMHh9.png",
+    Templar: "https://i.imgur.com/i53a1id.png",
+    Scion: "https://i.imgur.com/9IfOWoN.png",
+    Juggernaut: "https://i.imgur.com/QFubXr4.png",
+    Berserker: "https://i.imgur.com/l2vDx4j.png",
+    Chieftain: "https://i.imgur.com/WSkz5xh.png",
+    Slayer: "https://i.imgur.com/UMAd0yL.png",
+    Gladiator: "https://i.imgur.com/F3FQxV4.png",
+    Champion: "https://i.imgur.com/ltGrJ1K.png",
+    Deadeye: "https://i.imgur.com/NCybIiO.png",
+    Raider: "https://i.imgur.com/oFwpUJO.png",
+    Pathfinder: "https://i.imgur.com/EVg7lhR.png",
+    Assassin: "https://i.imgur.com/0tURSJ4.png",
+    Saboteur: "https://i.imgur.com/7dNJPM4.png",
+    Trickster: "https://i.imgur.com/n8jtbfr.png",
+    Necromancer: "https://i.imgur.com/k1debpx.png",
+    Occultist: "https://i.imgur.com/BGrQsx5.png",
+    Elementalist: "https://i.imgur.com/G5fSIS8.png",
+    Inquisitor: "https://i.imgur.com/PyzEPzP.png",
+    Hierophant: "https://i.imgur.com/8iu1k86.png",
+    Guardian: "https://i.imgur.com/sHiE02Y.png",
+    Ascendant: "https://i.imgur.com/Th9qGrm.png"
+};
 function Page(props) {
     const { userData  } = props;
     const [original, setOriginal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(userData);
     const [filtered, setFilter] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(userData);
     const [gemList, setGemList] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
     const [uniqueList, setUniqueList] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [filterClass, setClass] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [filterName, setName] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [filterLink, setLink] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [filterGem, setGem] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
@@ -341,7 +372,7 @@ function Page(props) {
         setName(e.target.value || "");
     };
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        if (filterName === "" && (filterGem === "" || filterGem === null) && filterDeath === "all" && filterUnique === "" && filterLink === "") {
+        if (filterName === "" && (filterGem === "" || filterGem === null) && filterDeath === "all" && filterUnique === "" && filterLink === "" && filterClass === "") {
             setFilter(original);
             return;
         } else {
@@ -349,9 +380,10 @@ function Page(props) {
                 const gemCheck = filterGem ? user.items?.allGems?.findIndex((gem)=>gem === filterGem) > -1 : true;
                 const uniqueCheck = filterUnique ? user.items?.allUniques?.findIndex((unique)=>unique === filterUnique) > -1 : true;
                 const deathCheck = filterDeath === "all" ? true : filterDeath === "dead" ? user.dead : !user.dead;
+                const classCheck = filterClass ? filterClass === user.class : true;
                 const nameCheck = filterName ? user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName) : true;
                 const linkCheck = filterLink ? filterLink === "6" ? user.items?.has6Link : filterLink === "5" ? user.items?.has5Link : filterLink === "4" ? user.items?.has6Link === false && user.items?.has5Link === false : false : true;
-                return Boolean(gemCheck && nameCheck && deathCheck && uniqueCheck && linkCheck);
+                return Boolean(gemCheck && nameCheck && deathCheck && uniqueCheck && linkCheck && classCheck);
             }).sort((a, b)=>{
                 return a.rank - b.rank;
             });
@@ -362,7 +394,8 @@ function Page(props) {
         filterName,
         filterDeath,
         filterUnique,
-        filterLink
+        filterLink,
+        filterClass
     ]);
     const handleChange = (event)=>{
         setLink(event.target.value);
@@ -380,6 +413,9 @@ function Page(props) {
                 },
                 children: [
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.TextField, {
+                        style: {
+                            minWidth: 150
+                        },
                         id: "outlined-basic",
                         label: "검색",
                         variant: "outlined",
@@ -427,7 +463,7 @@ function Page(props) {
                     }),
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_6___default()), {
                         style: {
-                            width: 150
+                            minWidth: 150
                         },
                         children: [
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_7___default()), {
@@ -489,6 +525,21 @@ function Page(props) {
                         ]
                     })
                 ]
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "classes",
+                children: Object.keys(CLASS).map((className)=>{
+                    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        onClick: ()=>setClass(filterClass === className ? "" : className),
+                        style: {
+                            border: filterClass === className ? "3px solid #50dd33" : "none"
+                        },
+                        className: "classBox",
+                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                            src: CLASS[className]
+                        })
+                    }, `search-${className}`);
+                })
             }),
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Table__WEBPACK_IMPORTED_MODULE_10___default()) //aria-label="simple table" 
             , {
@@ -633,7 +684,7 @@ function Page(props) {
                                                 borderRadius: 5
                                             },
                                             target: "_blank",
-                                            href: `https://www.pathofexile.com/account/view-profile/${row.account}/characters?characterName=${row.name}`,
+                                            href: `${POEHOST}account/view-profile/${row.account}/characters?characterName=${row.name}`,
                                             children: "POE"
                                         })
                                     })
