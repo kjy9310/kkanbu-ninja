@@ -31,7 +31,6 @@ export default async function Page() {
     const userData = await getUserData()
     const requestData = await getRequestData()
     const session = await getServerSession(authOptions)
-    console.log('session', session)
     return <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <RequestList userData={userData||[]} requestData={requestData||[]} session={session}/>
   </main>

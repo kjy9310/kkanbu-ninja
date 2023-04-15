@@ -15,6 +15,8 @@ export default function RootLayout({
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <body>
+      <div className='background'></div>
+        <div style={{position:'sticky'}}>
       <h2 style={{fontSize:50, marginBottom:10, textAlign: 'center',color:'white'}}>깐부 Ha<span style={{fontSize: 38,letterSpacing: '-0.14em'}}>nin</span>{' '}ja</h2>
       <div style={{padding: '0 0 10px', textAlign: 'center'}}>
         <a className="topButton"  style={{    backgroundColor: '#b34afb',
@@ -27,6 +29,7 @@ export default function RootLayout({
         <a className="topButton"  style={{    backgroundColor: '#3c0c9b'}} href="/request">{`"해줘"판`}</a>
       </div>
         {children}
+        </div>
       </body>
     </html>
   )
