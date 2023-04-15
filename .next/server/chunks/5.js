@@ -48,78 +48,88 @@ function RootLayout({ children , params  }) {
             }),
             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("body", {
                 children: [
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
-                        style: {
-                            fontSize: 50,
-                            marginBottom: 10,
-                            textAlign: "center",
-                            color: "white"
-                        },
-                        children: [
-                            "깐부 Ha",
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                style: {
-                                    fontSize: 38,
-                                    letterSpacing: "-0.14em"
-                                },
-                                children: "nin"
-                            }),
-                            " ",
-                            "ja"
-                        ]
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "background"
                     }),
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                         style: {
-                            padding: "0 0 10px",
-                            textAlign: "center"
+                            position: "sticky"
                         },
                         children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                className: "topButton",
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
                                 style: {
-                                    backgroundColor: "#b34afb"
+                                    fontSize: 50,
+                                    marginBottom: 10,
+                                    textAlign: "center",
+                                    color: "white"
                                 },
-                                target: "_blank",
-                                href: "https://www.twitch.tv/ham_90",
-                                children: "twitch"
+                                children: [
+                                    "깐부 Ha",
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                        style: {
+                                            fontSize: 38,
+                                            letterSpacing: "-0.14em"
+                                        },
+                                        children: "nin"
+                                    }),
+                                    " ",
+                                    "ja"
+                                ]
                             }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                className: "topButton",
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                 style: {
-                                    backgroundColor: "#fb4ab0"
+                                    padding: "0 0 10px",
+                                    textAlign: "center"
                                 },
-                                target: "_blank",
-                                href: "https://tgd.kr/s/ham_90/",
-                                children: "햄게더"
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                        className: "topButton",
+                                        style: {
+                                            backgroundColor: "#b34afb"
+                                        },
+                                        target: "_blank",
+                                        href: "https://www.twitch.tv/ham_90",
+                                        children: "twitch"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                        className: "topButton",
+                                        style: {
+                                            backgroundColor: "#fb4ab0"
+                                        },
+                                        target: "_blank",
+                                        href: "https://tgd.kr/s/ham_90/",
+                                        children: "햄게더"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                        className: "topButton",
+                                        style: {
+                                            backgroundColor: "#626262"
+                                        },
+                                        target: "_blank",
+                                        href: "https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347",
+                                        children: "깐부시트"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                        className: "topButton",
+                                        style: {
+                                            backgroundColor: "#621462"
+                                        },
+                                        href: "/",
+                                        children: "깐부build"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                        className: "topButton",
+                                        style: {
+                                            backgroundColor: "#3c0c9b"
+                                        },
+                                        href: "/request",
+                                        children: `"해줘"판`
+                                    })
+                                ]
                             }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                className: "topButton",
-                                style: {
-                                    backgroundColor: "#626262"
-                                },
-                                target: "_blank",
-                                href: "https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347",
-                                children: "깐부시트"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                className: "topButton",
-                                style: {
-                                    backgroundColor: "#621462"
-                                },
-                                href: "/",
-                                children: "깐부build"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                className: "topButton",
-                                style: {
-                                    backgroundColor: "#3c0c9b"
-                                },
-                                href: "/request",
-                                children: `"해줘"판`
-                            })
+                            children
                         ]
-                    }),
-                    children
+                    })
                 ]
             })
         ]

@@ -809,7 +809,6 @@ async function Page() {
     const userData = await getUserData();
     const requestData = await getRequestData();
     const session = await (0,next.getServerSession)(route.authOptions);
-    console.log("session", session);
     return /*#__PURE__*/ jsx_runtime.jsx("main", {
         className: "flex min-h-screen flex-col items-center justify-between p-24",
         children: /*#__PURE__*/ jsx_runtime.jsx(list, {
