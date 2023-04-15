@@ -7,7 +7,7 @@ const fetchingItemData = async () => {
 const dotenv = require('dotenv');
 dotenv.config();
 
-const updateHourLimit =240 //4hour
+const updateHourLimit = 12*60 //12hour
 
 // Connection URL
 const client = new MongoClient(process.env.mongodb||'no db env');
@@ -39,7 +39,7 @@ const user = db.collection('kkanbu_users');
         const updatedSince = itemDatum?new Date().getTime() - new Date(itemDatum.createdAt).getTime():1
         const isOverTheLimit = itemDatum? updatedSince/1000/60 > updateHourLimit : true
 
-        if(!itemDatum.isDead && isOverTheLimit){
+        if(!itemDatum?.isDead && isOverTheLimit){
             let items = []
             try{
                 const res = await fetch(`${POEHOST}character-window/get-items?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`, {
