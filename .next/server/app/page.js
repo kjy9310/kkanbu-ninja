@@ -354,6 +354,57 @@ function Page(props) {
     const [filterUnique, setUnique] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [filterUniqueInput, setUniqueInput] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [filterDeath, setDeath] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("all");
+    const downloadCsv = function(data) {
+        const blob = new Blob([
+            data
+        ], {
+            type: "text/csv"
+        });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.setAttribute("href", url);
+        a.setAttribute("download", "download.csv");
+        a.click();
+    };
+    const csvheader = [
+        "rank",
+        "level",
+        "dead",
+        "name",
+        "class",
+        "challenges",
+        "account",
+        "experience",
+        "has5Link",
+        "has6Link",
+        "mainSkills",
+        "allGems"
+    ];
+    const getCsv = ()=>{
+        const header = csvheader.join();
+        const commaSeperated = userData.slice(0, 4).map((row)=>{
+            const targets = csvheader.map((key)=>{
+                if (key === "challenges") {
+                    return row[key].completed;
+                } else if (key === "has5Link") {
+                    return row.items?.has5Link;
+                } else if (key === "has6Link") {
+                    return row.items?.has6Link;
+                } else if (key === "mainSkills") {
+                    return row.items?.mainSkills.map((gem)=>gem.baseType).join("|");
+                } else if (key === "allGems") {
+                    return row.items?.allGems.join("|");
+                }
+                return row[key];
+            });
+            const csvRow = targets.join();
+            return csvRow;
+        });
+        downloadCsv([
+            header,
+            ...commaSeperated
+        ].join("\n"));
+    };
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         (async ()=>{
             setOriginal(userData);
@@ -387,10 +438,10 @@ function Page(props) {
     };
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         if (filterName === "" && (filterGem === "" || filterGem === null) && filterDeath === "all" && filterUnique === "" && filterLink === "" && filterClass === "") {
-            setFilter(original);
+            setFilter(userData);
             return;
         } else {
-            const newFiltered = original.filter((user)=>{
+            const newFiltered = userData.filter((user)=>{
                 const gemCheck = filterGem ? user.items?.allGems?.findIndex((gem)=>gem === filterGem) > -1 : true;
                 const uniqueCheck = filterUnique ? user.items?.allUniques?.findIndex((unique)=>unique === filterUnique) > -1 : true;
                 const deathCheck = filterDeath === "all" ? true : filterDeath === "dead" ? user.dead : !user.dead;
@@ -539,6 +590,12 @@ function Page(props) {
                                     children: "살음"
                                 })
                             ]
+                        }),
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
+                            color: "primary",
+                            variant: "contained",
+                            onClick: getCsv,
+                            children: "CSV"
                         })
                     ]
                 }),
@@ -623,7 +680,7 @@ function Page(props) {
                                     children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13___default()), {
                                         className: "rankRow",
                                         style: {
-                                            fontSize: "1rem",
+                                            fontSize: "1rem !important",
                                             width: "80%",
                                             margin: "0 auto"
                                         },
@@ -659,17 +716,6 @@ function Page(props) {
     });
 }
 
-
-/***/ }),
-
-/***/ 46001:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 67144, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 65110, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 77914, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 23682, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 31390, 23))
 
 /***/ }),
 
@@ -746,7 +792,7 @@ async function Page() {
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [961,277,503], () => (__webpack_exec__(55296)));
+var __webpack_exports__ = __webpack_require__.X(0, [961,277,5], () => (__webpack_exec__(55296)));
 module.exports = __webpack_exports__;
 
 })();
