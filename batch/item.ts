@@ -62,6 +62,12 @@ const user = db.collection('kkanbu_users');
                     const state = res.headers.get('x-rate-limit-ip-state')
                      
                     console.log('retryDelay : ', retryDelay, 'state - ',state )
+                    if (parseInt(retryDelay||'')>=600){
+                        console.log('retryDelay over 600 stop for now ', new Date() )
+                        const delta = new Date().getTime() - startTime
+                        console.log('delta time : ', delta)
+                        process.exit(0)
+                    }
                     await new Promise(r=>setTimeout(()=>r(null),parseInt(retryDelay||'10')*1000))
                 } else if (res.status !==404 && res.status !== 403){
                     throw res
