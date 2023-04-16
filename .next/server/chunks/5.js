@@ -61,7 +61,7 @@ function RootLayout({ children , params  }) {
                                     fontSize: 50,
                                     marginBottom: 10,
                                     textAlign: "center",
-                                    color: "white"
+                                    color: "#ff9cea"
                                 },
                                 children: [
                                     "깐부 Ha",

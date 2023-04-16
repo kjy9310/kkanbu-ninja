@@ -425,6 +425,10 @@ function SignButton() {
     });
 }
 
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/styles/index.js
+var styles = __webpack_require__(22166);
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/colors/index.js
+var colors = __webpack_require__(83036);
 ;// CONCATENATED MODULE: ./src/app/request/list.tsx
 
 
@@ -439,6 +443,18 @@ function SignButton() {
 
 
 
+
+
+const theme = (0,styles.createTheme)({
+    palette: {
+        primary: {
+            main: colors.pink[300]
+        },
+        secondary: {
+            main: colors.purple[500]
+        }
+    }
+});
 const addRequest = async (objectWithData)=>{
     const res = await fetch("/api/request", {
         method: "POST",
@@ -552,181 +568,192 @@ function Page(props) {
             clearInterval(interval);
         };
     }, []);
-    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)((TableContainer_default()), {
-        component: (Paper_default()),
-        style: {
-            minWidth: 335
-        },
-        children: [
-            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react.SessionProvider, {
-                session: session,
-                children: [
-                    /*#__PURE__*/ jsx_runtime_.jsx(SignButton, {}),
-                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                        className: "search",
-                        style: {
-                            margin: 20
-                        },
-                        children: [
-                            /*#__PURE__*/ jsx_runtime_.jsx((Autocomplete_default()), {
-                                disablePortal: true,
-                                id: "combo-box-gem",
-                                options: userNames,
-                                sx: {
-                                    width: 300
-                                },
-                                value: requester,
-                                onChange: (event, newValue)=>{
-                                    setRequester(newValue || "");
-                                },
-                                renderInput: (params)=>/*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                        ...params,
-                                        label: "케릭명"
-                                    })
-                            }),
-                            /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                style: {
-                                    width: "100%"
-                                },
-                                multiline: true,
-                                maxRows: "3",
-                                label: "해줘내용",
-                                variant: "outlined",
-                                value: request,
-                                onChange: onChangeRequest
-                            }),
-                            /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                style: {
-                                    width: "250px"
-                                },
-                                label: "비번",
-                                type: "password",
-                                variant: "outlined",
-                                onChange: onChangePassword
-                            }),
-                            /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
-                                onClick: sendRequest,
-                                children: "요청"
-                            })
-                        ]
-                    })
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime_.jsxs)((Table_default()), {
-                className: "text-left text-sm font-light",
-                children: [
-                    /*#__PURE__*/ jsx_runtime_.jsx((TableHead_default()), {
-                        className: "border-b font-medium dark:border-neutral-500",
-                        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)((TableRow_default()), {
+    return /*#__PURE__*/ jsx_runtime_.jsx(styles.ThemeProvider, {
+        theme: theme,
+        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)((TableContainer_default()), {
+            component: (Paper_default()),
+            className: "listContent",
+            children: [
+                /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react.SessionProvider, {
+                    session: session,
+                    children: [
+                        /*#__PURE__*/ jsx_runtime_.jsx(SignButton, {}),
+                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                            className: "search",
                             style: {
-                                backgroundColor: "#626262"
+                                margin: 20
                             },
                             children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
-                                    style: {
-                                        maxWidth: 250
+                                /*#__PURE__*/ jsx_runtime_.jsx((Autocomplete_default()), {
+                                    disablePortal: true,
+                                    id: "combo-box-gem",
+                                    options: userNames,
+                                    sx: {
+                                        width: 300
                                     },
-                                    className: "px-2 py-4",
-                                    children: "케릭명"
-                                }),
-                                /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
-                                    className: "px-6 py-4",
-                                    children: `"해줘"`
-                                }),
-                                /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
-                                    className: "px-2 py-4",
-                                    style: {
-                                        width: 150
+                                    value: requester,
+                                    onChange: (event, newValue)=>{
+                                        setRequester(newValue || "");
                                     },
-                                    children: "버튼"
+                                    renderInput: (params)=>/*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                            ...params,
+                                            label: "케릭명"
+                                        })
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                    style: {
+                                        width: "100%"
+                                    },
+                                    multiline: true,
+                                    maxRows: "3",
+                                    label: "해줘내용",
+                                    variant: "outlined",
+                                    value: request,
+                                    onChange: onChangeRequest
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                    style: {
+                                        width: "250px"
+                                    },
+                                    label: "비번",
+                                    type: "password",
+                                    variant: "outlined",
+                                    onChange: onChangePassword
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                    variant: "contained",
+                                    onClick: sendRequest,
+                                    children: "요청"
                                 })
                             ]
                         })
-                    }),
-                    /*#__PURE__*/ jsx_runtime_.jsx((TableBody_default()), {
-                        children: requestList.map((row)=>{
-                            const created = new Date(row.createdAt).getTime();
-                            const deltaTime = new Date().getTime() - created;
-                            return /*#__PURE__*/ (0,jsx_runtime_.jsxs)((TableRow_default()), {
-                                className: "border-b dark:border-neutral-500",
-                                sx: {
-                                    "&:last-child td, &:last-child th": {
-                                        border: 0
-                                    }
+                    ]
+                }),
+                /*#__PURE__*/ (0,jsx_runtime_.jsxs)((Table_default()), {
+                    className: "text-left text-sm font-light",
+                    children: [
+                        /*#__PURE__*/ jsx_runtime_.jsx((TableHead_default()), {
+                            className: "border-b font-medium dark:border-neutral-500",
+                            children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)((TableRow_default()), {
+                                style: {
+                                    backgroundColor: "#999999b5",
+                                    borderRadius: 10
                                 },
                                 children: [
                                     /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
                                         style: {
                                             maxWidth: 250
                                         },
-                                        className: "px-2 py-2",
-                                        component: "th",
-                                        scope: "row",
-                                        children: row.requester
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
-                                        style: {
-                                            maxHeight: 150,
-                                            overflowY: "scroll"
-                                        },
-                                        className: "px-6 py-4 ",
-                                        component: "th",
-                                        scope: "row",
-                                        children: /*#__PURE__*/ jsx_runtime_.jsx("pre", {
-                                            style: {
-                                                whiteSpace: "break-spaces"
-                                            },
-                                            children: row.request
-                                        })
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
-                                        style: {
-                                            maxWidth: 250
-                                        },
                                         className: "px-2 py-4",
-                                        component: "th",
-                                        scope: "row",
-                                        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                            children: [
-                                                /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
-                                                    variant: "outlined",
-                                                    onClick: ()=>{
-                                                        const text = `@${row.requester} 당신의 해줘:${row.request} 내가 해줌!`;
-                                                        navigator.clipboard.writeText(text).then(function() {
-                                                            alert("복사완료 : " + text);
-                                                        }, function(err) {
-                                                            alert("복사가 안됬어요. 직접연락해주세요.");
-                                                        });
-                                                    },
-                                                    children: "귓말복사"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
-                                                    variant: "outlined",
-                                                    onClick: ()=>{
-                                                        const password = prompt("삭제할거에요? 비번적어주세요");
-                                                        if (password !== null) {
-                                                            console.log("row", row);
-                                                            deleteConfirm({
-                                                                ...row,
-                                                                password
-                                                            });
-                                                        }
-                                                    },
-                                                    children: "삭제"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                                    children: miliduration2date(deltaTime)
-                                                })
-                                            ]
-                                        })
+                                        children: "케릭명"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
+                                        className: "px-6 py-4",
+                                        children: `"해줘"`
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
+                                        className: "px-2 py-4",
+                                        style: {
+                                            width: 150
+                                        },
+                                        children: "버튼"
                                     })
                                 ]
-                            }, row._id);
+                            })
+                        }),
+                        /*#__PURE__*/ jsx_runtime_.jsx((TableBody_default()), {
+                            children: requestList.map((row)=>{
+                                const created = new Date(row.createdAt).getTime();
+                                const deltaTime = new Date().getTime() - created;
+                                return /*#__PURE__*/ (0,jsx_runtime_.jsxs)((TableRow_default()), {
+                                    style: {
+                                        backgroundColor: "#000000b3"
+                                    },
+                                    className: "border-b dark:border-neutral-500",
+                                    sx: {
+                                        "&:last-child td, &:last-child th": {
+                                            border: 0
+                                        }
+                                    },
+                                    children: [
+                                        /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
+                                            style: {
+                                                color: "white",
+                                                maxWidth: 250
+                                            },
+                                            className: "px-2 py-2",
+                                            component: "th",
+                                            scope: "row",
+                                            children: row.requester
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
+                                            style: {
+                                                color: "white",
+                                                maxHeight: 150,
+                                                overflowY: "scroll"
+                                            },
+                                            className: "px-6 py-4 ",
+                                            component: "th",
+                                            scope: "row",
+                                            children: /*#__PURE__*/ jsx_runtime_.jsx("pre", {
+                                                style: {
+                                                    whiteSpace: "break-spaces"
+                                                },
+                                                children: row.request
+                                            })
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx((TableCell_default()), {
+                                            style: {
+                                                maxWidth: 250
+                                            },
+                                            className: "px-2 py-4",
+                                            component: "th",
+                                            scope: "row",
+                                            children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                                children: [
+                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                                        variant: "outlined",
+                                                        onClick: ()=>{
+                                                            const text = `@${row.requester} 당신의 해줘:${row.request} 내가 해줌!`;
+                                                            navigator.clipboard.writeText(text).then(function() {
+                                                                alert("복사완료 : " + text);
+                                                            }, function(err) {
+                                                                alert("복사가 안됬어요. 직접연락해주세요.");
+                                                            });
+                                                        },
+                                                        children: "귓말복사"
+                                                    }),
+                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                                        variant: "outlined",
+                                                        onClick: ()=>{
+                                                            const password = prompt("삭제할거에요? 비번적어주세요");
+                                                            if (password !== null) {
+                                                                console.log("row", row);
+                                                                deleteConfirm({
+                                                                    ...row,
+                                                                    password
+                                                                });
+                                                            }
+                                                        },
+                                                        children: "삭제"
+                                                    }),
+                                                    /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                                                        style: {
+                                                            color: "white"
+                                                        },
+                                                        children: miliduration2date(deltaTime)
+                                                    })
+                                                ]
+                                            })
+                                        })
+                                    ]
+                                }, row._id);
+                            })
                         })
-                    })
-                ]
-            })
-        ]
+                    ]
+                })
+            ]
+        })
     });
 }
 

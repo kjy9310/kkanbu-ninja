@@ -253,34 +253,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(56786);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _mui_material_Table__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(20390);
-/* harmony import */ var _mui_material_Table__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Table__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _mui_material_TableBody__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(43606);
-/* harmony import */ var _mui_material_TableBody__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(40514);
-/* harmony import */ var _mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20475);
-/* harmony import */ var _mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _mui_material_TableHead__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(30092);
-/* harmony import */ var _mui_material_TableHead__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _mui_material_TableRow__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(93761);
-/* harmony import */ var _mui_material_TableRow__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _mui_material_Paper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(27561);
-/* harmony import */ var _mui_material_Paper__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Paper__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(20475);
+/* harmony import */ var _mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mui_material_Paper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(27561);
+/* harmony import */ var _mui_material_Paper__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Paper__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18038);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(64085);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_mui_material__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(90039);
-/* harmony import */ var _mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(40575);
-/* harmony import */ var _mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(62360);
-/* harmony import */ var _mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _mui_material_FormControl__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(80428);
-/* harmony import */ var _mui_material_FormControl__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _mui_material_Select__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(79006);
-/* harmony import */ var _mui_material_Select__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Select__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(64085);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mui_material__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(90039);
+/* harmony import */ var _mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(40575);
+/* harmony import */ var _mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(62360);
+/* harmony import */ var _mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _mui_material_FormControl__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(80428);
+/* harmony import */ var _mui_material_FormControl__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _mui_material_Select__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(79006);
+/* harmony import */ var _mui_material_Select__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Select__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22166);
+/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mui_material_styles__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mui_material_Accordion__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(80760);
+/* harmony import */ var _mui_material_Accordion__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Accordion__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _mui_material_AccordionSummary__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(15351);
+/* harmony import */ var _mui_material_AccordionSummary__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_mui_material_AccordionSummary__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _mui_material_AccordionDetails__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(20810);
+/* harmony import */ var _mui_material_AccordionDetails__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_mui_material_AccordionDetails__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(43360);
+/* harmony import */ var _mui_material_Typography__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(56020);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_14__);
 
 
 
@@ -296,6 +298,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+const theme = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_2__.createTheme)({
+    palette: {
+        primary: {
+            main: "#133d62"
+        },
+        secondary: {
+            // main: purple[500],
+            main: "#133d62"
+        }
+    }
+});
 const POEHOST = "https://poe.game.daum.net/";
 // const POEHOST = 'https://www.pathofexile.com/'
 const CLASS = {
@@ -400,300 +414,248 @@ function Page(props) {
     const handleChange = (event)=>{
         setLink(event.target.value);
     };
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_2___default()), {
-        component: (_mui_material_Paper__WEBPACK_IMPORTED_MODULE_3___default()),
-        style: {
-            minWidth: 335
-        },
-        children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "search",
-                style: {
-                    margin: 20
-                },
-                children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.TextField, {
-                        style: {
-                            minWidth: 150
-                        },
-                        id: "outlined-basic",
-                        label: "검색",
-                        variant: "outlined",
-                        onChange: findName
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_5___default()), {
-                        disablePortal: true,
-                        id: "combo-box-gem",
-                        options: gemList,
-                        sx: {
-                            width: 300
-                        },
-                        value: filterGem,
-                        onChange: (event, newValue)=>{
-                            setGem(newValue || "");
-                        },
-                        inputValue: filterGemInput,
-                        onInputChange: (event, newInputValue)=>{
-                            setGemInput(newInputValue);
-                        },
-                        renderInput: (params)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.TextField, {
-                                ...params,
-                                label: "쩸"
-                            })
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_5___default()), {
-                        disablePortal: true,
-                        id: "combo-box-unique",
-                        options: uniqueList,
-                        sx: {
-                            width: 300
-                        },
-                        value: filterUnique,
-                        onChange: (event, newValue)=>{
-                            setUnique(newValue || "");
-                        },
-                        inputValue: filterUniqueInput,
-                        onInputChange: (event, newInputValue)=>{
-                            setUniqueInput(newInputValue);
-                        },
-                        renderInput: (params)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.TextField, {
-                                ...params,
-                                label: "유닠"
-                            })
-                    }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_6___default()), {
-                        style: {
-                            minWidth: 150
-                        },
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_7___default()), {
-                                id: "demo-simple-select-label",
-                                children: "링크"
-                            }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Select__WEBPACK_IMPORTED_MODULE_8___default()), {
-                                labelId: "demo-simple-select-label",
-                                id: "demo-simple-select",
-                                value: filterLink,
-                                label: "Link",
-                                onChange: handleChange,
-                                children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        value: "",
-                                        children: "전부"
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        value: "6",
-                                        children: "6링오우너"
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        value: "5",
-                                        children: "5링"
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_9___default()), {
-                                        value: "4",
-                                        children: "기타"
-                                    })
-                                ]
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_4__.ButtonGroup, {
-                        variant: "contained",
-                        "aria-label": "outlined primary button group",
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.Button, {
-                                style: {
-                                    backgroundColor: filterDeath === "dead" ? "#a54e5d" : "gray"
-                                },
-                                onClick: ()=>setDeath("dead"),
-                                children: "죽음"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.Button, {
-                                style: {
-                                    backgroundColor: filterDeath === "all" ? "#28281c" : "gray"
-                                },
-                                onClick: ()=>setDeath("all"),
-                                children: "둘다"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_4__.Button, {
-                                style: {
-                                    backgroundColor: filterDeath === "alive" ? "#5e51af" : "gray"
-                                },
-                                onClick: ()=>setDeath("alive"),
-                                children: "덜죽음"
-                            })
-                        ]
-                    })
-                ]
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                className: "classes",
-                children: Object.keys(CLASS).map((className)=>{
-                    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        onClick: ()=>setClass(filterClass === className ? "" : className),
-                        style: {
-                            border: filterClass === className ? "3px solid #50dd33" : "none"
-                        },
-                        className: "classBox",
-                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
-                            src: CLASS[className]
-                        })
-                    }, `search-${className}`);
-                })
-            }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Table__WEBPACK_IMPORTED_MODULE_10___default()) //aria-label="simple table" 
-            , {
-                className: "text-left text-sm font-light",
-                children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_11___default()), {
-                        className: "border-b font-medium dark:border-neutral-500",
-                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_12___default()), {
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material_styles__WEBPACK_IMPORTED_MODULE_2__.ThemeProvider, {
+        theme: theme,
+        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_3___default()), {
+            component: (_mui_material_Paper__WEBPACK_IMPORTED_MODULE_4___default()),
+            className: "listContent",
+            children: [
+                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    className: "search",
+                    children: [
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
+                            color: "primary",
                             style: {
-                                backgroundColor: "#626262"
+                                minWidth: 150
+                            },
+                            id: "outlined-basic",
+                            label: "검색",
+                            variant: "outlined",
+                            onChange: findName
+                        }),
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_6___default()), {
+                            color: "primary",
+                            disablePortal: true,
+                            id: "combo-box-gem",
+                            options: gemList,
+                            sx: {
+                                width: 300
+                            },
+                            value: filterGem,
+                            onChange: (event, newValue)=>{
+                                setGem(newValue || "");
+                            },
+                            inputValue: filterGemInput,
+                            onInputChange: (event, newInputValue)=>{
+                                setGemInput(newInputValue);
+                            },
+                            renderInput: (params)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
+                                    ...params,
+                                    label: "쩸"
+                                })
+                        }),
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_Autocomplete__WEBPACK_IMPORTED_MODULE_6___default()), {
+                            color: "primary",
+                            disablePortal: true,
+                            id: "combo-box-unique",
+                            options: uniqueList,
+                            sx: {
+                                width: 300
+                            },
+                            value: filterUnique,
+                            onChange: (event, newValue)=>{
+                                setUnique(newValue || "");
+                            },
+                            inputValue: filterUniqueInput,
+                            onInputChange: (event, newInputValue)=>{
+                                setUniqueInput(newInputValue);
+                            },
+                            renderInput: (params)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
+                                    ...params,
+                                    label: "유닠"
+                                })
+                        }),
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_7___default()), {
+                            style: {
+                                minWidth: 150
                             },
                             children: [
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                    className: "px-2 py-4",
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_8___default()), {
+                                    color: "primary",
+                                    id: "demo-simple-select-label",
+                                    children: "링크"
+                                }),
+                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Select__WEBPACK_IMPORTED_MODULE_9___default()), {
+                                    color: "primary",
+                                    labelId: "demo-simple-select-label",
+                                    id: "demo-simple-select",
+                                    value: filterLink,
+                                    label: "Link",
+                                    onChange: handleChange,
+                                    children: [
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_10___default()), {
+                                            value: "",
+                                            children: "전부"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_10___default()), {
+                                            value: "6",
+                                            children: "6링오우너"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_10___default()), {
+                                            value: "5",
+                                            children: "5링"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_10___default()), {
+                                            value: "4",
+                                            children: "기타"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.ButtonGroup, {
+                            variant: "outlined",
+                            "aria-label": "outlined primary button group",
+                            style: {
+                                boxShadow: "none"
+                            },
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
+                                    color: "primary",
+                                    variant: "contained",
                                     style: {
-                                        width: 56
+                                        backgroundColor: filterDeath === "dead" || filterDeath === "all" ? "#7a1100" : "transparent"
                                     },
-                                    children: "순위"
+                                    onClick: ()=>setDeath(filterDeath === "all" ? "alive" : "all"),
+                                    children: "죽음"
                                 }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                    className: "px-6 py-4 hiddenOnMoblie",
-                                    children: "계정명"
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                    className: "px-6 py-4",
-                                    children: "케릭명"
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                    className: "px-6 py-4 removeOnMobile",
-                                    children: "육개장"
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                    className: "px-2 py-4",
-                                    children: "직업"
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                    className: "px-6 py-4",
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
+                                    color: "secondary",
+                                    variant: "contained",
                                     style: {
-                                        width: 48
+                                        backgroundColor: filterDeath === "alive" || filterDeath === "all" ? "#133d62" : "transparent"
                                     },
-                                    align: "right",
-                                    children: "LvL"
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                    className: "px-6 py-4 hiddenOnMoblie",
-                                    align: "right",
-                                    style: {
-                                        maxWidth: 120
-                                    },
-                                    children: "경험치"
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                    className: "px-2 py-2 removeOnMobile",
-                                    children: "챌린지"
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                    className: "px-6 py-4 hiddenOnMoblie",
-                                    children: "보러가기"
+                                    onClick: ()=>setDeath(filterDeath === "all" ? "dead" : "all"),
+                                    children: "살음"
                                 })
                             ]
                         })
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_14___default()), {
-                        children: filtered && filtered.length && filtered.length > 0 && filtered.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_12___default()), {
-                                className: "border-b dark:border-neutral-500 showOnHover",
+                    ]
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                    className: "classes",
+                    children: Object.keys(CLASS).map((className)=>{
+                        return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                            onClick: ()=>setClass(filterClass === className ? "" : className),
+                            style: {
+                                border: filterClass === className ? "3px solid #133d62" : "none"
+                            },
+                            className: "classBox",
+                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "classImg",
                                 style: {
-                                    backgroundColor: row.dead ? "#a54e5d" : "#5e51af"
-                                },
-                                sx: {
-                                    "&:last-child td, &:last-child th": {
-                                        border: 0
-                                    }
-                                },
-                                children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                        style: {
-                                            width: 56
-                                        },
-                                        className: "whitespace-nowrap px-2 py-2",
-                                        align: "center",
-                                        component: "th",
-                                        scope: "row",
-                                        children: row.rank
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                        className: "whitespace-nowrap px-6 py-4 hiddenOnMoblie",
-                                        component: "th",
-                                        scope: "row",
-                                        children: row.account
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                        className: "whitespace-nowrap px-6 py-4",
-                                        component: "th",
-                                        scope: "row",
-                                        children: row.name
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                        className: "whitespace-nowrap px-6 py-4 removeOnMobile",
-                                        component: "th",
-                                        scope: "row",
-                                        children: row.dead ? "ㅇㅇ쥬금" : "아직안쥬금"
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                        className: "whitespace-nowrap px-2 py-4",
-                                        component: "th",
-                                        scope: "row",
-                                        children: row.class
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                        style: {
-                                            width: 48
-                                        },
-                                        className: "whitespace-nowrap px-1 py-4",
-                                        component: "th",
-                                        align: "right",
-                                        children: row.level
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                        className: "whitespace-nowrap px-2 py-4 hiddenOnMoblie",
-                                        component: "th",
-                                        align: "right",
-                                        style: {
-                                            maxWidth: 120
-                                        },
-                                        children: row.experience
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                        className: "whitespace-nowrap px-2 py-2 removeOnMobile",
-                                        component: "th",
-                                        align: "center",
-                                        children: row.challenges?.completed
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_13___default()), {
-                                        className: "whitespace-nowrap px-6 py-4 hiddenOnMoblie",
-                                        component: "th",
-                                        scope: "row",
-                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                            style: {
-                                                backgroundColor: "white",
-                                                display: "inline-block",
-                                                padding: "2px 10px",
-                                                borderRadius: 5
-                                            },
-                                            target: "_blank",
-                                            href: `${POEHOST}account/view-profile/${row.account}/characters?characterName=${row.name}`,
-                                            children: "POE"
-                                        })
-                                    })
-                                ]
-                            }, row.rank))
+                                    backgroundImage: `url(${CLASS[className]})`
+                                }
+                            })
+                        }, `search-${className}`);
                     })
-                ]
-            })
-        ]
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                    children: filtered && filtered.length && filtered.length > 0 && filtered.map((row, index)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Accordion__WEBPACK_IMPORTED_MODULE_11___default()), {
+                            style: {
+                                backgroundColor: index % 2 === 0 ? "#0a0a0acc" : "#141414cc"
+                            },
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_AccordionSummary__WEBPACK_IMPORTED_MODULE_12___default()), {
+                                    expandIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                        style: {
+                                            color: "white"
+                                        },
+                                        children: "V"
+                                    }),
+                                    "aria-controls": "panel1a-content",
+                                    id: "panel1a-header",
+                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13___default()), {
+                                        className: "rankRow",
+                                        children: [
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
+                                                children: [
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                        children: `${row.rank} `
+                                                    }),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                        children: `Lv.${row.level} `
+                                                    }),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                                                        style: {
+                                                            border: "1px solid black",
+                                                            width: 32,
+                                                            height: 25,
+                                                            display: "inline-block"
+                                                        },
+                                                        src: CLASS[row.class]
+                                                    }),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                        style: {
+                                                            color: row.dead ? "red" : "white"
+                                                        },
+                                                        children: row.name
+                                                    })
+                                                ]
+                                            }),
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                style: {
+                                                    display: "flex"
+                                                },
+                                                children: row.items?.mainSkills?.map((skillgem)=>{
+                                                    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_14___default()), {
+                                                        title: skillgem.baseType,
+                                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
+                                                            src: skillgem.icon
+                                                        })
+                                                    }, skillgem.id);
+                                                })
+                                            })
+                                        ]
+                                    })
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((_mui_material_AccordionDetails__WEBPACK_IMPORTED_MODULE_15___default()), {
+                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)((_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13___default()), {
+                                        className: "rankRow",
+                                        style: {
+                                            fontSize: "1rem",
+                                            width: "80%",
+                                            margin: "0 auto"
+                                        },
+                                        children: [
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                children: `챌: ${row.challenges?.completed} `
+                                            }),
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                children: `계정: ${row.account}`
+                                            }),
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                children: `Exp.${row.experience} `
+                                            }),
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                                style: {
+                                                    backgroundColor: "#133d62",
+                                                    display: "inline-block",
+                                                    padding: "2px 10px",
+                                                    borderRadius: 5
+                                                },
+                                                target: "_blank",
+                                                href: `${POEHOST}account/view-profile/${row.account}/characters?characterName=${row.name}`,
+                                                children: "POE"
+                                            })
+                                        ]
+                                    })
+                                })
+                            ]
+                        }, row._id))
+                })
+            ]
+        })
     });
 }
 
