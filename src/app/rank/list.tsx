@@ -86,7 +86,7 @@ export default function Page(props:any) {
 
   const [filterDeath, setDeath] = useState<string>('all')
 
-  const downloadCsv = function (data) {
+  const downloadCsv = function (data:any) {
     const blob = new Blob([data], { type: 'text/csv' });
  
     const url = window.URL.createObjectURL(blob)
@@ -103,7 +103,7 @@ export default function Page(props:any) {
   const getCsv = ()=>{
     const header= csvheader.join()
 
-    const commaSeperated = userData.slice(0,4).map(row=>{
+    const commaSeperated = userData.slice(0,4).map((row:any)=>{
       
       const targets = csvheader.map((key)=>{
         if (key==="challenges"){
