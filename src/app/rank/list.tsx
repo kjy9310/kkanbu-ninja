@@ -85,6 +85,47 @@ export default function Page(props:any) {
   const [filterUniqueInput, setUniqueInput] = useState<string>('')
 
   const [filterDeath, setDeath] = useState<string>('all')
+
+  const downloadCsv = function (data:any) {
+    const blob = new Blob([data], { type: 'text/csv' });
+ 
+    const url = window.URL.createObjectURL(blob)
+ 
+    const a = document.createElement('a')
+ 
+    a.setAttribute('href', url)
+ 
+    a.setAttribute('download', 'download.csv');
+ 
+    a.click()
+  }
+  const csvheader = ["rank", "level", "dead","name","class", "challenges","account","experience","has5Link","has6Link","mainSkills","allGems"]
+  const getCsv = ()=>{
+    const header= csvheader.join()
+
+    const commaSeperated = userData.slice(0,4).map((row:any)=>{
+      
+      const targets = csvheader.map((key)=>{
+        if (key==="challenges"){
+          return row[key].completed
+        } else if(key==="has5Link"){
+          return row.items?.has5Link
+        } else if(key==="has6Link"){
+          return row.items?.has6Link
+        } else if(key==="mainSkills"){
+          return row.items?.mainSkills.map((gem:any)=>gem.baseType).join('|')
+        } else if(key==="allGems"){
+          return row.items?.allGems.join('|')
+        }
+        return row[key]
+      })
+      
+      const csvRow = targets.join()
+      return csvRow
+    })
+    downloadCsv([header,...commaSeperated].join('\n'))
+  }
+
   useEffect(()=>{
     (async () => {
       setOriginal(userData)
@@ -118,10 +159,10 @@ export default function Page(props:any) {
 
   useEffect(()=>{
     if (filterName==='' && (filterGem===''||filterGem===null) && filterDeath==='all' && filterUnique==='' && filterLink==='' && filterClass===''){
-      setFilter(original)
+      setFilter(userData)
       return
     }else{
-      const newFiltered = original.filter(user=>{
+      const newFiltered = userData.filter((user:any)=>{
         const gemCheck = filterGem ? user.items?.allGems?.findIndex((gem:any)=>gem===filterGem)>-1 : true
         const uniqueCheck = filterUnique ? user.items?.allUniques?.findIndex((unique:any)=>unique===filterUnique)>-1 : true
         const deathCheck = filterDeath === 'all'? true : filterDeath==='dead'?user.dead:!user.dead
@@ -135,7 +176,7 @@ export default function Page(props:any) {
           )
         ): true
         return Boolean(gemCheck&&nameCheck&&deathCheck&&uniqueCheck&&linkCheck&&classCheck)
-      }).sort((a,b)=>{
+      }).sort((a:any,b:any)=>{
         return a.rank-b.rank
       })
       setFilter(newFiltered)
@@ -210,6 +251,9 @@ export default function Page(props:any) {
         style={{backgroundColor:(filterDeath==='alive'||filterDeath==='all')?'#133d62':'transparent'}}
         onClick={()=>setDeath(filterDeath==='all'?'dead':'all')}>살음</Button>
       </ButtonGroup>
+      <Button color="primary"
+        variant='contained'
+        onClick={getCsv}>CSV</Button>
   </div>
   <div className='classes'>{Object.keys(CLASS).map(className=>{
     return <div key={`search-${className}`} onClick={()=>setClass(filterClass===className?'':className)} style={{border:filterClass===className?'3px solid #133d62':'none'}} className='classBox'>
@@ -240,7 +284,7 @@ export default function Page(props:any) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Typography className="rankRow" style={{fontSize:'1rem',width:'80%',margin:'0 auto'}}>
+            <Typography className="rankRow" style={{fontSize:'1rem !important',width:'80%',margin:'0 auto'}}>
               <span >{`챌: ${row.challenges?.completed} `}</span>
               <span>{`계정: ${row.account}`}</span>
               <span >{`Exp.${row.experience} `}</span>
