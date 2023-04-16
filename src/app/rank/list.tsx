@@ -113,7 +113,7 @@ export default function Page(props:any) {
         } else if(key==="has6Link"){
           return row.items?.has6Link
         } else if(key==="mainSkills"){
-          return row.items?.mainSkills.map((gem)=>gem.baseType).join('|')
+          return row.items?.mainSkills.map((gem:any)=>gem.baseType).join('|')
         } else if(key==="allGems"){
           return row.items?.allGems.join('|')
         }
@@ -176,7 +176,7 @@ export default function Page(props:any) {
           )
         ): true
         return Boolean(gemCheck&&nameCheck&&deathCheck&&uniqueCheck&&linkCheck&&classCheck)
-      }).sort((a,b)=>{
+      }).sort((a:any,b:any)=>{
         return a.rank-b.rank
       })
       setFilter(newFiltered)
