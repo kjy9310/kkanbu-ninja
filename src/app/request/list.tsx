@@ -11,6 +11,19 @@ import { Button, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import SignButton from '../sign/button'
 import { SessionProvider } from "next-auth/react"
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { purple, pink } from '@mui/material/colors';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: pink[300],
+    },
+    secondary: {
+      main: purple[500],
+    },
+  },
+});
 
 const addRequest = async (objectWithData:any)=>{
     const res = await fetch('/api/request', {
@@ -123,7 +136,8 @@ export default function Page(props:any) {
             clearInterval(interval)
         }
     },[])
-  return <TableContainer component={Paper} style={{minWidth:335}}>
+  return <ThemeProvider theme={theme}>
+  <TableContainer component={Paper} className='listContent'>
     <SessionProvider session={session}>
     <SignButton/>
     <div className="search" style={{margin:20}}>
@@ -140,12 +154,12 @@ export default function Page(props:any) {
     />
     <TextField style={{width:'100%'}} multiline maxRows={'3'} label="해줘내용" variant="outlined" value={request} onChange={onChangeRequest} />
     <TextField style={{width:'250px'}} label="비번" type="password" variant="outlined" onChange={onChangePassword} />
-    <Button onClick={sendRequest}>요청</Button>
+    <Button variant="contained" onClick={sendRequest}>요청</Button>
     </div>
     </SessionProvider>
       <Table className="text-left text-sm font-light">
         <TableHead className="border-b font-medium dark:border-neutral-500">
-          <TableRow style={{backgroundColor:'#626262'}}>
+          <TableRow style={{backgroundColor:'#999999b5', borderRadius:10}}>
             <TableCell style={{maxWidth:250}} className="px-2 py-4">케릭명</TableCell>
             <TableCell className="px-6 py-4">{`"해줘"`}</TableCell>
             <TableCell className="px-2 py-4" style={{width: 150}}>버튼</TableCell>
@@ -156,14 +170,15 @@ export default function Page(props:any) {
           const created = new Date(row.createdAt).getTime()
           const deltaTime = new Date().getTime() - created
             return <TableRow
+            style={{backgroundColor:'#000000b3'}}
             className="border-b dark:border-neutral-500"
               key={row._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell style={{maxWidth:250}} className="px-2 py-2" component="th" scope="row">
+              <TableCell style={{color:'white', maxWidth:250}} className="px-2 py-2" component="th" scope="row">
                 {row.requester}
               </TableCell>
-              <TableCell style={{maxHeight:150, overflowY:'scroll'}} className="px-6 py-4 " component="th" scope="row">
+              <TableCell style={{color:'white', maxHeight:150, overflowY:'scroll'}} className="px-6 py-4 " component="th" scope="row">
                 <pre style={{whiteSpace: 'break-spaces'}}>{row.request}</pre>
               </TableCell>
               <TableCell  style={{maxWidth: 250}} className="px-2 py-4" component="th" scope="row">
@@ -184,7 +199,7 @@ export default function Page(props:any) {
                             deleteConfirm({...row, password})
                         }                        
                     }}>삭제</Button>
-                    <div>{miliduration2date(deltaTime)}</div>
+                    <div style={{color:'white'}}>{miliduration2date(deltaTime)}</div>
                   </div>
               </TableCell>
             </TableRow>
@@ -192,4 +207,5 @@ export default function Page(props:any) {
         </TableBody>
       </Table>
     </TableContainer>
+  </ThemeProvider>
 }
