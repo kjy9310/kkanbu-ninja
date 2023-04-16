@@ -95,10 +95,11 @@ const user = db.collection('kkanbu_users');
     
     await new Promise(r=>setTimeout(()=>r(null),400))
   }
-    console.log('done!')
+  client.close()
+  console.log('done!')
   const delta = new Date().getTime() - startTime
-    console.log('delta time : ', delta)
-    process.exit(0)
+  console.log('delta time : ', delta)
+  process.exit(0)
 }
 
 fetchingItemData()

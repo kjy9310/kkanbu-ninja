@@ -17,7 +17,7 @@ export default function RootLayout({
       <body>
       <div className='background'></div>
         <div style={{position:'sticky'}}>
-      <h2 style={{fontSize:50, marginBottom:10, textAlign: 'center',color:'white'}}>깐부 Ha<span style={{fontSize: 38,letterSpacing: '-0.14em'}}>nin</span>{' '}ja</h2>
+      <h2 style={{fontSize:50, marginBottom:10, textAlign: 'center',color:'#ff9cea'}}>깐부 Ha<span style={{fontSize: 38,letterSpacing: '-0.14em'}}>nin</span>{' '}ja</h2>
       <div style={{padding: '0 0 10px', textAlign: 'center'}}>
         <a className="topButton"  style={{    backgroundColor: '#b34afb',
         }} target='_blank' href="https://www.twitch.tv/ham_90">twitch</a>

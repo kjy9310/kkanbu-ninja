@@ -13,6 +13,27 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { purple, pink } from '@mui/material/colors';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#133d62',//pink[300],
+    },
+    secondary: {
+      // main: purple[500],
+      main: '#133d62',
+    },
+  },
+});
+
 
 const POEHOST = 'https://poe.game.daum.net/'
 // const POEHOST = 'https://www.pathofexile.com/'
@@ -127,10 +148,12 @@ export default function Page(props:any) {
     setLink(event.target.value as string);
   };
 
-  return <TableContainer component={Paper} style={{minWidth:335}}>
-    <div className="search" style={{margin:20}}>
-    <TextField style={{minWidth:150}} id="outlined-basic" label="검색" variant="outlined" onChange={findName} />
+  return (<ThemeProvider theme={theme}>
+  <TableContainer component={Paper} className="listContent">
+  <div className="search">
+    <TextField color="primary" style={{minWidth:150}} id="outlined-basic" label="검색" variant="outlined" onChange={findName} />
     <Autocomplete
+      color="primary"
       disablePortal
       id="combo-box-gem"
       options={gemList}
@@ -146,6 +169,7 @@ export default function Page(props:any) {
       renderInput={(params) => <TextField {...params} label="쩸" />}
     />
     <Autocomplete
+    color="primary"
       disablePortal
       id="combo-box-unique"
       options={uniqueList}
@@ -161,8 +185,9 @@ export default function Page(props:any) {
       renderInput={(params) => <TextField {...params} label="유닠" />}
     />
     <FormControl style={{minWidth:150}}>
-        <InputLabel id="demo-simple-select-label">링크</InputLabel>
+        <InputLabel color="primary" id="demo-simple-select-label">링크</InputLabel>
         <Select
+          color="primary"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={filterLink}
@@ -175,70 +200,61 @@ export default function Page(props:any) {
           <MenuItem value={'4'}>기타</MenuItem>
         </Select>
       </FormControl>
-      <ButtonGroup variant="contained" aria-label="outlined primary button group">
-        <Button style={{backgroundColor:filterDeath==='dead'?'#a54e5d':'gray'}} onClick={()=>setDeath('dead')}>죽음</Button>
-        <Button style={{backgroundColor:filterDeath==='all'?'#28281c':'gray'}} onClick={()=>setDeath('all')}>둘다</Button>
-        <Button style={{backgroundColor:filterDeath==='alive'?'#5e51af':'gray'}} onClick={()=>setDeath('alive')}>덜죽음</Button>
+      <ButtonGroup variant="outlined" aria-label="outlined primary button group" style={{boxShadow:'none'}}>
+        <Button color="primary"
+        variant='contained'
+        style={{backgroundColor:(filterDeath==='dead'||filterDeath==='all')?'#7a1100':'transparent'}}
+        onClick={()=>setDeath(filterDeath==='all'?'alive':'all')}>죽음</Button>
+        <Button color="secondary"
+        variant='contained'
+        style={{backgroundColor:(filterDeath==='alive'||filterDeath==='all')?'#133d62':'transparent'}}
+        onClick={()=>setDeath(filterDeath==='all'?'dead':'all')}>살음</Button>
       </ButtonGroup>
-      </div>
-      <div className='classes'>{Object.keys(CLASS).map(className=>{
-        return <div key={`search-${className}`} onClick={()=>setClass(filterClass===className?'':className)} style={{border:filterClass===className?'3px solid #50dd33':'none'}} className='classBox'>
-          <img src={CLASS[className]} />
-        </div>
-      })}</div>
-      <Table //aria-label="simple table" 
-      className="text-left text-sm font-light">
-        <TableHead className="border-b font-medium dark:border-neutral-500">
-          <TableRow style={{backgroundColor:'#626262'}}>
-            <TableCell className="px-2 py-4" style={{width: 56}}>순위</TableCell>
-            <TableCell className="px-6 py-4 hiddenOnMoblie">계정명</TableCell>
-            <TableCell className="px-6 py-4">케릭명</TableCell>
-            <TableCell className="px-6 py-4 removeOnMobile">육개장</TableCell>
-            <TableCell className="px-2 py-4" >직업</TableCell>
-            <TableCell className="px-6 py-4" style={{width: 48}} align="right">LvL</TableCell>
-            <TableCell className="px-6 py-4 hiddenOnMoblie" align="right" style={{maxWidth:120}}>경험치</TableCell>
-            <TableCell className="px-2 py-2 removeOnMobile">챌린지</TableCell>
-            <TableCell className="px-6 py-4 hiddenOnMoblie">보러가기</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {filtered&&filtered.length&&filtered.length>0&&filtered.map((row:any) => (
-            <TableRow
-            className="border-b dark:border-neutral-500 showOnHover"
-              style={{backgroundColor:row.dead?'#a54e5d':'#5e51af'}}
-              key={row.rank}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell style={{width: 56}} className="whitespace-nowrap px-2 py-2" align="center" component="th" scope="row">
-                {row.rank}
-              </TableCell>
-              <TableCell className="whitespace-nowrap px-6 py-4 hiddenOnMoblie" component="th" scope="row">
-                {row.account}
-              </TableCell>
-              <TableCell className="whitespace-nowrap px-6 py-4" component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell className="whitespace-nowrap px-6 py-4 removeOnMobile" component="th" scope="row">
-                {row.dead?'ㅇㅇ쥬금':'아직안쥬금'}
-              </TableCell>
-              <TableCell
-               className="whitespace-nowrap px-2 py-4" component="th" scope="row">
-                {row.class}
-              </TableCell>
-              <TableCell style={{width: 48}} className="whitespace-nowrap px-1 py-4" component="th" align="right">{row.level}</TableCell>
-              <TableCell className="whitespace-nowrap px-2 py-4 hiddenOnMoblie" component="th" align="right" style={{maxWidth:120}}>{row.experience}</TableCell>
-              <TableCell className="whitespace-nowrap px-2 py-2 removeOnMobile" component="th" align="center">{row.challenges?.completed}</TableCell>
-              <TableCell className="whitespace-nowrap px-6 py-4 hiddenOnMoblie" component="th" scope="row">
-                <a style={{    backgroundColor: 'white',
-    display: 'inline-block',
-    padding: '2px 10px',
-    borderRadius: 5}} target='_blank' href={`${POEHOST}account/view-profile/${row.account}/characters?characterName=${row.name}`}>
+  </div>
+  <div className='classes'>{Object.keys(CLASS).map(className=>{
+    return <div key={`search-${className}`} onClick={()=>setClass(filterClass===className?'':className)} style={{border:filterClass===className?'3px solid #133d62':'none'}} className='classBox'>
+      <div className="classImg" style={{backgroundImage: `url(${CLASS[className]})`}}></div>
+    </div>})}
+  </div>
+  <div>
+    {filtered&&filtered.length&&filtered.length>0&&filtered.map((row:any, index:number) => (<Accordion key={row._id} style={{backgroundColor:index%2===0?'#0a0a0acc':'#141414cc'}}>
+        <AccordionSummary
+          expandIcon={<span style={{color:'white'}}>V</span>}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className="rankRow">
+            <span>
+              <span>{`${row.rank} `}</span>  
+              <span>{`Lv.${row.level} `}</span>
+              <img style={{border: '1px solid black', width:32, height:25, display:'inline-block'}} src={CLASS[row.class]}/>
+              <span style={{color:row.dead?'red':'white'}}>{row.name}</span>
+            </span>
+            <span style={{display:'flex'}}>
+              {row.items?.mainSkills?.map((skillgem:any)=>{
+                return <Tooltip key={skillgem.id} title={skillgem.baseType}>
+                <img src={skillgem.icon}/>
+              </Tooltip>
+              })}
+            </span>
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+            <Typography className="rankRow" style={{fontSize:'1rem',width:'80%',margin:'0 auto'}}>
+              <span >{`챌: ${row.challenges?.completed} `}</span>
+              <span>{`계정: ${row.account}`}</span>
+              <span >{`Exp.${row.experience} `}</span>
+              <a style={{    backgroundColor: '#133d62',
+                display: 'inline-block',
+                padding: '2px 10px',
+                borderRadius: 5}} target='_blank' href={`${POEHOST}account/view-profile/${row.account}/characters?characterName=${row.name}`}>
                   POE
                 </a>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            </Typography>        
+        </AccordionDetails>
+      </Accordion>
+    ))}
+  </div>
+</TableContainer>
+</ThemeProvider>)
 }
