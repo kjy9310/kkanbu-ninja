@@ -1,13 +1,4 @@
 "use strict";
-<<<<<<< HEAD
-(() => {
-var exports = {};
-exports.id = 155;
-exports.ids = [155];
-exports.modules = {
-
-/***/ 97783:
-=======
 /*
  * ATTENTION: An "eval-source-map" devtool has been used.
  * This devtool is neither made for production nor for readable output files.
@@ -26,294 +17,152 @@ exports.modules = {
 /*!***********************************************************!*\
   !*** external "next/dist/compiled/@edge-runtime/cookies" ***!
   \***********************************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/@edge-runtime/cookies");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 28530:
-=======
 /***/ "next/dist/compiled/@opentelemetry/api":
 /*!********************************************************!*\
   !*** external "next/dist/compiled/@opentelemetry/api" ***!
   \********************************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/@opentelemetry/api");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 35547:
-=======
 /***/ "next/dist/compiled/bytes":
 /*!*******************************************!*\
   !*** external "next/dist/compiled/bytes" ***!
   \*******************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/bytes");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 54426:
-=======
 /***/ "next/dist/compiled/chalk":
 /*!*******************************************!*\
   !*** external "next/dist/compiled/chalk" ***!
   \*******************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/chalk");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 74929:
-=======
 /***/ "next/dist/compiled/content-type":
 /*!**************************************************!*\
   !*** external "next/dist/compiled/content-type" ***!
   \**************************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/content-type");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 40252:
-=======
 /***/ "next/dist/compiled/cookie":
 /*!********************************************!*\
   !*** external "next/dist/compiled/cookie" ***!
   \********************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/cookie");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 47664:
-=======
 /***/ "next/dist/compiled/fresh":
 /*!*******************************************!*\
   !*** external "next/dist/compiled/fresh" ***!
   \*******************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/fresh");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 45644:
-=======
 /***/ "next/dist/compiled/jsonwebtoken":
 /*!**************************************************!*\
   !*** external "next/dist/compiled/jsonwebtoken" ***!
   \**************************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/jsonwebtoken");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 27798:
-=======
 /***/ "next/dist/compiled/raw-body":
 /*!**********************************************!*\
   !*** external "next/dist/compiled/raw-body" ***!
   \**********************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/raw-body");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 32196:
-=======
 /***/ "next/dist/compiled/ua-parser-js":
 /*!**************************************************!*\
   !*** external "next/dist/compiled/ua-parser-js" ***!
   \**************************************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("next/dist/compiled/ua-parser-js");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 6113:
-=======
 /***/ "crypto":
 /*!*************************!*\
   !*** external "crypto" ***!
   \*************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("crypto");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 57147:
-=======
 /***/ "fs":
 /*!*********************!*\
   !*** external "fs" ***!
   \*********************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("fs");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 63477:
-=======
 /***/ "querystring":
 /*!******************************!*\
   !*** external "querystring" ***!
   \******************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("querystring");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 12781:
-=======
 /***/ "stream":
 /*!*************************!*\
   !*** external "stream" ***!
   \*************************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("stream");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 57310:
-=======
 /***/ "url":
 /*!**********************!*\
   !*** external "url" ***!
   \**********************/
->>>>>>> main
 /***/ ((module) => {
 
 module.exports = require("url");
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 68834:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "headerHooks": () => (/* binding */ headerHooks),
-  "requestAsyncStorage": () => (/* binding */ requestAsyncStorage),
-  "routeModule": () => (/* binding */ routeModule),
-  "serverHooks": () => (/* binding */ serverHooks),
-  "staticGenerationAsyncStorage": () => (/* binding */ staticGenerationAsyncStorage),
-  "staticGenerationBailout": () => (/* binding */ staticGenerationBailout)
-});
-
-// NAMESPACE OBJECT: ./node_modules/next/dist/build/webpack/loaders/next-metadata-route-loader.js?pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata
-var favicon_next_metadata_namespaceObject = {};
-__webpack_require__.r(favicon_next_metadata_namespaceObject);
-__webpack_require__.d(favicon_next_metadata_namespaceObject, {
-  "GET": () => (GET),
-  "dynamic": () => (dynamic)
-});
-
-// EXTERNAL MODULE: ./node_modules/next/dist/server/node-polyfill-headers.js
-var node_polyfill_headers = __webpack_require__(76145);
-// EXTERNAL MODULE: ./node_modules/next/dist/server/future/route-modules/app-route/module.js
-var app_route_module = __webpack_require__(19532);
-// EXTERNAL MODULE: external "fs"
-var external_fs_ = __webpack_require__(57147);
-var external_fs_default = /*#__PURE__*/__webpack_require__.n(external_fs_);
-// EXTERNAL MODULE: external "url"
-var external_url_ = __webpack_require__(57310);
-// EXTERNAL MODULE: ./node_modules/next/server.js
-var server = __webpack_require__(38529);
-;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-metadata-route-loader.js?pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!./src/app/favicon.ico?__next_metadata
-
-
-
-
-const contentType = "image/x-icon"
-const resourceUrl = new URL("file:///home/aa019/dev/kkanbu-ninja/src/app/favicon.ico%3F__next_metadata")
-const filePath = (0,external_url_.fileURLToPath)(resourceUrl).replace("?__next_metadata", '')
-const buffer = external_fs_default().readFileSync(filePath)
-
-function GET() {
-  return new server.NextResponse(buffer, {
-    headers: {
-      'Content-Type': contentType,
-      'Cache-Control': "public, max-age=0, must-revalidate",
-    },
-  })
-}
-
-const dynamic = 'force-static'
-
-;// CONCATENATED MODULE: ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?page=%2Ffavicon.ico%2Froute&name=app%2Ffavicon.ico%2Froute&pagePath=private-next-app-dir%2Ffavicon.ico&appDir=%2Fhome%2Faa019%2Fdev%2Fkkanbu-ninja%2Fsrc%2Fapp&appPaths=%2Ffavicon.ico&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&assetPrefix=&nextConfigOutput=!
-
-    
-
-    
-
-    
-
-    const routeModule = new app_route_module/* default */.ZP({
-    userland: favicon_next_metadata_namespaceObject,
-    pathname: "/favicon.ico",
-    resolvedPagePath: "next-metadata-route-loader?pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!/home/aa019/dev/kkanbu-ninja/src/app/favicon.ico?__next_metadata",
-    nextConfigOutput: undefined,
-  })
-
-    // Pull out the exports that we need to expose from the module. This should
-    // be eliminated when we've moved the other routes to the new format. These
-    // are used to hook into the route.
-    const {
-      requestAsyncStorage,
-      staticGenerationAsyncStorage,
-      serverHooks,
-      headerHooks,
-      staticGenerationBailout
-    } = routeModule
-
-    
-=======
 /***/ "(sc_server)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Ffavicon.ico%2Froute&page=%2Ffavicon.ico%2Froute&appPaths=&pagePath=private-next-app-dir%2Ffavicon.ico&appDir=%2Fhome%2Faa019%2Fdev%2Fkkanbu-ninja%2Fsrc%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fhome%2Faa019%2Fdev%2Fkkanbu-ninja&isDev=true&tsconfigPath=tsconfig.json&assetPrefix=&nextConfigOutput=!":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Ffavicon.ico%2Froute&page=%2Ffavicon.ico%2Froute&appPaths=&pagePath=private-next-app-dir%2Ffavicon.ico&appDir=%2Fhome%2Faa019%2Fdev%2Fkkanbu-ninja%2Fsrc%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fhome%2Faa019%2Fdev%2Fkkanbu-ninja&isDev=true&tsconfigPath=tsconfig.json&assetPrefix=&nextConfigOutput=! ***!
@@ -1001,7 +850,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({\n    value: true\n}));
 /***/ ((module, exports, __webpack_require__) => {
 
 eval("\nObject.defineProperty(exports, \"__esModule\", ({\n    value: true\n}));\nexports.staticGenerationAsyncStorage = void 0;\nvar _asyncLocalStorage = __webpack_require__(/*! ./async-local-storage */ \"(sc_shared)/./node_modules/next/dist/client/components/async-local-storage.js\");\nconst staticGenerationAsyncStorage = (0, _asyncLocalStorage).createAsyncLocalStorage();\nexports.staticGenerationAsyncStorage = staticGenerationAsyncStorage;\nif ((typeof exports.default === \"function\" || typeof exports.default === \"object\" && exports.default !== null) && typeof exports.default.__esModule === \"undefined\") {\n    Object.defineProperty(exports.default, \"__esModule\", {\n        value: true\n    });\n    Object.assign(exports.default, exports);\n    module.exports = exports.default;\n} //# sourceMappingURL=static-generation-async-storage.js.map\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNjX3NoYXJlZCkvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2NsaWVudC9jb21wb25lbnRzL3N0YXRpYy1nZW5lcmF0aW9uLWFzeW5jLXN0b3JhZ2UuanMuanMiLCJtYXBwaW5ncyI6IkFBQWE7QUFDYkEsOENBQTZDO0lBQ3pDRyxPQUFPLElBQUk7QUFDZixDQUFDLEVBQUM7QUFDRkQsb0NBQW9DLEdBQUcsS0FBSztBQUM1QyxJQUFJRyxxQkFBcUJDLG1CQUFPQSxDQUFDLDRHQUF1QjtBQUN4RCxNQUFNRiwrQkFBK0IsQ0FBQyxHQUFHQyxrQkFBa0IsRUFBRUUsdUJBQXVCO0FBQ3BGTCxvQ0FBb0MsR0FBR0U7QUFFdkMsSUFBSSxDQUFDLE9BQU9GLFFBQVFNLE9BQU8sS0FBSyxjQUFlLE9BQU9OLFFBQVFNLE9BQU8sS0FBSyxZQUFZTixRQUFRTSxPQUFPLEtBQUssSUFBSSxLQUFNLE9BQU9OLFFBQVFNLE9BQU8sQ0FBQ0MsVUFBVSxLQUFLLGFBQWE7SUFDcktULE9BQU9DLGNBQWMsQ0FBQ0MsUUFBUU0sT0FBTyxFQUFFLGNBQWM7UUFBRUwsT0FBTyxJQUFJO0lBQUM7SUFDbkVILE9BQU9VLE1BQU0sQ0FBQ1IsUUFBUU0sT0FBTyxFQUFFTjtJQUMvQlMsT0FBT1QsT0FBTyxHQUFHQSxRQUFRTSxPQUFPO0FBQ2xDLENBQUMsQ0FFRCwyREFBMkQiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9ra2FuYnUtbmluamEvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2NsaWVudC9jb21wb25lbnRzL3N0YXRpYy1nZW5lcmF0aW9uLWFzeW5jLXN0b3JhZ2UuanM/MmIyOCJdLCJzb3VyY2VzQ29udGVudCI6WyJcInVzZSBzdHJpY3RcIjtcbk9iamVjdC5kZWZpbmVQcm9wZXJ0eShleHBvcnRzLCBcIl9fZXNNb2R1bGVcIiwge1xuICAgIHZhbHVlOiB0cnVlXG59KTtcbmV4cG9ydHMuc3RhdGljR2VuZXJhdGlvbkFzeW5jU3RvcmFnZSA9IHZvaWQgMDtcbnZhciBfYXN5bmNMb2NhbFN0b3JhZ2UgPSByZXF1aXJlKFwiLi9hc3luYy1sb2NhbC1zdG9yYWdlXCIpO1xuY29uc3Qgc3RhdGljR2VuZXJhdGlvbkFzeW5jU3RvcmFnZSA9ICgwLCBfYXN5bmNMb2NhbFN0b3JhZ2UpLmNyZWF0ZUFzeW5jTG9jYWxTdG9yYWdlKCk7XG5leHBvcnRzLnN0YXRpY0dlbmVyYXRpb25Bc3luY1N0b3JhZ2UgPSBzdGF0aWNHZW5lcmF0aW9uQXN5bmNTdG9yYWdlO1xuXG5pZiAoKHR5cGVvZiBleHBvcnRzLmRlZmF1bHQgPT09ICdmdW5jdGlvbicgfHwgKHR5cGVvZiBleHBvcnRzLmRlZmF1bHQgPT09ICdvYmplY3QnICYmIGV4cG9ydHMuZGVmYXVsdCAhPT0gbnVsbCkpICYmIHR5cGVvZiBleHBvcnRzLmRlZmF1bHQuX19lc01vZHVsZSA9PT0gJ3VuZGVmaW5lZCcpIHtcbiAgT2JqZWN0LmRlZmluZVByb3BlcnR5KGV4cG9ydHMuZGVmYXVsdCwgJ19fZXNNb2R1bGUnLCB7IHZhbHVlOiB0cnVlIH0pO1xuICBPYmplY3QuYXNzaWduKGV4cG9ydHMuZGVmYXVsdCwgZXhwb3J0cyk7XG4gIG1vZHVsZS5leHBvcnRzID0gZXhwb3J0cy5kZWZhdWx0O1xufVxuXG4vLyMgc291cmNlTWFwcGluZ1VSTD1zdGF0aWMtZ2VuZXJhdGlvbi1hc3luYy1zdG9yYWdlLmpzLm1hcCJdLCJuYW1lcyI6WyJPYmplY3QiLCJkZWZpbmVQcm9wZXJ0eSIsImV4cG9ydHMiLCJ2YWx1ZSIsInN0YXRpY0dlbmVyYXRpb25Bc3luY1N0b3JhZ2UiLCJfYXN5bmNMb2NhbFN0b3JhZ2UiLCJyZXF1aXJlIiwiY3JlYXRlQXN5bmNMb2NhbFN0b3JhZ2UiLCJkZWZhdWx0IiwiX19lc01vZHVsZSIsImFzc2lnbiIsIm1vZHVsZSJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(sc_shared)/./node_modules/next/dist/client/components/static-generation-async-storage.js\n");
->>>>>>> main
 
 /***/ })
 
@@ -1012,11 +860,7 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({\n    value: true\n}));
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-<<<<<<< HEAD
-var __webpack_exports__ = __webpack_require__.X(0, [961,904,601,843,529], () => (__webpack_exec__(68834)));
-=======
 var __webpack_exports__ = (__webpack_exec__("(sc_server)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Ffavicon.ico%2Froute&page=%2Ffavicon.ico%2Froute&appPaths=&pagePath=private-next-app-dir%2Ffavicon.ico&appDir=%2Fhome%2Faa019%2Fdev%2Fkkanbu-ninja%2Fsrc%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fhome%2Faa019%2Fdev%2Fkkanbu-ninja&isDev=true&tsconfigPath=tsconfig.json&assetPrefix=&nextConfigOutput=!"));
->>>>>>> main
 module.exports = __webpack_exports__;
 
 })();
