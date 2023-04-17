@@ -265,9 +265,11 @@ export default function Page(props:any) {
         }}>리셋</Button>
         <div>{`${filtered&&filtered.length}명`}</div>
       </div>
+      <div>
       <Button color="primary"
         variant='contained'
         onClick={getCsv}>CSV</Button>
+      </div>
   </div>
   <div className='classes'>{Object.keys(CLASS).map(className=>{
     return <div key={`search-${className}`} onClick={()=>setClass(filterClass===className?'':className)} style={{border:filterClass===className?'3px solid #133d62':'none'}} className='classBox'>
