@@ -87,7 +87,7 @@ export default function Page(props:any) {
   const [filterDeath, setDeath] = useState<string>('all')
 
   const downloadCsv = function (data:any) {
-    const blob = new Blob([data], { type: 'text/csv' });
+    const blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
  
     const url = window.URL.createObjectURL(blob)
  
@@ -103,7 +103,7 @@ export default function Page(props:any) {
   const getCsv = ()=>{
     const header= csvheader.join()
 
-    const commaSeperated = userData.slice(0,4).map((row:any)=>{
+    const commaSeperated = userData.map((row:any)=>{
       
       const targets = csvheader.map((key)=>{
         if (key==="challenges"){
@@ -192,7 +192,9 @@ export default function Page(props:any) {
   return (<ThemeProvider theme={theme}>
   <TableContainer component={Paper} className="listContent">
   <div className="search">
-    <TextField color="primary" style={{minWidth:150}} id="outlined-basic" label="검색" variant="outlined" onChange={findName} />
+    <TextField color="primary" style={{minWidth:150}} 
+      id="outlined-basic" label="검색" 
+      variant="outlined" onChange={findName} value={filterName} />
     <Autocomplete
       color="primary"
       disablePortal
@@ -241,6 +243,7 @@ export default function Page(props:any) {
           <MenuItem value={'4'}>기타</MenuItem>
         </Select>
       </FormControl>
+      
       <ButtonGroup variant="outlined" aria-label="outlined primary button group" style={{boxShadow:'none'}}>
         <Button color="primary"
         variant='contained'
@@ -251,6 +254,17 @@ export default function Page(props:any) {
         style={{backgroundColor:(filterDeath==='alive'||filterDeath==='all')?'#133d62':'transparent'}}
         onClick={()=>setDeath(filterDeath==='all'?'dead':'all')}>살음</Button>
       </ButtonGroup>
+      <div>
+        <Button variant="outlined" onClick={()=>{
+          setDeath('all')
+          setClass('')
+          setName('')
+          setLink('')
+          setGem('')
+          setUnique('')
+        }}>리셋</Button>
+        <div>{`${filtered&&filtered.length}명`}</div>
+      </div>
       <Button color="primary"
         variant='contained'
         onClick={getCsv}>CSV</Button>
@@ -267,10 +281,17 @@ export default function Page(props:any) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className="rankRow">
+          <Typography className="rankRow" style={{ minHeight: 45}}>
             <span>
-              <span>{`${row.rank} `}</span>  
-              <span>{`Lv.${row.level} `}</span>
+              <span style={{
+                minWidth: 40,
+                display: 'inline-block'
+              }}>{`${index+1} `}</span>  
+              <span style={{
+                minWidth: 70,
+                textAlign: 'left',
+                display: 'inline-block'
+              }}>{`Lv.${row.level} `}</span>
               <img style={{border: '1px solid black', width:32, height:25, display:'inline-block'}} src={CLASS[row.class]}/>
               <span style={{color:row.dead?'red':'white'}}>{row.name}</span>
             </span>
@@ -285,13 +306,13 @@ export default function Page(props:any) {
         </AccordionSummary>
         <AccordionDetails>
             <Typography className="rankRow" style={{fontSize:'1rem !important',width:'80%',margin:'0 auto'}}>
+              <span>{`전체 랭킹: ${row.rank}`}</span>
               <span >{`챌: ${row.challenges?.completed} `}</span>
               <span>{`계정: ${row.account}`}</span>
               <span >{`Exp.${row.experience} `}</span>
-              <a style={{    backgroundColor: '#133d62',
-                display: 'inline-block',
-                padding: '2px 10px',
-                borderRadius: 5}} target='_blank' href={`${POEHOST}account/view-profile/${row.account}/characters?characterName=${row.name}`}>
+              <a style={{    backgroundColor: '#133d62', textAlign:'center',
+                display: 'inline-block', padding: '2px 10px', borderRadius: 5}} 
+                target='_blank' href={`${POEHOST}account/view-profile/${encodeURIComponent(row.account)}/characters?characterName=${encodeURIComponent(row.name)}`}>
                   POE
                 </a>
             </Typography>        
