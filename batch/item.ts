@@ -21,7 +21,8 @@ const user = db.collection('kkanbu_users');
     console.log(start)
     const startTime = start.getTime()
 
-  
+  const dateLimit = new Date().setHours(new Date().getHours()-13)
+  console.log(new Date(dateLimit))
   const userList = await user.find().toArray()
 
   const item = db.collection('kkanbu_items');
@@ -34,12 +35,12 @@ const user = db.collection('kkanbu_users');
     }
     console.log(`${index}/${userList.length} - `+'reqData',reqData, user.name)
     
-    const itemDatum = await item.findOne({id:user.id})
-    
-        const updatedSince = itemDatum?new Date().getTime() - new Date(itemDatum.createdAt).getTime():1
-        const isOverTheLimit = itemDatum? updatedSince/1000/60 > updateHourLimit : true
+    const itemDatum = await item.findOne({id:user.id, createdAt:{$lte:dateLimit}})
+    if(itemDatum){
+        const updatedSince = new Date().getTime() - new Date(itemDatum.createdAt).getTime()
+        const isOverTheLimit = updatedSince/1000/60 > updateHourLimit
 
-        if(!itemDatum?.isDead && isOverTheLimit){
+        if(!itemDatum.isDead && isOverTheLimit){
             let items = []
             try{
                 const res = await fetch(`${POEHOST}character-window/get-items?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`, {
@@ -96,10 +97,14 @@ const user = db.collection('kkanbu_users');
             item.deleteOne({id:user.id})
             item.insertOne(charItems)
             console.log('updated : ',user.name)
+
+            await new Promise(r=>setTimeout(()=>r(null),400))
         }
+    } else {
+        console.log('skip : ',user.name, itemDatum.createdAt)
+    }
     
     
-    await new Promise(r=>setTimeout(()=>r(null),400))
   }
   client.close()
   console.log('done!')
