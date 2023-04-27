@@ -36,6 +36,7 @@ const user = db.collection('kkanbu_users');
     console.log(`${index}/${userList.length} - `+'reqData',reqData, user.name)
     
     const itemDatum = await item.findOne({id:user.id, createdAt:{$lte:dateLimit}})
+    
     if(itemDatum){
         const updatedSince = new Date().getTime() - new Date(itemDatum.createdAt).getTime()
         const isOverTheLimit = updatedSince/1000/60 > updateHourLimit
@@ -101,7 +102,7 @@ const user = db.collection('kkanbu_users');
             await new Promise(r=>setTimeout(()=>r(null),400))
         }
     } else {
-        console.log('skip : ',user.name, itemDatum.createdAt)
+        console.log('skip : ',user.name)
     }
     
     
