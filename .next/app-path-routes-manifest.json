@@ -1,8 +1,8 @@
 {
   "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]",
   "/api/request/route": "/api/request",
-  "/api/user/route": "/api/user",
   "/page": "/",
   "/request/page": "/request",
+  "/api/user/route": "/api/user",
   "/favicon.ico/route": "/favicon.ico"
 }
