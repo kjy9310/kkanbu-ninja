@@ -101,7 +101,7 @@ const user = db.collection('kkanbu_users');
             await new Promise(r=>setTimeout(()=>r(null),400))
         }
     } else {
-        console.log('skip : ',user.name)
+        console.log('skip : ',user.name, itemDatum.createdAt)
     }
     
     
