@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - 127.0.0.1:27017:27017
+    volumes:
+      - ./db:/data/db
+      - ./configdb:/data/configdb
+    networks:
+      - kkanbu-ninja-net
+  app:
+    build:
+      context: .
+    depends_on:
+      - db
+    ports:
+      - "0.0.0.0:3000:3000"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    command: sh -c "npm run dev"
+    environment:
+      - mongodb=mongodb://root:root@db:27017/?retryWrites=true&w=majority
+      - host=http://0.0.0.0:3000
+      - collection_prefix=kkanbu
+      - db_name=MakkaKim-M0
+    networks:
+      - kkanbu-ninja-net
+volumes:
+  node_modules:
+networks:
+  kkanbu-ninja-net:

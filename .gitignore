@@ -37,3 +37,6 @@ next-env.d.ts
 
 # batch logs
 /logs/
+
+# DB
+/db/

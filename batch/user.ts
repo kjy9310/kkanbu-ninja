@@ -69,6 +69,7 @@ const LEAGUE_STRING='KKANBU (PL38521)'
     });
     const data = await res.json()
     maxCount = data.total
+    
     rankList = [...rankList,...data.entries]
     offset +=limit
   }
@@ -121,6 +122,7 @@ const LEAGUE_STRING='KKANBU (PL38521)'
     console.log('done!')
     const delta = new Date().getTime() - startTime
     console.log('delta time : ', delta)
+    client.close()
     process.exit(0)
 }
 

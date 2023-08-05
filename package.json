@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3000",
+    "buildstart": "npm run build && npm run start",
     "lint": "next lint",
-    "batch:users": "ts-node ./batch/user.ts > ./logs/userbatch_`date +'%Y-%m-%d'`.log",
-    "batch:items": "ts-node ./batch/item.ts > ./logs/itembatch_`date +'%Y-%m-%d %H'`.log"
+    "batch:users": "ts-node ./batch/user.ts > ./logs/userbatch_`date +%Y-%m-%d`.log",
+    "batch:items": "ts-node ./batch/item.ts > ./logs/itembatch_`date +%Y-%m-%d_%H`.log"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

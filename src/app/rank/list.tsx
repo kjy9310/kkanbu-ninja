@@ -69,6 +69,7 @@ const CLASS:any = {
 
 export default function Page(props:any) {
     const {userData} = props
+    
   const [original, setOriginal] = useState<any[]>(userData)
   const [filtered, setFilter] = useState<any[]>(userData)
   const [gemList, setGemList] = useState<any[]>([])
@@ -128,6 +129,7 @@ export default function Page(props:any) {
 
   useEffect(()=>{
     (async () => {
+      console.log('useEffect')
       setOriginal(userData)
       
       const gemSet = await userData?.reduce((acc:any, user:any)=>{
@@ -158,6 +160,7 @@ export default function Page(props:any) {
   }
 
   useEffect(()=>{
+    console.log('useEffect2')
     if (filterName==='' && (filterGem===''||filterGem===null) && filterDeath==='all' && filterUnique==='' && filterLink==='' && filterClass===''){
       setFilter(userData)
       return
@@ -188,7 +191,7 @@ export default function Page(props:any) {
   const handleChange = (event: SelectChangeEvent) => {
     setLink(event.target.value as string);
   };
-
+  console.log('render , list')
   return (<ThemeProvider theme={theme}>
   <TableContainer component={Paper} className="listContent">
   <div className="search">

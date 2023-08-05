@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 const getUsers = async () =>{
     const client = new MongoClient(process.env.mongodb||'no db env');
     // Database Name
-    const dbName = 'MakkaKim-M0';
+    const dbName = process.env.db_name;
     await client.connect();
     const db = client.db(dbName);
     const collection = db.collection('kkanbu_users');

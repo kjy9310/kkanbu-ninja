@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, token }:any) {
       const client = new MongoClient(process.env.mongodb||'no db env');
-      const dbName = 'MakkaKim-M0';
+      const dbName = process.env.db_name;
       await client.connect();
       const db = client.db(dbName);
       const collection = db.collection('kkanbu');

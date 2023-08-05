@@ -35,7 +35,7 @@ const user = db.collection('kkanbu_users');
     }
     console.log(`${index}/${userList.length} - `+'reqData',reqData, user.name)
     
-    const itemDatum = await item.findOne({id:user.id, createdAt:{$lte:dateLimit}})
+    const itemDatum = await item.findOne({id:user.id, createdAt:{$lte:new Date(dateLimit)}})
     
     if(itemDatum){
         const updatedSince = new Date().getTime() - new Date(itemDatum.createdAt).getTime()
