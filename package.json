@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start -p 3000",
+    "start": "next start -p 80",
     "buildstart": "npm run build && npm run start",
     "lint": "next lint",
     "batch:users": "ts-node ./batch/user.ts > ./logs/userbatch_`date +%Y-%m-%d`.log",

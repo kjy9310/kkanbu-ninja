@@ -4,27 +4,37 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]/route"
 
 async function getUserData() {
-  const res = await fetch(`${process.env.host}/api/user`,{ next: { revalidate: 10 } }); //10 min cache
+  try{
+    const res = await fetch(`${process.env.host}/api/user`,{ next: { revalidate: 10 } }); //10 min cache
   
-  if (!res.ok) {
-    console.log('에러낫다! 스샷찍어주실?')
-    console.log(res)
+    if (!res.ok) {
+      console.log('에러낫다! 스샷찍어주실?')
+      console.log(res)
+      return []
+    }
+
+    return res.json();
+  } catch(e){
+    console.log('error:', e)
     return []
   }
-
-  return res.json();
 }
 
 async function getRequestData() {
-  const res = await fetch(`${process.env.host}/api/request`,{ next: { revalidate: 1 } }); //1 min cache
-  
-  if (!res.ok) {
-    console.log('에러낫다! 스샷찍어주실?')
-    console.log(res)
+  try{
+    const res = await fetch(`${process.env.host}/api/request`,{ next: { revalidate: 1 } }); //1 min cache
+    
+    if (!res.ok) {
+      console.log('에러낫다! 스샷찍어주실?')
+      console.log(res)
+      return []
+    }
+
+    return res.json();
+  } catch(e){
+    console.log('error:', e)
     return []
   }
-
-  return res.json();
 }
 
 export default async function Page() {
