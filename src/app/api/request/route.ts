@@ -7,51 +7,66 @@ import { getServerSession } from "next-auth/next"
 export const revalidate = 1
 
 export async function GET(request: Request, param:any) {
-    const client = new MongoClient(process.env.mongodb||'no db env');
-    const dbName = process.env.db_name;
-    await client.connect();
-    const db = client.db(dbName);
-    const collection = db.collection(`${process.env.collection_prefix}_requests`);
-    const requestList = await collection.find({},{projection:{password:0}}).sort({createdAt:-1}).toArray()
-    client.close()
-  return NextResponse.json(requestList)
-}
-
-export async function POST(request: NextRequest) {
-    const requestData = await request.json()
-    const client = new MongoClient(process.env.mongodb||'no db env');
-    const dbName = process.env.db_name;
-    await client.connect();
-    const db = client.db(dbName);
-    const collection = db.collection(`${process.env.collection_prefix}_requests`);
-    
-    const obj = await collection.insertOne({...requestData, createdAt:new Date()})
-    client.close()
-    return NextResponse.json(obj.insertedId)
-}
-
-export async function DELETE(request: NextRequest, param:any) {
-    const session:any = await getServerSession(authOptions)
-    
-    const query = request.url.split('?')[1]
-    if (query){
-        const params = parse(query)
-        
+    try{
         const client = new MongoClient(process.env.mongodb||'no db env');
         const dbName = process.env.db_name;
         await client.connect();
         const db = client.db(dbName);
         const collection = db.collection(`${process.env.collection_prefix}_requests`);
-        const {id, password} = params
-        const res = await collection.deleteOne(
-            (session?.kkanbu?.admin)?
-            {_id:new ObjectId(id as string)}
-            :{_id:new ObjectId(id as string), password}
-        )
+        const requestList = await collection.find({},{projection:{password:0}}).sort({createdAt:-1}).toArray()
         client.close()
-        if (res.deletedCount===1){
-            return NextResponse.json('success')
-        }
+        return NextResponse.json(requestList)
+    }catch(e){
+        console.log('DB error', e)
+        return []
     }
-    return NextResponse.json('failed')
+}
+
+export async function POST(request: NextRequest) {
+    try{
+        const requestData = await request.json()
+        const client = new MongoClient(process.env.mongodb||'no db env');
+        const dbName = process.env.db_name;
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection(`${process.env.collection_prefix}_requests`);
+        
+        const obj = await collection.insertOne({...requestData, createdAt:new Date()})
+        client.close()
+        return NextResponse.json(obj.insertedId)
+    }catch(e){
+        console.log('DB error', e)
+        return NextResponse.json('')
+    }
+}
+
+export async function DELETE(request: NextRequest, param:any) {
+    try{
+        const session:any = await getServerSession(authOptions)
+        
+        const query = request.url.split('?')[1]
+        if (query){
+            const params = parse(query)
+            
+            const client = new MongoClient(process.env.mongodb||'no db env');
+            const dbName = process.env.db_name;
+            await client.connect();
+            const db = client.db(dbName);
+            const collection = db.collection(`${process.env.collection_prefix}_requests`);
+            const {id, password} = params
+            const res = await collection.deleteOne(
+                (session?.kkanbu?.admin)?
+                {_id:new ObjectId(id as string)}
+                :{_id:new ObjectId(id as string), password}
+            )
+            client.close()
+            if (res.deletedCount===1){
+                return NextResponse.json('success')
+            }
+        }
+        return NextResponse.json('failed')
+    }catch(e){
+        console.log('DB error', e)
+        return NextResponse.json('db failed')
+    }
 }

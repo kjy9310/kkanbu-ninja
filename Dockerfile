@@ -8,7 +8,8 @@ RUN npm install
 
 # 앱 실행
 RUN mkdir pages
-
+RUN npm run build
 EXPOSE 3000
+EXPOSE 80
 
-CMD [ "npm", "run", "buildstart"]
+CMD [ "npm", "run", "start"]

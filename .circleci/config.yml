@@ -26,9 +26,15 @@ workflows:
             branches:
               only:
                 - circleci-project-setup
-      # - aws-ecs/deploy-service-update:
-      #     requires:
-      #       - aws-ecr/build_and_push_image
-      #     family: 'kim-app-nginx'
-      #     cluster: 'kkanbu'
-          # container-image-name-updates: 'container=nginx,image-and-tag=${AWS_ECR_ACCOUNT_URL}/nginx:${CIRCLE_SHA1}'
+      - aws-ecs/deploy-service-update:
+          context:
+            - aws-deploy
+          requires:
+            - aws-ecr
+          family: 'kkanbu-ninja'
+          cluster: 'kkanbu'
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
+          #container-image-name-updates: 'container=nginx,image-and-tag=${AWS_ECR_ACCOUNT_URL}/nginx:${CIRCLE_SHA1}'
