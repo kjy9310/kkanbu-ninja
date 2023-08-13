@@ -5,7 +5,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route"
 
 async function getUserData() {
   try{
-    const res = await fetch(`${process.env.host}/api/user`,{ next: { revalidate: 10 } }); //10 min cache
+    const res = await fetch(`${process.env.host}/api/user`,{ next: { revalidate: 1 } }); //1 min cache
   
     if (!res.ok) {
       console.log('에러낫다! 스샷찍어주실?')
@@ -15,7 +15,7 @@ async function getUserData() {
 
     return res.json();
   } catch(e){
-    console.log('error:', e)
+    console.log('request getUserData error:', e)
     return []
   }
 }
@@ -32,7 +32,7 @@ async function getRequestData() {
 
     return res.json();
   } catch(e){
-    console.log('error:', e)
+    console.log('request getRequestData error:', e)
     return []
   }
 }

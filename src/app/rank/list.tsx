@@ -20,6 +20,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import SignButton from '../sign/button'
+import { SessionProvider } from "next-auth/react"
 
 
 const theme = createTheme({
@@ -68,7 +70,7 @@ const CLASS:any = {
 }
 
 export default function Page(props:any) {
-    const {userData} = props
+    const {userData, session} = props
     
   const [original, setOriginal] = useState<any[]>(userData)
   const [filtered, setFilter] = useState<any[]>(userData)
@@ -191,6 +193,8 @@ export default function Page(props:any) {
   };
   return (<ThemeProvider theme={theme}>
   <TableContainer component={Paper} className="listContent">
+  <SessionProvider session={session}>
+    <SignButton/>
   <div className="search">
     <TextField color="primary" style={{minWidth:150}} 
       id="outlined-basic" label="검색" 
@@ -322,6 +326,7 @@ export default function Page(props:any) {
       </Accordion>
     ))}
   </div>
+  </SessionProvider>
 </TableContainer>
 </ThemeProvider>)
 }

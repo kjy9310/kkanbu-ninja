@@ -7,13 +7,13 @@ export default function SignButton() {
       return (
         <>
           관리모드 {session.user?.name} <br />
-          <button style={{backgroundColor:'#fb4ab0',color:'white', margin:5, padding:5, borderRadius:5}} onClick={() => signOut()}>햄 아웃</button>
+          <button style={{backgroundColor:'#fb4ab0',color:'white', margin:5, padding:5, borderRadius:5}} onClick={() => signOut()}>로갓</button>
         </>
       )
     }
     return (
       <>
-        <button style={{backgroundColor:'#fb4ab0',color:'white', margin:5, padding:5, borderRadius:5}} onClick={() => signIn()}>햄 인</button>
+        <button style={{backgroundColor:'#fb4ab0',color:'white', margin:5, padding:5, borderRadius:5}} onClick={() => signIn()}>로긴</button>
       </>
     )
   }

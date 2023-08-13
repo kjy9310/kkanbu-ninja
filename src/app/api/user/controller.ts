@@ -37,8 +37,9 @@ const getUsers = async (leagueStr:string|null) =>{
                     }
                 }
 
-        ]).sort( { experience: -1 } ).toArray()
-        client.close()
+        ]).sort( { rank: 1 } ).toArray()
+        await client.close()
+        console.log('userData', userData.length)
         return userData
     }catch(e){
         console.log('db error', e)

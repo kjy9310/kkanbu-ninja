@@ -15,6 +15,7 @@ export async function GET(request: Request, param:any) {
         const collection = db.collection(`${process.env.collection_prefix}_requests`);
         const requestList = await collection.find({},{projection:{password:0}}).sort({createdAt:-1}).toArray()
         client.close()
+        console.log('requestList', requestList.length)
         return NextResponse.json(requestList)
     }catch(e){
         console.log('DB error', e)

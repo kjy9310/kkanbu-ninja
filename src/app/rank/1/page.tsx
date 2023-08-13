@@ -13,7 +13,7 @@ async function getUserData(leagueString?:string) {
 
     return res.json();
   } catch(e){
-    console.log('error:', e)
+    console.log('rank 1 pager getUserData error:', e)
     return []
   }
 }
