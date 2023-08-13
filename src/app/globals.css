@@ -30,6 +30,23 @@
   }
 }
 
+.rankLink{
+  position:relative
+}
+
+.rankLink .hidden{
+  display:none
+}
+.rankLink:hover{
+  display:inline-block;
+  height: 35px;
+}
+.rankLink:hover .hidden{
+  display:inline;
+  position: absolute;
+  top: 30px;
+  left: 0px;
+}
 
 body {
   color: rgb(var(--foreground-rgb));

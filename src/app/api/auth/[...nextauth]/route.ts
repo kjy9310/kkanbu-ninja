@@ -5,6 +5,7 @@ import TwitchProvider from "next-auth/providers/twitch"
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 7
   },
   providers: [
     TwitchProvider({
