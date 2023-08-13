@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
-const getUsers = async () =>{
+const getUsers = async (leagueStr:string|null) =>{
     try{
+        const league = leagueStr || process.env.LEAGUE_STRING
         const client = new MongoClient(process.env.mongodb||'no db env');
         // Database Name
         const dbName = process.env.db_name;
@@ -8,6 +9,9 @@ const getUsers = async () =>{
         const db = client.db(dbName);
         const collection = db.collection(`${process.env.collection_prefix}_users`);
         const userData = await collection.aggregate([
+            {
+                '$match':{league}
+            },
             {
                 '$lookup':{
                     from: `${process.env.collection_prefix}_items`,

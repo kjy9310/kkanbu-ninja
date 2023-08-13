@@ -1,5 +1,5 @@
 import React from 'react';
-import RankList from './rank/list'
+import RankList from './list'
 
 async function getUserData(leagueString?:string) {
   try{

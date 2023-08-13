@@ -26,6 +26,7 @@ export default function RootLayout({
         <a className="topButton"  style={{    backgroundColor: '#626262',
         }} target='_blank' href="https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347">깐부시트</a>
         <a className="topButton" style={{    backgroundColor: '#621462'}} href="/">깐부build</a>
+        <a className="topButton" style={{    backgroundColor: '#621462'}} href="/rank/1">1</a>
         <a className="topButton"  style={{    backgroundColor: '#3c0c9b'}} href="/request">{`"해줘"판`}</a>
       </div>
         {children}

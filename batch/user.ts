@@ -50,7 +50,7 @@ const fetchingUserData = async () => {
 const dotenv = require('dotenv');
 dotenv.config();
 
-const LEAGUE_STRING='KKANBU (PL38521)'
+const LEAGUE_STRING=process.env.LEAGUE_STRING||'KKANBU (PL38521)'
 
 
   const start = new Date()
@@ -96,7 +96,7 @@ const LEAGUE_STRING='KKANBU (PL38521)'
     console.log(`${index}/${rankList.length} - `+'reqData',reqData)
     
     const formattedUser = {
-        id: ranker.character.id,
+      id: ranker.character.id,
       public: ranker.public,
       rank : ranker.rank,
       dead: ranker.dead,
@@ -107,7 +107,8 @@ const LEAGUE_STRING='KKANBU (PL38521)'
       account: ranker.account.name,
       realm: ranker.account.realm,
       challenges: ranker.account.challenges,
-      createdAt: new Date()
+      createdAt: new Date(),
+      league: LEAGUE_STRING
     };
     formattedList.push(formattedUser)
   }
@@ -116,7 +117,7 @@ const LEAGUE_STRING='KKANBU (PL38521)'
     formattedList.forEach((formattedUser)=>{
       bulk.insert(formattedUser)
     })
-    user.deleteMany({})
+    user.deleteMany({league: LEAGUE_STRING})
     await bulk.execute();
   
     console.log('done!')
