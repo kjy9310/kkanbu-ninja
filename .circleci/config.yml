@@ -25,7 +25,7 @@ workflows:
           filters:
             branches:
               only:
-                - circleci-project-setup
+                - dev
       - aws-ecs/deploy-service-update:
           context:
             - aws-deploy
@@ -36,5 +36,4 @@ workflows:
           filters:
             branches:
               only:
-                - circleci-project-setup
-          #container-image-name-updates: 'container=nginx,image-and-tag=${AWS_ECR_ACCOUNT_URL}/nginx:${CIRCLE_SHA1}'
+                - dev
