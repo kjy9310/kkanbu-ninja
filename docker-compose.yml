@@ -28,6 +28,7 @@ services:
       - host=http://0.0.0.0:3000
       - collection_prefix=kkanbu
       - db_name=MakkaKim-M0
+      - NEXTAUTH_URL=http://0.0.0.0:3000
     networks:
       - kkanbu-ninja-net
 volumes:
