@@ -1,10 +1,5 @@
 "use client";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import React , { useEffect, useState } from 'react';
 import { ButtonGroup , Button, TextField } from '@mui/material';
@@ -186,7 +181,7 @@ export default function Page(props:any) {
     }
 
     
-  },[filterGem, filterName, filterDeath, filterUnique,filterLink, filterClass])
+  },[filterGem, filterName, filterDeath, filterUnique,filterLink, filterClass, userData])
   
   const handleChange = (event: SelectChangeEvent) => {
     setLink(event.target.value as string);
@@ -195,6 +190,7 @@ export default function Page(props:any) {
   <TableContainer component={Paper} className="listContent">
   <SessionProvider session={session}>
     <SignButton/>
+  </SessionProvider>
   <div className="search">
     <TextField color="primary" style={{minWidth:150}} 
       id="outlined-basic" label="검색" 
@@ -326,7 +322,6 @@ export default function Page(props:any) {
       </Accordion>
     ))}
   </div>
-  </SessionProvider>
 </TableContainer>
 </ThemeProvider>)
 }
