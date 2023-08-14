@@ -6,7 +6,10 @@ import { authOptions } from "./api/auth/[...nextauth]/route"
 async function getUserData() {
   try{
     const res = await fetch(`${process.env.host}/api/user}`,{ next: { revalidate: 0 } }); //10 min cache
-  
+    if(!res.ok){
+      return []
+    }
+
     return res.json();
   } catch(e){
     console.log('app page getUserData error:', e)

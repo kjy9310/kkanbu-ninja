@@ -6,8 +6,6 @@ async function getUserData(leagueString?:string) {
     const res = await fetch(`${process.env.host}/api/user?league=${leagueString}`,{ next: { revalidate: 10 } }); //10 min cache
   
     if (!res.ok) {
-      console.log('에러낫다! 스샷찍어주실?')
-      console.log(res)
       return []
     }
 

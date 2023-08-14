@@ -25,6 +25,7 @@ export const authOptions: NextAuthOptions = {
       if (kkanbuInfo){
         session.token = token.token
         session.kkanbu = kkanbuInfo
+        session.user.kkanbu = kkanbuInfo
       return session // The return type will match the one returned in `useSession()`
       }
       return null

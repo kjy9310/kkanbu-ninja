@@ -6,8 +6,6 @@ async function getUserData() {
     const res = await fetch(`${process.env.host}/api/user}`,{ next: { revalidate: 0 } }); //10 min cache
   
     if (!res.ok) {
-      console.log('에러낫다! 스샷찍어주실?')
-      console.log(res)
       return []
     }
 
