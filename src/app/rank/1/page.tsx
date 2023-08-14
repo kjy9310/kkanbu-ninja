@@ -3,7 +3,7 @@ import RankList from '../list'
 
 async function getUserData(leagueString?:string) {
   try{
-    const res = await fetch(`${process.env.host}/api/user?league=${leagueString}`,{ next: { revalidate: 10 } }); //10 min cache
+    const res = await fetch(`${process.env.host}/api/user?league=${leagueString}`,{ next: { revalidate: 0 } }); //10 min cache
   
     if (!res.ok) {
       return []
