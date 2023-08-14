@@ -66,7 +66,6 @@ const CLASS:any = {
 
 export default function Page(props:any) {
     const {userData, session} = props
-    
   const [original, setOriginal] = useState<any[]>(userData)
   const [filtered, setFilter] = useState<any[]>(userData)
   const [gemList, setGemList] = useState<any[]>([])

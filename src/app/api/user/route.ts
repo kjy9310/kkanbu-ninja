@@ -4,7 +4,7 @@ import getUsers from './controller'
 export const revalidate = 0
 
 export async function GET(request: Request, param:{league:string}) {
-  
+  console.log('api user called')
   const url = new URL(request.url)
   
   const userData = await getUsers(url.searchParams.get('league'))
