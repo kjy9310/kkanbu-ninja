@@ -8,8 +8,8 @@
     "start": "next start -p 80",
     "buildstart": "npm run build && npm run start",
     "lint": "next lint",
-    "batch:users": "ts-node ./batch/user.ts > ./logs/userbatch_`date +%Y-%m-%d`.log",
-    "batch:items": "ts-node ./batch/item.ts > ./logs/itembatch_`date +%Y-%m-%d_%H`.log"
+    "batch:users": "npx ts-node ./batch/user.ts > ./logs/userbatch_`date +%Y-%m-%d`.log",
+    "batch:items": "npx ts-node ./batch/item.ts > ./logs/itembatch_`date +%Y-%m-%d_%H`.log"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

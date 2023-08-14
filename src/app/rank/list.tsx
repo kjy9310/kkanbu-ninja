@@ -9,15 +9,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { purple, pink } from '@mui/material/colors';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
+import Row from './row'
 import SignButton from '../sign/button'
 import { SessionProvider } from "next-auth/react"
-
+import { CLASS } from './constants'
 
 const theme = createTheme({
   palette: {
@@ -30,39 +25,6 @@ const theme = createTheme({
     },
   },
 });
-
-
-const POEHOST = 'https://poe.game.daum.net/'
-// const POEHOST = 'https://www.pathofexile.com/'
-
-const CLASS:any = {
-  Marauder:'https://i.imgur.com/UWvvGKZ.png',
-  Duelist:'https://i.imgur.com/c8vB7OX.png',
-  Ranger:'https://i.imgur.com/qtdp8Jh.png',
-  Shadow:'https://i.imgur.com/nWahbNR.png',
-  Witch:'https://i.imgur.com/XSqMHh9.png',
-  Templar:'https://i.imgur.com/i53a1id.png',
-  Scion:'https://i.imgur.com/9IfOWoN.png',
-  Juggernaut:'https://i.imgur.com/QFubXr4.png',
-  Berserker:'https://i.imgur.com/l2vDx4j.png',
-  Chieftain:'https://i.imgur.com/WSkz5xh.png',
-  Slayer:'https://i.imgur.com/UMAd0yL.png',
-  Gladiator:'https://i.imgur.com/F3FQxV4.png',
-  Champion:'https://i.imgur.com/ltGrJ1K.png',
-  Deadeye:'https://i.imgur.com/NCybIiO.png',
-  Raider:'https://i.imgur.com/oFwpUJO.png',
-  Pathfinder:'https://i.imgur.com/EVg7lhR.png',
-  Assassin:'https://i.imgur.com/0tURSJ4.png',
-  Saboteur:'https://i.imgur.com/7dNJPM4.png',
-  Trickster:'https://i.imgur.com/n8jtbfr.png',
-  Necromancer:'https://i.imgur.com/k1debpx.png',
-  Occultist:'https://i.imgur.com/BGrQsx5.png',
-  Elementalist:'https://i.imgur.com/G5fSIS8.png',
-  Inquisitor:'https://i.imgur.com/PyzEPzP.png',
-  Hierophant:'https://i.imgur.com/8iu1k86.png',
-  Guardian:'https://i.imgur.com/sHiE02Y.png',
-  Ascendant:'https://i.imgur.com/Th9qGrm.png'
-}
 
 export default function Page(props:any) {
     const {userData, session} = props
@@ -82,6 +44,8 @@ export default function Page(props:any) {
   const [filterUniqueInput, setUniqueInput] = useState<string>('')
 
   const [filterDeath, setDeath] = useState<string>('all')
+
+  const [openAccordId, setOpenAccordId] = useState<string>('')
 
   const downloadCsv = function (data:any) {
     const blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
@@ -177,8 +141,8 @@ export default function Page(props:any) {
         return a.rank-b.rank
       })
       setFilter(newFiltered)
+      setOpenAccordId('')
     }
-
     
   },[filterGem, filterName, filterDeath, filterUnique,filterLink, filterClass, userData])
   
@@ -189,7 +153,6 @@ export default function Page(props:any) {
   <TableContainer component={Paper} className="listContent">
   <SessionProvider session={session}>
     <SignButton/>
-  </SessionProvider>
   <div className="search">
     <TextField color="primary" style={{minWidth:150}} 
       id="outlined-basic" label="검색" 
@@ -276,51 +239,9 @@ export default function Page(props:any) {
     </div>})}
   </div>
   <div>
-    {filtered&&filtered.length&&filtered.length>0&&filtered.map((row:any, index:number) => (<Accordion key={row._id} style={{backgroundColor:index%2===0?'#0a0a0acc':'#141414cc'}}>
-        <AccordionSummary
-          expandIcon={<span style={{color:'white'}}>V</span>}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className="rankRow" style={{ minHeight: 45}}>
-            <span>
-              <span style={{
-                minWidth: 40,
-                display: 'inline-block'
-              }}>{`${index+1} `}</span>  
-              <span style={{
-                minWidth: 70,
-                textAlign: 'left',
-                display: 'inline-block'
-              }}>{`Lv.${row.level} `}</span>
-              <img style={{border: '1px solid black', width:32, height:25, display:'inline-block'}} src={CLASS[row.class]}/>
-              <span style={{color:row.dead?'red':'white'}}>{row.name}</span>
-            </span>
-            <span style={{display:'flex'}}>
-              {row.items?.mainSkills?.map((skillgem:any)=>{
-                return <Tooltip key={skillgem.id} title={skillgem.baseType}>
-                <img src={skillgem.icon}/>
-              </Tooltip>
-              })}
-            </span>
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-            <Typography className="rankRow" style={{fontSize:'1rem !important',width:'80%',margin:'0 auto'}}>
-              <span>{`전체 랭킹: ${row.rank}`}</span>
-              <span >{`챌: ${row.challenges?.completed} `}</span>
-              <span>{`계정: ${row.account}`}</span>
-              <span >{`Exp.${row.experience} `}</span>
-              <a style={{    backgroundColor: '#133d62', textAlign:'center',
-                display: 'inline-block', padding: '2px 10px', borderRadius: 5}} 
-                target='_blank' href={`${POEHOST}account/view-profile/${encodeURIComponent(row.account)}/characters?characterName=${encodeURIComponent(row.name)}`}>
-                  POE
-                </a>
-            </Typography>        
-        </AccordionDetails>
-      </Accordion>
-    ))}
+    {filtered&&filtered.length&&filtered.length>0&&filtered.map((row:any, index:number) => <Row key={row.id} row={row} index={index} session={session} openAccordId={openAccordId} setOpenAccordId={setOpenAccordId} />)}
   </div>
+  </SessionProvider>
 </TableContainer>
 </ThemeProvider>)
 }

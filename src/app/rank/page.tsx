@@ -1,5 +1,7 @@
 import React from 'react';
 import RankList from './list'
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "../api/auth/[...nextauth]/route"
 
 async function getUserData() {
   try{
@@ -18,7 +20,8 @@ async function getUserData() {
 
 export default async function Page() {
     const data = await getUserData()
+    const session = await getServerSession(authOptions)
     return <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    <RankList userData={data||[]}/>
+    <RankList userData={data||[]} session={session}/>
   </main>
 }

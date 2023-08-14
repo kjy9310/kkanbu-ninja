@@ -1,7 +1,9 @@
 import React from 'react';
 import RankList from '../list'
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "../../api/auth/[...nextauth]/route"
 
-async function getUserData(leagueString?:string) {
+async function getUserData1(leagueString?:string) {
   try{
     const res = await fetch(`${process.env.host}/api/user?league=${leagueString}`,{ next: { revalidate: 0 } }); //10 min cache
   
@@ -17,8 +19,9 @@ async function getUserData(leagueString?:string) {
 }
 
 export default async function Page() {
-    const data = await getUserData('KKANBU (PL38521)')
+    const data = await getUserData1('KKANBU (PL38521)')
+    const session = await getServerSession(authOptions)
     return <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    <RankList userData={data||[]}/>
+    <RankList userData={data||[]}  session={session}/>
   </main>
 }

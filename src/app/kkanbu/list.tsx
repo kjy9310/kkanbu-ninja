@@ -61,7 +61,7 @@ async function getKkanbu() {
 
 export default function Page(props:any) {
     const {kkanbus, session} = props
-
+    
     const [kkanbuList, setkkanbuList] = useState<any>(kkanbus)
     const [twitch, setTwitch] = useState<string>('')
     const [account, setAccount] = useState<string>('')
@@ -95,8 +95,8 @@ export default function Page(props:any) {
   <Paper className='listContent'>
     {(session?.kkanbu?.admin)?
     <div className="search" style={{margin:20}}>
-        <TextField style={{width:'250px'}} label="Twitch" variant="outlined" onChange={onChangeTwitch} />
-        <TextField style={{width:'250px'}} label="POE" variant="outlined" onChange={onChangePoe} />
+        <TextField style={{width:'250px'}} label="Twitch" variant="outlined" value={twitch} onChange={onChangeTwitch} />
+        <TextField style={{width:'250px'}} label="POE" variant="outlined" value={account} onChange={onChangePoe} />
         <Button variant="contained" onClick={addKkanbu}>추가</Button>
     </div>
     :''}

@@ -185,3 +185,17 @@ body {
 .rankRow span{
   margin:0 .2rem;
 }
+
+.hover-button {
+  display:inline-block;
+  cursor: pointer;
+}
+
+.hover-button > svg {
+  color: white
+}
+
+.hover-button:hover  > svg {
+  color: pink;
+  background-color:'white'
+}
