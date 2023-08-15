@@ -46,7 +46,7 @@ export async function GET(request: Request, param:{league:string}) {
               }
 
       ]).sort( { rank: 1 } ).toArray()
-      await client.close()
+      client.close()
       console.log('userData', userData.length)
       return NextResponse.json(userData)
   }catch(e){

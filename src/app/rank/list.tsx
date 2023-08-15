@@ -69,8 +69,8 @@ export default function Page(props:any) {
 
   const [start, setStart] = useState<number>(0);
 
-  const startTag = useRef()
-  const endTag = useRef()
+  const startTag = useRef<HTMLDivElement | null>(null)
+  const endTag = useRef<HTMLDivElement | null>(null)
   const isStart = useIsVisible(startTag)
   const isEnd = useIsVisible(endTag)
   
@@ -304,14 +304,14 @@ export default function Page(props:any) {
   </div>
   <div style={{overflowAnchor: 'none'}}>
     <div ref={startTag}>
-    {[...startArr].map(()=><div style={{height:70, width:'100%'}}></div>)}
+    {[...startArr].map((e,index)=><div key={'start'+index} style={{height:70, width:'100%'}}></div>)}
     </div>
     
     {filtered&&filtered.length&&filtered.length>0&&filtered.slice(start, start+limit).map((row:any, index:number) => <Row key={row.id} row={row} index={start+index} session={session} openAccordId={openAccordId} setOpenAccordId={setOpenAccordId} />)}
     
     <div ref={endTag}>
-    {[...bottomArr].map((e)=>{
-      return <div style={{height:70, width:'100%'}}>t</div>
+    {[...bottomArr].map((e,index)=>{
+      return <div key={'end'+index} style={{height:70, width:'100%'}}>t</div>
     })} 
     </div>
   </div>
