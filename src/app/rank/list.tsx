@@ -47,6 +47,15 @@ export default function Page(props:any) {
 
   const [openAccordId, setOpenAccordId] = useState<string>('')
 
+  const classCounts = userData.reduce((acc:any,user:any)=>{
+    if (acc[user.class]){
+      acc[user.class] = acc[user.class]+1
+    } else {
+      acc[user.class] = 1
+    }
+    return acc
+  },{})
+
   const downloadCsv = function (data:any) {
     const blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
  
@@ -234,8 +243,21 @@ export default function Page(props:any) {
       </div>
   </div>
   <div className='classes'>{Object.keys(CLASS).map(className=>{
+    const count = classCounts[className]
     return <div key={`search-${className}`} onClick={()=>setClass(filterClass===className?'':className)} style={{border:filterClass===className?'3px solid #133d62':'none'}} className='classBox'>
       <div className="classImg" style={{backgroundImage: `url(${CLASS[className]})`}}></div>
+      <span
+      style={{
+        position: 'absolute',
+        bottom: 0,
+        color: 'white',
+        backgroundColor:'black',
+        left: 0,
+        fontSize: 11,
+        lineHeight:'10px',
+        width: '100%'
+      }}
+      >{parseInt(((count / userData.length * 1000) as unknown) as string)/10||'0'}%</span>
     </div>})}
   </div>
   <div>
