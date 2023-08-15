@@ -25,6 +25,8 @@ export async function GET(request: Request, param:any) {
 
 export async function POST(request: NextRequest) {
     try{
+        const session:any = await getServerSession(authOptions)
+
         const requestData = await request.json()
         const client = new MongoClient(process.env.mongodb||'no db env');
         const dbName = process.env.db_name;
@@ -32,7 +34,11 @@ export async function POST(request: NextRequest) {
         const db = client.db(dbName);
         const collection = db.collection(`${process.env.collection_prefix}_requests`);
         
-        const obj = await collection.insertOne({...requestData, createdAt:new Date()})
+        const obj = await collection.insertOne({
+            ...requestData, 
+            ...(session?{account:session.kkanbu?.account}:{}),
+            createdAt:new Date()
+        })
         client.close()
         return NextResponse.json(obj.insertedId)
     }catch(e){
@@ -56,9 +62,11 @@ export async function DELETE(request: NextRequest, param:any) {
             const collection = db.collection(`${process.env.collection_prefix}_requests`);
             const {id, password} = params
             const res = await collection.deleteOne(
-                (session?.kkanbu?.admin)?
-                {_id:new ObjectId(id as string)}
-                :{_id:new ObjectId(id as string), password}
+                session?(
+                    (session.kkanbu?.admin)?
+                        {_id:new ObjectId(id as string)}
+                    :{_id:new ObjectId(id as string), account:session.kkanbu?.account}
+                ):{_id:new ObjectId(id as string), password}
             )
             client.close()
             if (res.deletedCount===1){

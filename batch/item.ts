@@ -7,7 +7,7 @@ const fetchingItemData = async () => {
 const dotenv = require('dotenv');
 dotenv.config();
 
-const updateHourLimit = 3 * 24 * 60 //12hour
+const updateHourLimit = 5 * 24 * 60 //12hour
 
 // Connection URL
 const client = new MongoClient(process.env.mongodb||'no db env');
@@ -43,7 +43,7 @@ const user = db.collection('kkanbu_users');
         const updatedSince = new Date().getTime() - updated.getTime()
         const isOverTheLimit = updatedSince/1000/60 > updateHourLimit
 
-        if(!itemDatum.isDead && isOverTheLimit){
+        if(!itemDatum.isDead && !itemDatum.isDeleted && isOverTheLimit){
             const {charItems, index:newIndex} = await getCharItem(user, startTime, index)
             index = newIndex
             item.deleteOne({id:user.id})
@@ -147,7 +147,20 @@ const getCharItem = async (user:any, startTime: number, index:number) =>{
                     }
                     await new Promise(r=>setTimeout(()=>r(null),parseInt(retryDelay||'10')*1000))
                 } else if (res.status !==404 && res.status !== 403){
-                    throw res
+                    return {
+                        charItems : {
+                            id: user.id,
+                            allGems:[],
+                            allUniques:[],
+                            has5Link:false,
+                            has6Link:false,
+                            mainSkills:[],
+                            createdAt: new Date(),
+                            isDead:user.dead,
+                            isDeleted:res.status ===404?true:false
+                        },
+                        index
+                    }
                 }
             }
             }catch(e){

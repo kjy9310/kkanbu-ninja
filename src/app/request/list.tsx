@@ -57,7 +57,7 @@ const deleteRequest = async (objectWithData:any) =>{
 }
 
 async function getRequestData() {
-    const res = await fetch(`api/request`,{ next: { revalidate: 1 } }); //1 min cache
+    const res = await fetch(`/api/request`,{ next: { revalidate: 1 } }); //1 min cache
     
     if (!res.ok) {
       console.log('에러낫다! 스샷찍어주실?')
@@ -82,13 +82,12 @@ async function getRequestData() {
   }
 export default function Page(props:any) {
     const {userData, requestData, session} = props
-
     const [requestList, setRequestList] = useState<any>(requestData)
     const [request, setRequest] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [requester, setRequester] = useState<string>('')
     
-    const userNames = userData.map((user:any)=>user.name)
+    const userNames = userData.filter((user:any)=>(session?(user.account===session.kkanbu?.account):true)).map((user:any)=>user.name)
 
     const onChangeRequest = (e:any) =>{
         setRequest(e.target.value.slice(0,50))
@@ -153,16 +152,16 @@ export default function Page(props:any) {
       renderInput={(params) => <TextField {...params} label="케릭명" />}
     />
     <TextField style={{width:'100%'}} multiline maxRows={'3'} label="해줘내용" variant="outlined" value={request} onChange={onChangeRequest} />
-    <TextField style={{width:'250px'}} label="비번" type="password" variant="outlined" onChange={onChangePassword} />
+    {!session&&<TextField style={{width:'250px'}} label="비번" type="password" variant="outlined" onChange={onChangePassword} />}
     <Button variant="contained" onClick={sendRequest}>요청</Button>
     </div>
     </SessionProvider>
-      <Table className="text-left text-sm font-light">
+      <Table className="text-left text-sm font-light" style={{minWidth:380}}>
         <TableHead className="border-b font-medium dark:border-neutral-500">
-          <TableRow style={{backgroundColor:'#999999b5', borderRadius:10}}>
-            <TableCell style={{maxWidth:250}} className="px-2 py-4">케릭명</TableCell>
-            <TableCell className="px-6 py-4">{`"해줘"`}</TableCell>
-            <TableCell className="px-2 py-4" style={{width: 150}}>버튼</TableCell>
+          <TableRow style={{backgroundColor:'#999999b5', borderRadius:10, display:'flex', justifyContent:'space-evenly'}}>
+            <TableCell style={{minWidth:70}} className="px-2 py-4">케릭명</TableCell>
+            <TableCell style={{width:'100%', textAlign:'center'}} className="px-6 py-4">{`"해줘"`}</TableCell>
+            <TableCell style={{minWidth:70}} className="px-2 py-4" >버튼</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -170,18 +169,18 @@ export default function Page(props:any) {
           const created = new Date(row.createdAt).getTime()
           const deltaTime = new Date().getTime() - created
             return <TableRow
-            style={{backgroundColor:'#000000b3'}}
+            style={{backgroundColor:'#000000b3',display:'flex', justifyContent:'space-evenly'}}
             className="border-b dark:border-neutral-500"
               key={row._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell style={{color:'white', maxWidth:250}} className="px-2 py-2" component="th" scope="row">
+              <TableCell style={{color:'white', width: 110, wordBreak: 'break-all'}} className="px-2 py-2" component="th" scope="row">
                 {row.requester}
               </TableCell>
-              <TableCell style={{color:'white', maxHeight:150, overflowY:'scroll'}} className="px-6 py-4 " component="th" scope="row">
+              <TableCell style={{color:'white', maxHeight:150, overflowY:'scroll', width:'100%'}} className="px-6 py-4 " component="th" scope="row">
                 <pre style={{whiteSpace: 'break-spaces'}}>{row.request}</pre>
               </TableCell>
-              <TableCell  style={{maxWidth: 250}} className="px-2 py-4" component="th" scope="row">
+              <TableCell  className="px-2 py-4" component="th" scope="row">
                   <div>
                     <Button variant="outlined" onClick={()=>{
                         const text = `@${row.requester} 당신의 해줘:${row.request} 내가 해줌!`
@@ -193,11 +192,14 @@ export default function Page(props:any) {
                         
                     }}>귓말복사</Button>
                     <Button variant="outlined" onClick={()=>{
-                        const password = prompt('삭제할거에요? 비번적어주세요')
-                        if (password!==null){
-                            console.log('row',row)
-                            deleteConfirm({...row, password})
-                        }                        
+                        if (row.account){
+                          deleteConfirm({...row})
+                        } else {
+                          const password = prompt('삭제할거에요? 비번적어주세요')
+                          if (password!==null){
+                              deleteConfirm({...row, password})
+                          }
+                        }
                     }}>삭제</Button>
                     <div style={{color:'white'}}>{miliduration2date(deltaTime)}</div>
                   </div>
