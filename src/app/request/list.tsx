@@ -159,7 +159,7 @@ export default function Page(props:any) {
       <Table className="text-left text-sm font-light" style={{minWidth:380}}>
         <TableHead className="border-b font-medium dark:border-neutral-500">
           <TableRow style={{backgroundColor:'#999999b5', borderRadius:10, display:'flex', justifyContent:'space-evenly'}}>
-            <TableCell style={{minWidth:70}} className="px-2 py-4">케릭명</TableCell>
+            <TableCell style={{minWidth:80}} className="px-2 py-4">케릭명</TableCell>
             <TableCell style={{width:'100%', textAlign:'center'}} className="px-6 py-4">{`"해줘"`}</TableCell>
             <TableCell style={{minWidth:70}} className="px-2 py-4" >버튼</TableCell>
           </TableRow>
