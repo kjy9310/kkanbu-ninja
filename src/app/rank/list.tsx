@@ -1,7 +1,7 @@
 "use client";
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
-import React , { useEffect, useState } from 'react';
+import React , { useEffect, useState, useRef } from 'react';
 import { ButtonGroup , Button, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputLabel from '@mui/material/InputLabel';
@@ -13,6 +13,7 @@ import Row from './row'
 import SignButton from '../sign/button'
 import { SessionProvider } from "next-auth/react"
 import { CLASS } from './constants'
+
 
 const theme = createTheme({
   palette: {
@@ -26,7 +27,26 @@ const theme = createTheme({
   },
 });
 
+function useIsVisible(ref:any) {
+  const [isIntersecting, setIntersecting] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) =>
+      setIntersecting(entry.isIntersecting)
+    );
+
+    observer.observe(ref.current);
+    return () => {
+      observer.disconnect();
+    };
+  }, [ref]);
+
+  return isIntersecting;
+}
+
 export default function Page(props:any) {
+  const limit = 100
+  const tick = 10
     const {userData, session} = props
   const [original, setOriginal] = useState<any[]>(userData)
   const [filtered, setFilter] = useState<any[]>(userData)
@@ -46,6 +66,23 @@ export default function Page(props:any) {
   const [filterDeath, setDeath] = useState<string>('all')
 
   const [openAccordId, setOpenAccordId] = useState<string>('')
+
+  const [start, setStart] = useState<number>(0);
+
+  const startTag = useRef()
+  const endTag = useRef()
+  const isStart = useIsVisible(startTag)
+  const isEnd = useIsVisible(endTag)
+  
+  useEffect(()=>{
+    if(isEnd && isStart){
+
+    } else if (isEnd && filtered.length > start+limit){
+      setStart((pre)=>pre+tick)
+    } else if(isStart && start >= tick){
+      setStart((pre)=>pre-tick)
+    }
+  },[isStart,isEnd, start])
 
   const classCounts = userData.reduce((acc:any,user:any)=>{
     if (acc[user.class]){
@@ -158,6 +195,11 @@ export default function Page(props:any) {
   const handleChange = (event: SelectChangeEvent) => {
     setLink(event.target.value as string);
   };
+
+  const bottomCount = filtered.length-start-limit>0?filtered.length-start-limit:0
+  const bottomArr = new Array(bottomCount)
+  const startArr = new Array(start)
+  
   return (<ThemeProvider theme={theme}>
   <TableContainer component={Paper} className="listContent">
   <SessionProvider session={session}>
@@ -260,8 +302,18 @@ export default function Page(props:any) {
       >{parseInt(((count / userData.length * 1000) as unknown) as string)/10||'0'}%</span>
     </div>})}
   </div>
-  <div>
-    {filtered&&filtered.length&&filtered.length>0&&filtered.map((row:any, index:number) => <Row key={row.id} row={row} index={index} session={session} openAccordId={openAccordId} setOpenAccordId={setOpenAccordId} />)}
+  <div style={{overflowAnchor: 'none'}}>
+    <div ref={startTag}>
+    {[...startArr].map(()=><div style={{height:70, width:'100%'}}></div>)}
+    </div>
+    
+    {filtered&&filtered.length&&filtered.length>0&&filtered.slice(start, start+limit).map((row:any, index:number) => <Row key={row.id} row={row} index={start+index} session={session} openAccordId={openAccordId} setOpenAccordId={setOpenAccordId} />)}
+    
+    <div ref={endTag}>
+    {[...bottomArr].map((e)=>{
+      return <div style={{height:70, width:'100%'}}>t</div>
+    })} 
+    </div>
   </div>
   </SessionProvider>
 </TableContainer>
