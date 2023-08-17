@@ -118,7 +118,12 @@ const LEAGUE_STRING=process.env.LEAGUE_STRING||'KKANBU (PL38521)'
       bulk.insert(formattedUser)
     })
     user.deleteMany({league: LEAGUE_STRING})
-    await bulk.execute();
+    try{
+      await bulk.execute();
+    }catch(e){
+      console.log('batch error', e)
+    }
+    
   
     console.log('done!')
     const delta = new Date().getTime() - startTime

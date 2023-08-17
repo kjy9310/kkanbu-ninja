@@ -15,11 +15,28 @@ jobs:
           dockerfile: Dockerfile
           repo: kkanbu
           tag: latest #,$CIRCLE_SHA1
-          
+  aws-ecr-batch:
+    docker:
+      - image: cimg/node:20.5
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+      - aws-ecr/build-and-push-image:
+          dockerfile: Dockerfile-batch
+          repo: kkanbu-batch
+          tag: latest
+
 workflows:
   build-and-push-to-ecr:
     jobs:
       - aws-ecr:
+          context:
+            - aws-deploy
+          filters:
+            branches:
+              only:
+                - dev
+      - aws-ecr-batch:
           context:
             - aws-deploy
           filters:
