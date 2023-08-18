@@ -3,7 +3,7 @@ FROM node:20-alpine
 WORKDIR /app/
 
 COPY . .
-#COPY ./package.json ./
+COPY ./package.json ./
 RUN npm install
 
 # 앱 실행
