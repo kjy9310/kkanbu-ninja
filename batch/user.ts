@@ -49,7 +49,7 @@ const fetchingUserData = async () => {
   const { MongoClient } = require('mongodb');
 const dotenv = require('dotenv');
 dotenv.config();
-
+console.log('env', process.env)
 const LEAGUE_STRING=process.env.LEAGUE_STRING||'KKANBU (PL38521)'
 
 
