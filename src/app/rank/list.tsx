@@ -190,7 +190,7 @@ const handleSort=(e:any)=>{
   }
 
   useEffect(()=>{
-    if (filterName==='' && (filterGem===''||filterGem===null) && filterDeath==='all' && filterUnique==='' && filterLink==='' && filterClass===''){
+    if (filterName==='' && (filterGem===''||filterGem===null) && filterDeath==='all' && filterUnique==='' && filterLink==='' && filterClass==='' && sortString==='rank'){
       setFilter(userData)
       return
     }else{
@@ -213,7 +213,7 @@ const handleSort=(e:any)=>{
       setOpenAccordId('')
     }
     
-  },[filterGem, filterName, filterDeath, filterUnique,filterLink, filterClass, userData])
+  },[filterGem, filterName, filterDeath, filterUnique,filterLink, filterClass, userData, sortString])
   
   const handleChange = (event: SelectChangeEvent) => {
     setLink(event.target.value as string);
