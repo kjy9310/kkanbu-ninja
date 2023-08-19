@@ -100,7 +100,8 @@ export default function Row(props:any) {
   <AccordionDetails>
       <Typography className="rankRow" style={{fontSize:'1rem !important',width:'80%',margin:'0 auto'}}>
         <span>{`전체 랭킹: ${row.rank}`}</span>
-        <span>{`조상 랭크: ${row.ancestor}`}</span>
+        {row.ancestor&&<span>{`조상 랭크: ${row.ancestor}`}</span>}
+        {row.depth&&<span>{`팡산: ${row.depth.default} / solo:${row.depth.solo}`}</span>}
         <span >{`챌: ${row.challenges?.completed} `}</span>
         <span>{`계정: ${row.account}`}</span>
         <span >{`Exp.${row.experience} `}</span>

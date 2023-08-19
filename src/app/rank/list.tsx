@@ -85,6 +85,14 @@ const sortSelect = (sortType:string)=>{
       return (a:any, b:any)=>{
         return b.ancestor-a.ancestor===0?a.rank-b.rank:b.ancestor-a.ancestor
       }
+    case 'depth_default':
+      return (a:any, b:any)=>{
+        return (b.depth?.default||0)-(a.depth?.default||0)===0?a.rank-b.rank:(b.depth?.default||0)-(a.depth?.default||0)
+      }
+    case 'depth_solo':
+      return (a:any, b:any)=>{
+        return (b.depth?.solo||0)-(a.depth?.solo||0)===0?a.rank-b.rank:(b.depth?.solo||0)-(a.depth?.solo||0)
+      }
     case'rank':
     default:
     return (a:any,b:any)=>{
@@ -302,6 +310,8 @@ const handleSort=(e:any)=>{
             onChange={handleSort}
           >
           <MenuItem value={'rank'}>일반</MenuItem>
+          <MenuItem value={'depth_default'}>팡산</MenuItem>
+          <MenuItem value={'depth_solo'}>팡산솔로</MenuItem>
           <MenuItem value={'ancestor'}>선조</MenuItem>
         </Select>
         </FormControl>
@@ -314,6 +324,7 @@ const handleSort=(e:any)=>{
           setLink('')
           setGem('')
           setUnique('')
+          setSortString('rank')
         }}>리셋</Button>
         <div>{`${filtered&&filtered.length}명`}</div>
       </div>

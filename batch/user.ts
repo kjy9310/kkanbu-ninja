@@ -11,7 +11,11 @@
 //       "experience": 787751487,
 //       "ancestor": {
 //           "rank": 151
-//       }
+//       },
+// "depth": {
+//   "default": 71,
+//   "solo": 0
+// },
 //   },
 //   "account": {
 //       "name": "name_moon",
@@ -70,7 +74,11 @@ type charInfo={
   class: string;
   experience: number;
   league?: string;
-  ancestor?:{rank:string;}
+  ancestor?:{rank:number;}
+  depth?:{
+    solo:number;
+    default:number
+  }
 }
 
 
@@ -139,7 +147,8 @@ const LEAGUE_STRING=process.env.LEAGUE_STRING||'KKANBU (PL38521)'
       challenges: ranker.account.challenges,
       createdAt: new Date(),
       league: LEAGUE_STRING,
-      ancestor:charInfo.ancestor?.rank||0
+      ancestor:charInfo.ancestor?.rank||0,
+      depth: charInfo.depth
     };
     formattedList.push(formattedUser)
   }

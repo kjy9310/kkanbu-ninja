@@ -42,7 +42,8 @@ export async function GET(request: Request, param:{league:string}) {
                       realm:'$realm',
                       dead:'$dead',
                       items: {$arrayElemAt: ['$item', 0 ]},
-                      ancestor: '$ancestor'
+                      ancestor: '$ancestor',
+                      depth: '$depth'
                   }
               }
 
