@@ -1,3 +1,32 @@
+//user/
+// {
+//   "rank": 20,
+//   "dead": false,
+//   "public": true,
+//   "character": {
+//       "id": "eddcffc0382418abe09d616d34e98ba2a161bfec5c5c4020de87b08ead5c13ec",
+//       "name": "_AnimateWeapon",
+//       "level": 79,
+//       "class": "Necromancer",
+//       "experience": 787751487,
+//       "ancestor": {
+//           "rank": 151
+//       }
+//   },
+//   "account": {
+//       "name": "name_moon",
+//       "realm": "pc",
+//       "challenges": {
+//           "set": "Ancestral",
+//           "completed": 6,
+//           "max": 40
+//       },
+//       "twitch": {
+//           "name": "mskang333"
+//       }
+//   }
+// }
+
 ////////////gem//////////
     // verified: false,
     // w: 1,
@@ -41,6 +70,7 @@ type charInfo={
   class: string;
   experience: number;
   league?: string;
+  ancestor?:{rank:string;}
 }
 
 
@@ -108,7 +138,8 @@ const LEAGUE_STRING=process.env.LEAGUE_STRING||'KKANBU (PL38521)'
       realm: ranker.account.realm,
       challenges: ranker.account.challenges,
       createdAt: new Date(),
-      league: LEAGUE_STRING
+      league: LEAGUE_STRING,
+      ancestor:charInfo.ancestor?.rank||0
     };
     formattedList.push(formattedUser)
   }

@@ -13,6 +13,7 @@ import Row from './row'
 import SignButton from '../sign/button'
 import { SessionProvider } from "next-auth/react"
 import { CLASS } from './constants'
+import { sortAndDeduplicateDiagnostics } from 'typescript';
 
 
 const theme = createTheme({
@@ -73,6 +74,30 @@ export default function Page(props:any) {
   const endTag = useRef<HTMLDivElement | null>(null)
   const isStart = useIsVisible(startTag)
   const isEnd = useIsVisible(endTag)
+
+  
+  const [sortString, setSortString] = useState<string>('rank')
+
+
+const sortSelect = (sortType:string)=>{
+  switch(sortType){
+    case 'ancestor':
+      return (a:any, b:any)=>{
+        return b.ancestor-a.ancestor===0?a.rank-b.rank:b.ancestor-a.ancestor
+      }
+    case'rank':
+    default:
+    return (a:any,b:any)=>{
+      return a.rank-b.rank
+    }
+    
+  }
+
+}
+const handleSort=(e:any)=>{
+  const sortString = e.target.value
+  setSortString(sortString)
+}
   
   useEffect(()=>{
     if(isEnd && isStart){
@@ -183,9 +208,7 @@ export default function Page(props:any) {
           )
         ): true
         return Boolean(gemCheck&&nameCheck&&deathCheck&&uniqueCheck&&linkCheck&&classCheck)
-      }).sort((a:any,b:any)=>{
-        return a.rank-b.rank
-      })
+      }).sort(sortSelect(sortString))
       setFilter(newFiltered)
       setOpenAccordId('')
     }
@@ -267,6 +290,22 @@ export default function Page(props:any) {
         style={{backgroundColor:(filterDeath==='alive'||filterDeath==='all')?'#133d62':'transparent'}}
         onClick={()=>setDeath(filterDeath==='all'?'dead':'all')}>살음</Button>
       </ButtonGroup>
+      <div>
+      <FormControl style={{minWidth:150}}>
+        <InputLabel color="primary" id="rank-type-label">랭크</InputLabel>
+        <Select
+            color="primary"
+            labelId="rank-type-label"
+            id="rank-type-select"
+            value={sortString}
+            label="랭크"
+            onChange={handleSort}
+          >
+          <MenuItem value={'rank'}>일반</MenuItem>
+          <MenuItem value={'ancestor'}>선조</MenuItem>
+        </Select>
+        </FormControl>
+      </div>
       <div>
         <Button variant="outlined" onClick={()=>{
           setDeath('all')
