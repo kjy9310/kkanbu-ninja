@@ -193,7 +193,7 @@ body {
 }
 
 .hover-button > svg {
-  color: white
+  color: #e30065
 }
 
 .hover-button:hover  > svg {

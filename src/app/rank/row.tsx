@@ -54,7 +54,9 @@ export default function Row(props:any) {
     
     const poeAccount = session?.kkanbu?.account
     const deathCamInfo = userInfo.length>0&& userInfo?.find((info:any)=>info.type==="deathCam")
+    const bestInfo = userInfo.length>0&& userInfo?.find((info:any)=>info.type==="best")
     const deathCam = row.info?.find((info:any)=>info.type==="deathCam")
+    const bestCam = row.info?.find((info:any)=>info.type==="best")
   return (<Accordion key={row._id}
     style={{backgroundColor:index%2===0?'#0a0a0acc':'#141414cc'}}
     expanded={expanded}
@@ -89,10 +91,14 @@ export default function Row(props:any) {
           display: 'inline-block'
         }}>{`Lv.${row.level} `}</span>
         <img style={{border: '1px solid black', width:32, height:25, display:'inline-block'}} src={CLASS[row.class]}/>
-        <span style={{color:row.dead?'red':'white'}}>{row.name}</span> {row.account===poeAccount&&'★'}
+        <span style={{color:row.dead?'red':'white'}}>{row.name}</span> {row.account===poeAccount&&' ★ '}
         {deathCam?.url && <Tooltip title={deathCam.updatedAt}><a className='hover-button' style={{height: 20}} href={deathCam.url} target='_blank'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
             </svg></a></Tooltip>}
+        {bestCam?.url && <Tooltip title={"최대업적"}><a className='hover-button' style={{height: 20}} href={bestCam.url} target='_blank'><svg style={{color:'cyan'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+        </svg></a></Tooltip>}
+            
       </span>
       <span style={{display:'flex'}}>
         {row.items?.mainSkills?.map((skillgem:any)=>{
@@ -118,7 +124,8 @@ export default function Row(props:any) {
           </a>
       </Typography>
       <div>
-        {((row.dead && row.account===poeAccount)||deathCamInfo?.url)&&<span className='hover-button' onClick={()=>{
+        {((row.dead && row.account===poeAccount)||deathCamInfo?.url)&&<Tooltip title={"데스캠"}><span className='hover-button' onClick={(e)=>{
+          e.preventDefault()
             if (row.dead && row.account===poeAccount){
                 const defaultValue=deathCamInfo?.url||''
                 const url = prompt('deathCam URL 적어주세요.', defaultValue)
@@ -136,8 +143,27 @@ export default function Row(props:any) {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
             </svg>
-        </span>}
-        
+        </span></Tooltip>}
+        {((row.account===poeAccount)||bestInfo?.url)&&<Tooltip title={"최대업적"}><span className='hover-button' onClick={(e)=>{
+          e.preventDefault()
+            if (row.account===poeAccount){
+                const defaultValue=bestInfo?.url||''
+                const url = prompt('최대업적 URL 적어주세요.', defaultValue)
+                if(url){
+                    putUserInfo({
+                        userId: row.id,
+                        url,
+                        type:'best'
+                    })
+                }
+            }else{
+                window.open(bestInfo.url, '_blank');
+            }
+        }}>
+            <svg style={{color:'cyon'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+            </svg>
+        </span></Tooltip>}
       </div>
   </AccordionDetails>
 </Accordion>
