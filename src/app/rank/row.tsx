@@ -40,7 +40,7 @@ export default function Row(props:any) {
     const {row, index, session, openAccordId, setOpenAccordId} = props
 
     const [expanded, setExpanded] = useState(false)
-    const [userInfo, setUserInfo] = useState<any>({})
+    const [userInfo, setUserInfo] = useState<any>([])
 
     const fetchUserInfo = async (userId:string) =>{
         const res = await getUserInfo(userId)
@@ -53,7 +53,8 @@ export default function Row(props:any) {
     },[row, openAccordId])
     
     const poeAccount = session?.kkanbu?.account
-
+    const deathCamInfo = userInfo.length>0&& userInfo?.find((info:any)=>info.type==="deathCam")
+    const deathCam = row.info?.find((info:any)=>info.type==="deathCam")
   return (<Accordion key={row._id}
     style={{backgroundColor:index%2===0?'#0a0a0acc':'#141414cc'}}
     expanded={expanded}
@@ -70,7 +71,9 @@ export default function Row(props:any) {
     }
   >
   <AccordionSummary
-    expandIcon={<span style={{color:'white'}}>V</span>}
+    expandIcon={<span style={{color:'white'}}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
+    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"/>
+</svg></span>}
     aria-controls="panel1a-content"
     id="panel1a-header"
   >
@@ -87,6 +90,9 @@ export default function Row(props:any) {
         }}>{`Lv.${row.level} `}</span>
         <img style={{border: '1px solid black', width:32, height:25, display:'inline-block'}} src={CLASS[row.class]}/>
         <span style={{color:row.dead?'red':'white'}}>{row.name}</span> {row.account===poeAccount&&'★'}
+        {deathCam?.url && <Tooltip title={deathCam.updatedAt}><a className='hover-button' style={{height: 20}} href={deathCam.url} target='_blank'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+            </svg></a></Tooltip>}
       </span>
       <span style={{display:'flex'}}>
         {row.items?.mainSkills?.map((skillgem:any)=>{
@@ -100,7 +106,7 @@ export default function Row(props:any) {
   <AccordionDetails>
       <Typography className="rankRow" style={{fontSize:'1rem !important',width:'80%',margin:'0 auto'}}>
         <span>{`전체 랭킹: ${row.rank}`}</span>
-        {row.ancestor&&<span>{`조상 랭크: ${row.ancestor}`}</span>}
+        {row.ancestor&&<span>{`조상님 랭크: ${row.ancestor}`}</span>}
         {row.depth&&<span>{`팡산: ${row.depth.default} / solo:${row.depth.solo}`}</span>}
         <span >{`챌: ${row.challenges?.completed} `}</span>
         <span>{`계정: ${row.account}`}</span>
@@ -112,18 +118,19 @@ export default function Row(props:any) {
           </a>
       </Typography>
       <div>
-        {(userInfo?.deathCamUrl||(row.dead && row.account===poeAccount))&&<span className='hover-button' onClick={()=>{
+        {((row.dead && row.account===poeAccount)||deathCamInfo?.url)&&<span className='hover-button' onClick={()=>{
             if (row.dead && row.account===poeAccount){
-                const defaultValue=userInfo?.deathCamUrl||''
-                const url = prompt('URL 적어주세요.', defaultValue)
+                const defaultValue=deathCamInfo?.url||''
+                const url = prompt('deathCam URL 적어주세요.', defaultValue)
                 if(url){
                     putUserInfo({
                         userId: row.id,
-                        deathCamUrl:url
+                        url,
+                        type:'deathCam'
                     })
                 }
             }else{
-                window.open(userInfo.deathCamUrl, '_blank');
+                window.open(deathCamInfo.url, '_blank');
             }
         }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

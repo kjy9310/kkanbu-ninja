@@ -27,7 +27,15 @@ export async function GET(request: Request, param:{league:string}) {
                   foreignField: 'id',
                   as: 'item'
                   }
-              },{
+              },
+              {
+                '$lookup':{
+                              from: `${process.env.collection_prefix}_user_info`,
+                              localField: 'id',
+                              foreignField: 'userId',
+                              as: 'info'
+                              }
+                          },{
                   $project:{
                       rank:'$rank',
                       challenges:'$challenges',
@@ -43,7 +51,8 @@ export async function GET(request: Request, param:{league:string}) {
                       dead:'$dead',
                       items: {$arrayElemAt: ['$item', 0 ]},
                       ancestor: '$ancestor',
-                      depth: '$depth'
+                      depth: '$depth',
+                      info: '$info'
                   }
               }
 

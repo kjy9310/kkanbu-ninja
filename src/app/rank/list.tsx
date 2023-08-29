@@ -93,6 +93,14 @@ const sortSelect = (sortType:string)=>{
       return (a:any, b:any)=>{
         return (b.depth?.solo||0)-(a.depth?.solo||0)===0?a.rank-b.rank:(b.depth?.solo||0)-(a.depth?.solo||0)
       }
+    case 'death_cam':
+      return (a:any, b:any)=>{
+        const bDeathCam = b.info.find((info:any)=>info.type==="deathCam")
+        const aDeathCam = a.info.find((info:any)=>info.type==="deathCam")
+        const bInfo = (new Date(bDeathCam?.updatedAt).getTime()||0)
+        const aInfo = (new Date(aDeathCam?.updatedAt).getTime()||0)
+        return bInfo-aInfo===0?a.rank-b.rank:bInfo-aInfo
+      }
     case'rank':
     default:
     return (a:any,b:any)=>{
@@ -313,6 +321,7 @@ const handleSort=(e:any)=>{
           <MenuItem value={'depth_default'}>팡산</MenuItem>
           <MenuItem value={'depth_solo'}>팡산솔로</MenuItem>
           <MenuItem value={'ancestor'}>선조</MenuItem>
+          <MenuItem value={'death_cam'}>데스캠최신순</MenuItem>
         </Select>
         </FormControl>
       </div>

@@ -17,7 +17,7 @@ export async function GET(request: Request, param:any) {
         await client.connect();
         const db = client.db(dbName);
         const collection = db.collection(`${process.env.collection_prefix}_user_info`);
-        const userInfo = await collection.findOne({userId:userId})
+        const userInfo = await collection.find({userId:userId}).toArray()
         client.close()
         return NextResponse.json(userInfo)
     }catch(e){
