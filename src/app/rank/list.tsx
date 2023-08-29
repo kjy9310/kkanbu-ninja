@@ -343,7 +343,11 @@ const handleSort=(e:any)=>{
         onClick={getCsv}>CSV</Button>
       </div>
   </div>
-  <div className='classes'>{Object.keys(CLASS).map(className=>{
+  <div className='classes'>{Object.keys(classCounts).sort((a:string,b:string)=>{
+    const classA = classCounts[a]
+    const classB = classCounts[b]
+    return classB-classA
+  }).map(className=>{
     const count = classCounts[className]
     return <div key={`search-${className}`} onClick={()=>setClass(filterClass===className?'':className)} style={{border:filterClass===className?'3px solid #133d62':'none'}} className='classBox'>
       <div className="classImg" style={{backgroundImage: `url(${CLASS[className]})`}}></div>
