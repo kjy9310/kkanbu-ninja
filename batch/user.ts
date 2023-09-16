@@ -100,11 +100,13 @@ const LEAGUE_STRING=process.env.LEAGUE_STRING||'KKANBU (PL38521)'
   let offset = 0
   const limit = 200
   while(maxCount > rankList.length){
-    const res = await fetch(`https://www.pathofexile.com/api/ladders?offset=${offset}&limit=${limit}&id=${LEAGUE_STRING}&type=league`, {
+    const url = `https://www.pathofexile.com/api/ladders/${LEAGUE_STRING}?offset=${offset}&limit=${limit}&id=${LEAGUE_STRING}&type=league`
+    const res = await fetch(url, {
       headers: {
-        'Content-Type': 'application/json',
+        "User-Agent": "curl/7.81.0",
       },
     });
+    console.log('res', res.status)
     const data = await res.json()
     maxCount = data.total
     
