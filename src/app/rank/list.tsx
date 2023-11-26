@@ -3,7 +3,6 @@ import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
 import React , { useEffect, useState, useRef } from 'react';
 import { ButtonGroup , Button, TextField } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -13,8 +12,7 @@ import Row from './row'
 import SignButton from '../sign/button'
 import { SessionProvider } from "next-auth/react"
 import { CLASS } from './constants'
-import { sortAndDeduplicateDiagnostics } from 'typescript';
-
+import {AutocompleteWithChip} from './autocompleteWithChip'
 
 const theme = createTheme({
   palette: {
@@ -58,12 +56,10 @@ export default function Page(props:any) {
   const [filterName, setName] = useState<string>('')
   const [filterLink, setLink] = useState<string>('')
   
-  const [filterGem, setGem] = useState<string>('')
-  const [filterGemInput, setGemInput] = useState<string>('')
+  const [filterGems, setGems] = useState<any>([])
   
-  const [filterUnique, setUnique] = useState<string>('')
-  const [filterUniqueInput, setUniqueInput] = useState<string>('')
-
+  const [filterUniques, setUniques] = useState<any>([])
+  
   const [filterDeath, setDeath] = useState<string>('all')
 
   const [openAccordId, setOpenAccordId] = useState<string>('')
@@ -75,7 +71,7 @@ export default function Page(props:any) {
   const isStart = useIsVisible(startTag)
   const isEnd = useIsVisible(endTag)
 
-  
+  const [classCounts, setClassCounts] = useState<any>([])
   const [sortString, setSortString] = useState<string>('rank')
 
 
@@ -125,15 +121,6 @@ const handleSort=(e:any)=>{
     }
   },[isStart,isEnd, start])
 
-  const classCounts = userData.reduce((acc:any,user:any)=>{
-    if (acc[user.class]){
-      acc[user.class] = acc[user.class]+1
-    } else {
-      acc[user.class] = 1
-    }
-    return acc
-  },{})
-
   const downloadCsv = function (data:any) {
     const blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
  
@@ -174,45 +161,132 @@ const handleSort=(e:any)=>{
     downloadCsv([header,...commaSeperated].join('\n'))
   }
 
+  const getGemList= async (data:any)=>{
+    const filterGemNames = filterGems.map((e:any)=>e.name)
+    const gemSet = await data?.reduce((acc:any, user:any)=>{
+      user.items?.allGems?.forEach((gemName:any)=>{
+        if (filterGemNames.includes(gemName)){
+        }else if (acc[gemName]){
+          acc[gemName] = {name:gemName, count: acc[gemName].count+1}
+        }else{
+          acc[gemName] = {name:gemName, count: 1}
+        }
+      })
+      return acc
+    },{} as any)
+    const orderedGemSetList = Object.values(gemSet).sort((a:any,b:any)=>{
+      return b.count - a.count
+    })
+    return orderedGemSetList
+  }
+
+  const getUniqueList = async (data:any) =>{
+    const filterUniqueNames = filterUniques.map((e:any)=>e.name)
+    const uniqueSet = await data?.reduce((acc:any, user:any)=>{
+      user.items?.allUniques?.forEach((unique:string)=>{
+        if (filterUniqueNames.includes(unique)){
+        }else if (acc[unique]){
+          acc[unique] = {name:unique, count: acc[unique].count+1}
+        }else{
+          acc[unique] = {name:unique, count: 1}
+        }
+      })
+      return acc
+    },{} as any)
+    setUniqueList(["",...Array.from(uniqueSet||[])].sort())
+    const orderedUniqueSetList = Object.values(uniqueSet).sort((a:any,b:any)=>{
+      return b.count - a.count
+    })
+    return orderedUniqueSetList
+  }
+
   useEffect(()=>{
     (async () => {
-      setOriginal(userData)
-      
-      const gemSet = await userData?.reduce((acc:any, user:any)=>{
-        user.items?.allGems?.forEach((gemName:any)=>{
-          acc.add(gemName)
-        })
-        
+      // setOriginal(userData)
+      const gemListSet = await getGemList(filtered)
+      setGemList(gemListSet)
+      const uniqueListSet = await getUniqueList(filtered)
+      setUniqueList(uniqueListSet)
+      // setFilter(userData)
+      setClassCounts(filtered.reduce((acc:any,user:any)=>{
+        if (acc[user.class]){
+          acc[user.class] = acc[user.class]+1
+        } else {
+          acc[user.class] = 1
+        }
         return acc
-      },new Set())
-      
-      setGemList(["",...Array.from(gemSet||[])].sort())
-
-      const uniqueSet = await userData?.reduce((acc:any, user:any)=>{
-        user.items?.allUniques?.forEach((unique:string)=>{
-          acc.add(unique)
-        })
-        
-        return acc
-      },new Set())
-      setUniqueList(["",...Array.from(uniqueSet||[])].sort())
-      setFilter(userData)
+      },{
+        "Juggernaut":0,
+        "Guardian":0,
+        "Champion":0,
+        "Pathfinder":0,
+        "Necromancer":0,
+        "Raider":0,
+        "Occultist":0,
+        "Ascendant":0,
+        "Hierophant":0,
+        "Saboteur":0,
+        "Chieftain":0,
+        "Elementalist":0,
+        "Deadeye":0,
+        "Inquisitor":0,
+        "Gladiator":0,
+        "Slayer":0,
+        "Trickster":0,
+        "Berserker":0,
+        "Assassin":0,
+        "Duelist":0,
+        "Shadow":0,
+        "Ranger":0,
+        "Witch":0,
+        "Templar":0,
+        "Marauder":0,
+        "Scion":0}))
     })()
-  },[userData])
+  },[filtered])
   
   
   const findName = (e:any)=>{
     setName(e.target.value||'')
   }
 
+  const gemSelectedCheck = (gems?:any)=>{
+    if (!gems){
+      return false
+    }
+    const filterGemNames = filterGems.map((e:any)=>e.name)
+    const isMatched = filterGemNames.reduce((acc:boolean, filterGemName:any)=>{
+      return acc&&(gems||[]).includes(filterGemName)
+    },true)
+    return isMatched
+  }
+
+  const uniqueSelectedCheck = (allUniques?:any)=>{
+    if (!allUniques){
+      return false
+    }
+    const filterUniqueNames = filterUniques.map((e:any)=>e.name)
+    const isMatched = filterUniqueNames.reduce((acc:boolean, filterName:any)=>{
+      return acc&&(allUniques||[]).includes(filterName)
+    },true)
+    return isMatched
+  }
+
   useEffect(()=>{
-    if (filterName==='' && (filterGem===''||filterGem===null) && filterDeath==='all' && filterUnique==='' && filterLink==='' && filterClass==='' && sortString==='rank'){
+    if (filterName==='' && (filterGems.length===0) && filterDeath==='all' && filterUniques.length===0 && filterLink==='' && filterClass==='' && sortString==='rank'){
       setFilter(userData)
       return
     }else{
       const newFiltered = userData.filter((user:any)=>{
-        const gemCheck = filterGem ? user.items?.allGems?.findIndex((gem:any)=>gem===filterGem)>-1 : true
-        const uniqueCheck = filterUnique ? user.items?.allUniques?.findIndex((unique:any)=>unique===filterUnique)>-1 : true
+        const gemCheck = filterGems.length>0 
+        ? gemSelectedCheck(user.items?.allGems)
+        // ? user.items?.allGems?.findIndex((gem:any)=>gem===filterGem)>-1 
+        : true
+
+        const uniqueCheck = filterUniques.length>0 
+        ? uniqueSelectedCheck(user.items?.allUniques)
+        //? user.items?.allUniques?.findIndex((unique:any)=>unique===filterUnique)>-1 
+        : true
         const deathCheck = filterDeath === 'all'? true : filterDeath==='dead'?user.dead:!user.dead
         const classCheck = filterClass ? filterClass===user.class :true
         const nameCheck = filterName ? (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName)) : true
@@ -229,7 +303,7 @@ const handleSort=(e:any)=>{
       setOpenAccordId('')
     }
     
-  },[filterGem, filterName, filterDeath, filterUnique,filterLink, filterClass, userData, sortString])
+  },[filterGems, filterName, filterDeath, filterUniques,filterLink, filterClass, userData, sortString])
   
   const handleChange = (event: SelectChangeEvent) => {
     setLink(event.target.value as string);
@@ -247,38 +321,16 @@ const handleSort=(e:any)=>{
     <TextField color="primary" style={{minWidth:150}} 
       id="outlined-basic" label="검색" 
       variant="outlined" onChange={findName} value={filterName} />
-    <Autocomplete
-      color="primary"
-      disablePortal
-      id="combo-box-gem"
-      options={gemList}
-      sx={{ width: 300 }}
-      value={filterGem}
-        onChange={(event: any, newValue: string |null) => {
-          setGem(newValue||'');
-        }}
-        inputValue={filterGemInput}
-        onInputChange={(event, newInputValue) => {
-          setGemInput(newInputValue);
-        }}
-      renderInput={(params) => <TextField {...params} label="쩸" />}
-    />
-    <Autocomplete
-    color="primary"
-      disablePortal
-      id="combo-box-unique"
-      options={uniqueList}
-      sx={{ width: 300 }}
-      value={filterUnique}
-        onChange={(event: any, newValue: string |null) => {
-          setUnique(newValue||'');
-        }}
-        inputValue={filterUniqueInput}
-        onInputChange={(event, newInputValue) => {
-          setUniqueInput(newInputValue);
-        }}
-      renderInput={(params) => <TextField {...params} label="유닠" />}
-    />
+      <AutocompleteWithChip
+      data={gemList}
+      onChange={(gemList:any)=>setGems(gemList)}
+      name="쨈"
+      />
+      <AutocompleteWithChip
+      data={uniqueList}
+      onChange={(uniqueList:any)=>setUniques(uniqueList)}
+      name="유닠"
+      />
     <FormControl style={{minWidth:150}}>
         <InputLabel color="primary" id="demo-simple-select-label">링크</InputLabel>
         <Select
@@ -331,8 +383,8 @@ const handleSort=(e:any)=>{
           setClass('')
           setName('')
           setLink('')
-          setGem('')
-          setUnique('')
+          setGems([])
+          setUniques([])
           setSortString('rank')
         }}>리셋</Button>
         <div>{`${filtered&&filtered.length}명`}</div>
