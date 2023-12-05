@@ -42,10 +42,15 @@
   height: 35px;
 }
 .rankLink:hover .hidden{
-  display:inline;
+  display:flex;
   position: absolute;
   top: 30px;
   left: 0px;
+  z-index: 1000;
+}
+.rankLink:hover .hidden a{
+  margin: 0;
+  min-width: 50px
 }
 
 body {
