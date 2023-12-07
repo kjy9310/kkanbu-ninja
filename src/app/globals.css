@@ -19,30 +19,30 @@
 @media screen and (-webkit-device-pixel-ratio: 1.5) {
   /* CSS for high-density screens */
   #header {
-      background:magenta;
+    background: magenta;
   }
 }
 
 @media screen and (-webkit-device-pixel-ratio: 0.75) {
   /* CSS for low-density screens */
   #header {
-      background:pink;
+    background: pink;
   }
 }
 
-.rankLink{
-  position:relative
+.rankLink {
+  position: relative;
 }
 
-.rankLink .hidden{
-  display:none
+.rankLink .hidden {
+  display: none;
 }
-.rankLink:hover{
-  display:inline-block;
+.rankLink:hover {
+  display: inline-block;
   height: 35px;
 }
-.rankLink:hover .hidden{
-  display:inline;
+.rankLink:hover .hidden {
+  display: inline;
   position: absolute;
   top: 30px;
   left: 0px;
@@ -60,28 +60,28 @@ body {
 
 .search {
   display: inline-flex;
-  background-color:#e1e1e1a3;
+  background-color: #e1e1e1a3;
   border-radius: 10px;
   padding: 10px 10px 6px;
   max-width: 1130px;
 }
 
 .search > div {
-    margin:5px;
+  margin: 5px;
 }
 
-.rankRow{
+.rankRow {
   display: inline-flex;
   justify-content: space-between;
-  color:white;
-  width:100%;
+  color: white;
+  width: 100%;
   font-size: 1.3rem !important;
-  line-height:45px;
+  line-height: 45px;
 }
 
 @media only screen and (max-width: 1350px) {
   main.p-24 {
-    padding:0
+    padding: 0;
   }
 }
 
@@ -90,25 +90,24 @@ body {
     justify-content: center;
     display: flex;
   }
-  
 }
 
 @media only screen and (max-width: 840px) {
-  table{
+  table {
     min-width: 335px;
   }
   .search {
     display: flex;
     flex-direction: column;
   }
-  .search > div{
-    width:100%;
+  .search > div {
+    width: 100%;
   }
   th {
     overflow: hidden;
     display: block !important;
     width: 30%;
-    border-bottom:none !important
+    border-bottom: none !important;
   }
   th.hiddenOnMoblie {
     display: none !important;
@@ -116,15 +115,15 @@ body {
   tr:hover.showOnHover th {
     overflow: auto;
     display: block !important;
-    width: 40%
+    width: 40%;
   }
   th.removeOnMobile {
-    display: none  !important;
+    display: none !important;
   }
   tr:hover.showOnHover th.removeOnMobile {
-    display: none  !important;
+    display: none !important;
   }
-  .rankRow{
+  .rankRow {
     flex-direction: column;
     font-size: 1rem !important;
     text-align: left;
@@ -141,10 +140,11 @@ body {
 }
 .classes {
   text-align: center;
-  background-color: #646464b5;
-    padding: 10px 0 3px 0;
-    border-radius: 7px;
-    margin: 20px 0;
+  /* background-color: aqua; */
+  /* background-color: #646464b5; */
+  /* padding: 10px 0 3px 0; */
+  /* border-radius: 7px; */
+  /* margin: 20px 0; */
 }
 .classes .classBox {
   display: inline-block;
@@ -153,55 +153,56 @@ body {
   min-width: 40px;
   min-height: 40px;
   height: 2.4vw;
+  margin-left: 10px;
   box-sizing: border-box;
   position: relative;
 }
 
-.classImg{
+.classImg {
   background-size: cover;
   background-position: center center;
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
 }
 
-.classImg:hover{
-  opacity: .6;
-  cursor:pointer
+.classImg:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }
 
-.background{
+.background {
   background-image: url(https://web.poecdn.com/protected/image/layout/ancestor-bg.jpg?v=1692145313116&key=EZnPlsvdgPo5qWE6ZraQGg);
   background-size: cover;
   background-position: center center;
   position: fixed;
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
 }
 
-.listContent{
-  min-width:335px;
+.listContent {
+  min-width: 335px;
   background-color: transparent !important;
   text-align: center;
 }
 
 .button {
-  color:#fb4ab0;
+  color: #fb4ab0;
 }
 
-.rankRow span{
-  margin:0 .2rem;
+.rankRow span {
+  margin: 0 0.2rem;
 }
 
 .hover-button {
-  display:inline-block;
+  display: inline-block;
   cursor: pointer;
 }
 
 .hover-button > svg {
-  color: #e30065
+  color: #e30065;
 }
 
-.hover-button:hover  > svg {
+.hover-button:hover > svg {
   color: pink;
-  background-color:'white'
+  background-color: "white";
 }
