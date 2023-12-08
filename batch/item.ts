@@ -1,3 +1,4 @@
+// passive https://www.pathofexile.com/character-window/get-passive-skills?accountName=%25EC%258B%25A0%25EA%25B8%25B0%25ED%2595%2598%25EB%258B%25B9&realm=pc&character=%25EB%2598%2590%25EB%25B0%2595%25EC%2582%25B4_%25EC%258B%25A0%25EA%25B8%25B0%25ED%2595%2598%25EB%258B%25B9
 
 const POEHOST = 'https://poe.game.daum.net/'
 // const POEHOST = 'https://www.pathofexile.com/'
@@ -7,7 +8,7 @@ const fetchingItemData = async () => {
 const dotenv = require('dotenv');
 dotenv.config();
 
-const updateHourLimit = 6 * 60 //12hour
+const updateHourLimit = 30 // min
 
 // Connection URL
 const client = new MongoClient(process.env.mongodb||'no db env');
