@@ -8,7 +8,7 @@ const fetchingItemData = async () => {
 const dotenv = require('dotenv');
 dotenv.config();
 
-const updateHourLimit = 30 // min
+const updateHourLimit = 1 * 60 // min
 
 // Connection URL
 const client = new MongoClient(process.env.mongodb||'no db env');

@@ -1,8 +1,16 @@
 FROM node:20-alpine
 
+ENV LUA_PATH "/app/PathOfBuilding/runtime/lua/?.lua;;/app/PathOfBuilding/runtime/lua/?/init.lua;;"
+
+RUN apk add --update git gcc musl-dev zlib-dev luajit lua5.1 lua5.1-dev luarocks5.1
+RUN luarocks-5.1 install lua-zlib ZLIB_DIR=/usr
+
+
 WORKDIR /app/
+RUN git clone https://github.com/PathOfBuildingCommunity/PathOfBuilding.git
+
 COPY . .
 COPY ./package.json ./
 RUN npm install
-
+RUN mkdir json
 CMD [ "npm", "run", "batch:all"]

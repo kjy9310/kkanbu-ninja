@@ -10,7 +10,8 @@
     "lint": "next lint",
     "batch:users": "npx ts-node ./batch/user.ts > ./logs/userbatch_`date +%Y-%m-%d`.log",
     "batch:items": "npx ts-node ./batch/item.ts > ./logs/itembatch_`date +%Y-%m-%d_%H`.log",
-    "batch:all": "npx ts-node ./batch/user.ts && npx ts-node ./batch/item.ts"
+    "batch:pob": "npx ts-node ./batch/pob.ts",
+    "batch:all": "npx ts-node ./batch/user.ts && npx ts-node ./batch/item.ts && npx ts-node ./batch/pob.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
