@@ -2,7 +2,7 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 
 function execute(command:string, callback:Function){
-    exec(command, function(error:any, stdout:any, stderr:any){ callback(stdout); });
+    exec(command, function(error:any, stdout:any, stderr:any){ callback(error, stdout, stderr); });
 };
 console.log("pob batch starting...")
 const ItemJsonPath = "/app/json/item.json"
@@ -101,6 +101,7 @@ const batchMain = async () => {
             if (!successI){
                 if (retryDelayI){
                     if (parseInt(retryDelayI||'')>=600){
+                        client.close()
                         console.log('retryDelay over 600 stop for now ', new Date() )
                         const delta = new Date().getTime() - startTime
                         console.log('delta time : ', delta)
@@ -112,13 +113,17 @@ const batchMain = async () => {
             }
             let { success:successI2, json:jsonI, error:errorI, deleted:deletedI } = Ires||{}
             if(successI2 && jsonI){
-                await new Promise((r)=>fs.writeFile(ItemJsonPath, JSON.stringify(jsonI), 'utf8', r))
+                console.log('got item saving file...', JSON.stringify(jsonI).slice(0,100))
+                const itemError = await new Promise((r)=>fs.writeFile(ItemJsonPath, JSON.stringify(jsonI), 'utf8', r))
+                console.log('itemError', itemError)
+                console.log('saved')
             }
             let Tres = await getJson(typeJson.TREE,user)
             const { success:successT, retryDelay:retryDelayT } = Ires||{}
             if (!successT){
                 if (retryDelayT){
                     if (parseInt(retryDelayT||'')>=600){
+                        client.close()
                         console.log('retryDelay over 600 stop for now ', new Date() )
                         const delta = new Date().getTime() - startTime
                         console.log('delta time : ', delta)
@@ -130,18 +135,23 @@ const batchMain = async () => {
             }
             let { success:successT2, json:jsonT, error:errorT, deleted:deletedT } = Tres||{}
             if(successT2 && jsonT){
-                await new Promise((r)=>fs.writeFile(TreeJsonPath, JSON.stringify(jsonT), 'utf8',r))
+                console.log('got Tree saving file...', JSON.stringify(jsonT).slice(0,100))
+                const treeError = await new Promise((r)=>fs.writeFile(TreeJsonPath, JSON.stringify(jsonT), 'utf8',r))
+                console.log('treeError',treeError)
+                console.log('saved')
             }
-
+            console.log('executing')
             const pobResult = await new Promise((r)=>{
-                execute("cd /app/PathOfBuilding/src/ && sh kkanbu.sh",(std:string)=>{
+                execute("cd /app/PathOfBuilding/src/ && sh kkanbu.sh",(err:any, std:string, stderr:any)=>{
+                    console.log(err)
+                    // console.log(std)
+                    // console.log(stderr)
                     const line = std.split("\n")
                     const regex = /\[\((.*)\)\]/
                     const filtered = line.reduce((acc:any, oneLine:string, index:number)=>{
                         const matches = oneLine.match(regex)
                         if (matches){
                             if (matches[1]==="POB"){
-                                
                                 acc.POB=line[index+1]
                             }else{
                                 const keyVal = matches[1].split(":")
@@ -159,6 +169,9 @@ const batchMain = async () => {
                 EnergyShield,
                 POB
             } = pobResult as any
+            console.log("got data : ",{TotalEHP,
+                LifeUnreserved,
+                EnergyShield,})
             const newPobDatum={
                 id: user.id,
                 TotalEHP,
@@ -174,6 +187,11 @@ const batchMain = async () => {
             pob.insertOne(newPobDatum)
         }
     }
+    client.close()
+    console.log('done!')
+    const delta = new Date().getTime() - startTime
+    console.log('delta time : ', delta)
+    process.exit(0)
 }
 
 batchMain()

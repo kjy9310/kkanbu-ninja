@@ -98,8 +98,10 @@ export default function Row(props:any) {
         {bestCam?.url && <Tooltip title={"최대업적"}><a className='hover-button' style={{height: 20}} href={bestCam.url} target='_blank'><svg style={{color:'cyan'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
         </svg></a></Tooltip>}
-            
       </span>
+      {row.life.length>0&&<span style={{color:'red'}}>피:{row.life}</span>}
+      {row.energyShield.length>0&&<span style={{color:'cyan'}}>에실:{row.energyShield}</span>}
+      {row.eHp.length>0&&<span style={{color:'magenta'}}>eHP:{(isNaN(parseInt(row.eHp))?"ㅁ?ㄹ":parseInt(row.eHp))}</span>}
       <span style={{display:'flex'}}>
         {row.items?.mainSkills?.map((skillgem:any)=>{
           return <Tooltip key={skillgem.id} title={skillgem.baseType}>
@@ -122,6 +124,18 @@ export default function Row(props:any) {
           target='_blank' href={`${POEHOST}account/view-profile/${encodeURIComponent(row.account)}/characters?characterName=${encodeURIComponent(row.name)}`}>
             POE
           </a>
+        {row.pob.length>0&&<a
+        style={{    backgroundColor: '#4c1362', textAlign:'center', cursor:'pointer',
+        display: 'inline-block', padding: '2px 10px', borderRadius: 5}}
+        onClick={()=>{
+          const text = row.pob
+          navigator.clipboard.writeText(text).then(function() {
+            alert('복사완료');
+          }, function(err) {
+            alert('복사가 안됬어요.ㅠㅠ : '+text)
+          });
+        }}
+        >POB</a>}
       </Typography>
       <div>
         {((row.dead && row.account===poeAccount)||deathCamInfo?.url)&&<Tooltip title={"데스캠"}><span className='hover-button' onClick={(e)=>{

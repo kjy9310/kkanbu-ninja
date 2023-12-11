@@ -222,8 +222,11 @@ function readAll(file)
     return content
 end
 
+print("read all start")
 local charItem = readAll("/app/json/item.json")
+print("charItem read")
 local charTree = readAll("/app/json/tree.json")
+print("charTree read")
 
 loadBuildFromJSON(charItem, charTree)
 runCallback("OnFrame")

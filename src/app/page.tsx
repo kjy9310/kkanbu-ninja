@@ -19,9 +19,6 @@ async function getUserData() {
 
 export default async function Page() {
     const data = await getUserData()
-    data.forEach((u:any)=>{
-      u.depth && console.log(u)
-    })
     const session = await getServerSession(authOptions)
     return <main className="flex flex-col items-center justify-between p-24">
     <RankList userData={data||[]} session={session}/>
