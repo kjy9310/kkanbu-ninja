@@ -263,13 +263,19 @@ for key, value in pairs(build.displayStats) do
         -- print(valueKey)
         -- print(valueStat)
     end
-
-    if value.stat == "EnergyShield" then
+	if value.stat == "LifeRecoverable" then
         local oneline = "[("..valueKey..":"..valueStat..")]"
         print(oneline)
     end
-
+	if value.stat == "EnergyShield" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
     if value.stat == "TotalEHP" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	if value.stat == "CombinedDPS" then
         local oneline = "[("..valueKey..":"..valueStat..")]"
         print(oneline)
     end

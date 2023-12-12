@@ -165,18 +165,25 @@ const batchMain = async () => {
             })
             const {
                 TotalEHP,
+                LifeRecoverable,
                 LifeUnreserved,
                 EnergyShield,
+                CombinedDPS,
                 POB
             } = pobResult as any
             console.log("got data : ",{TotalEHP,
+                LifeRecoverable,
                 LifeUnreserved,
-                EnergyShield,})
+                EnergyShield,
+                CombinedDPS,
+                POB})
             const newPobDatum={
                 id: user.id,
                 TotalEHP,
+                LifeRecoverable,
                 LifeUnreserved,
                 EnergyShield,
+                CombinedDPS,
                 POB,
                 createdAt: new Date(),
                 isDead:user.dead,

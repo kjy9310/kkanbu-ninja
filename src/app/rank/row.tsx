@@ -99,9 +99,10 @@ export default function Row(props:any) {
             <path strokeLinecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
         </svg></a></Tooltip>}
       </span>
-      {row.life.length>0&&<span style={{color:'red'}}>피:{row.life}</span>}
-      {row.energyShield.length>0&&<span style={{color:'cyan'}}>에실:{row.energyShield}</span>}
-      {row.eHp.length>0&&<span style={{color:'magenta'}}>eHP:{(isNaN(parseInt(row.eHp))?"ㅁ?ㄹ":parseInt(row.eHp))}</span>}
+      {row.pob&&<span style={{color:'red'}}>피:{((row.pob.LifeRecoverable&&parseInt(row.pob.LifeRecoverable)>0)?row.pob.LifeRecoverable:row.pob.LifeUnreserved)}</span>}
+      {row.pob&&<span style={{color:'cyan'}}>에실:{row.pob.EnergyShield}</span>}
+      {row.pob&&<span style={{color:'magenta'}}>eHP:{(isNaN(parseInt(row.pob.TotalEHP))?"ㅁ?ㄹ":parseInt(row.pob.TotalEHP))}</span>}
+      {row.pob&&<span style={{color:'white'}}>dps:{(isNaN(parseInt(row.pob.CombinedDPS))?"ㅁ?ㄹ":parseInt(row.pob.CombinedDPS))}</span>}
       <span style={{display:'flex'}}>
         {row.items?.mainSkills?.map((skillgem:any)=>{
           return <Tooltip key={skillgem.id} title={skillgem.baseType}>
@@ -124,11 +125,11 @@ export default function Row(props:any) {
           target='_blank' href={`${POEHOST}account/view-profile/${encodeURIComponent(row.account)}/characters?characterName=${encodeURIComponent(row.name)}`}>
             POE
           </a>
-        {row.pob.length>0&&<a
+        {row.pob&&<a
         style={{    backgroundColor: '#4c1362', textAlign:'center', cursor:'pointer',
         display: 'inline-block', padding: '2px 10px', borderRadius: 5}}
         onClick={()=>{
-          const text = row.pob
+          const text = row.pob.POB
           navigator.clipboard.writeText(text).then(function() {
             alert('복사완료');
           }, function(err) {

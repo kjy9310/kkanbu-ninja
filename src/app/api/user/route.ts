@@ -60,10 +60,7 @@ export async function GET(request: Request, param:{league:string}) {
         ancestor: '$ancestor',
         depth: '$depth',
         info: '$info',
-        life: '$pob.LifeUnreserved',
-        energyShield: '$pob.EnergyShield',
-        eHp: '$pob.TotalEHP',
-        pob: '$pob.POB',
+        pob: {$arrayElemAt: ['$pob', 0 ]},
     }
 },
 
