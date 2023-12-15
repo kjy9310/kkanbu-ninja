@@ -188,7 +188,7 @@ end
 
 -- The build module; once a build is loaded, you can find all the good stuff in here
 build = mainObject.main.modes["BUILD"]
-
+local data = build.data
 -- Here's some helpful helper functions to help you get started
 function newBuild()
 	mainObject.main:SetMode("BUILD", false, "Help, I'm stuck in Path of Building!")
@@ -245,7 +245,36 @@ function printTable(t, indent)
         end
     end
 end
+local m_max = math.max
 
+local defaultEleResist = 50
+build.configTab.varControls['enemyLightningResist']:SetPlaceholder(defaultEleResist, true)
+build.configTab.varControls['enemyColdResist']:SetPlaceholder(defaultEleResist, true)
+build.configTab.varControls['enemyFireResist']:SetPlaceholder(defaultEleResist, true)
+build.configTab.varControls['enemyChaosResist']:SetPlaceholder(30, true)
+
+local defaultLevel = 84
+build.configTab.varControls['enemyLevel']:SetPlaceholder(defaultLevel, true)
+build.configTab:UpdateLevel()
+if build.configTab.enemyLevel then
+	defaultLevel = m_max(build.configTab.enemyLevel, defaultLevel)
+end
+
+local defaultDamage = round(data.monsterDamageTable[defaultLevel] * 1.5  * data.misc.pinnacleBossDPSMult)
+build.configTab.varControls['enemyPhysicalDamage']:SetPlaceholder(defaultDamage, true)
+build.configTab.varControls['enemyLightningDamage']:SetPlaceholder(defaultDamage, true)
+build.configTab.varControls['enemyColdDamage']:SetPlaceholder(defaultDamage, true)
+build.configTab.varControls['enemyFireDamage']:SetPlaceholder(defaultDamage, true)
+build.configTab.varControls['enemyChaosDamage']:SetPlaceholder(round(defaultDamage / 2.5), true)
+
+build.configTab.varControls['enemyLightningPen']:SetPlaceholder(data.misc.pinnacleBossPen, true)
+build.configTab.varControls['enemyColdPen']:SetPlaceholder(data.misc.pinnacleBossPen, true)
+build.configTab.varControls['enemyFirePen']:SetPlaceholder(data.misc.pinnacleBossPen, true)
+
+build.configTab.varControls['enemyArmour']:SetPlaceholder(round(data.monsterArmourTable[defaultLevel] * (data.bossStats.PinnacleArmourMean/100)), true)
+build.configTab.varControls['enemyEvasion']:SetPlaceholder(round(data.monsterEvasionTable[defaultLevel] * (data.bossStats.PinnacleEvasionMean/100)), true)
+
+runCallback("OnFrame")
 -- { stat = "Life", label = "Total Life", fmt = "d", color = colorCodes.LIFE, compPercent = true },
 for key, value in pairs(build.displayStats) do
 	-- if value ~= nil then
@@ -254,31 +283,142 @@ for key, value in pairs(build.displayStats) do
 	-- printTable(value)
     local valueKey = value.stat
     local valueStat = build.calcsTab.mainOutput[value.stat]
-    -- print(valueKey)
-    -- print(valueStat)
+    print(valueKey)
+    print(valueStat)
 
     if value.stat == "LifeUnreserved" then
         local oneline = "[("..valueKey..":"..valueStat..")]"
         print(oneline)
-        -- print(valueKey)
-        -- print(valueStat)
     end
+	if value.stat == "Life" then
+		local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+	end
 	if value.stat == "LifeRecoverable" then
         local oneline = "[("..valueKey..":"..valueStat..")]"
         print(oneline)
     end
+	-- if value.stat == "LifeRegenRecovery" then
+    --     local oneline = "[("..valueKey..":"..valueStat..")]"
+    --     print(oneline)
+    -- end
+
+	if value.stat == "Mana" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	if value.stat == "ManaUnreserved" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
 	if value.stat == "EnergyShield" then
         local oneline = "[("..valueKey..":"..valueStat..")]"
         print(oneline)
     end
+
+	if value.stat == "Evasion" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
+	if value.stat == "Armour" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
+	if value.stat == "BlockChance" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	
+	if value.stat == "SpellBlockChance" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	
+	if value.stat == "AttackDodgeChance" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
+	if value.stat == "SpellDodgeChance" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
+	if value.stat == "EffectiveSpellSuppressionChance" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	
+
     if value.stat == "TotalEHP" then
         local oneline = "[("..valueKey..":"..valueStat..")]"
         print(oneline)
     end
+
 	if value.stat == "CombinedDPS" then
+		-- local activeMinionLimit = build.calcsTab.mainOutput['ActiveMinionLimit']
+		
+		-- if activeMinionLimit > 0 then
+		-- 	valueStat = valueStat * activeMinionLimit
+		-- end
         local oneline = "[("..valueKey..":"..valueStat..")]"
         print(oneline)
     end
+
+	if value.stat == "PhysicalDamageReduction" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	if value.stat == "FireResist" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	if value.stat == "ColdResist" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	if value.stat == "LightningResist" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	if value.stat == "ChaosResist" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
+	if value.stat == "PhysicalMaximumHitTaken" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
+	if value.stat == "LightningMaximumHitTaken" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
+	if value.stat == "FireMaximumHitTaken" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	
+	if value.stat == "ColdMaximumHitTaken" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+	
+	if value.stat == "ChaosMaximumHitTaken" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
+	if value.stat == "EffectiveMovementSpeedMod" then
+        local oneline = "[("..valueKey..":"..valueStat..")]"
+        print(oneline)
+    end
+
 end
 local xmldata = build:SaveDB("code")
 local deflated = Deflate(xmldata)
