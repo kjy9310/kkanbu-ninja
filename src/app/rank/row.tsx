@@ -102,7 +102,7 @@ export default function Row(props:any) {
       {row.pob&&<span style={{color:'red'}}>피:{((row.pob.LifeRecoverable&&parseInt(row.pob.LifeRecoverable)>0)?row.pob.LifeRecoverable:row.pob.LifeUnreserved)}</span>}
       {row.pob&&<span style={{color:'cyan'}}>에실:{row.pob.EnergyShield}</span>}
       {row.pob&&<span style={{color:'magenta'}}>eHP:{(isNaN(parseInt(row.pob.TotalEHP))?"ㅁ?ㄹ":parseInt(row.pob.TotalEHP))}</span>}
-      {row.pob&&<span style={{color:'white'}}>dps:{(isNaN(parseInt(row.pob.CombinedDPS))?"ㅁ?ㄹ":parseInt(row.pob.CombinedDPS))}</span>}
+      {row.pob&&<span style={{color:'white'}}>dps:{(isNaN(parseInt(row.pob.CombinedDPS))||parseInt(row.pob.CombinedDPS)===0?"ㅁ?ㄹ":parseInt(row.pob.CombinedDPS))}</span>}
       <span style={{display:'flex'}}>
         {row.items?.mainSkills?.map((skillgem:any)=>{
           return <Tooltip key={skillgem.id} title={skillgem.baseType}>

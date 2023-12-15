@@ -8,7 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Row from './row'
+// import Row from './row'
+import Row from './newRow'
 import SignButton from '../sign/button'
 import { SessionProvider } from "next-auth/react"
 import { CLASS } from './constants'
@@ -44,7 +45,7 @@ function useIsVisible(ref:any) {
 }
 
 export default function Page(props:any) {
-  const limit = 100
+  const limit = 140
   const tick = 10
     const {userData, session} = props
   const [original, setOriginal] = useState<any[]>(userData)
