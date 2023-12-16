@@ -93,11 +93,11 @@ export default function Row(props:any) {
         setExpanded(row.id===openAccordId)
     },[row, openAccordId])
     
-    const poeAccount = session?.kkanbu?.account
-    const deathCamInfo = userInfo.length>0&& userInfo?.find((info:any)=>info.type==="deathCam")
-    const bestInfo = userInfo.length>0&& userInfo?.find((info:any)=>info.type==="best")
-    const deathCam = row.info?.find((info:any)=>info.type==="deathCam")
-    const bestCam = row.info?.find((info:any)=>info.type==="best")
+    // const poeAccount = session?.kkanbu?.account
+    // const deathCamInfo = userInfo.length>0&& userInfo?.find((info:any)=>info.type==="deathCam")
+    // const bestInfo = userInfo.length>0&& userInfo?.find((info:any)=>info.type==="best")
+    // const deathCam = row.info?.find((info:any)=>info.type==="deathCam")
+    // const bestCam = row.info?.find((info:any)=>info.type==="best")
   return (<Accordion key={row._id}
     style={{backgroundColor:index%2===0?'#0a0a0acc':'#141414cc', cursor:'pointer'}}
     expanded={expanded}
@@ -113,7 +113,7 @@ export default function Row(props:any) {
         }
     }
   >
-    <div style={{color:'white', display:'grid', gridTemplateColumns:'50px 70px 25% 310px 120px 200px auto', margin:2}}>
+    <div style={{color:'white', display:'grid', gridTemplateColumns:'50px 74px 25% 310px 120px 200px auto', margin:2}}>
         <div style={{padding:4}}>
             <span>{index+1}</span>
         </div>
@@ -165,30 +165,65 @@ export default function Row(props:any) {
     </div>
     <AccordionDetails>
         <div style={{color:'white', display:'flex', justifyContent: 'space-evenly'}}>
-        <span>{`전체 랭킹: ${row.rank}`}</span>
-        {row.ancestor&&<span>{`조상님 랭크: ${row.ancestor}`}</span>}
-        {row.depth&&<span>{`팡산: ${row.depth.default} / solo:${row.depth.solo}`}</span>}
-        <span >{`챌: ${row.challenges?.completed} `}</span>
-        <span>{`계정: ${row.account}`}</span>
-        <span >{`Exp.${row.experience} `}</span>
-        <a style={{    backgroundColor: '#133d62', textAlign:'center',
-          display: 'inline-block', padding: '2px 10px', borderRadius: 5}} 
-          target='_blank' href={`${POEHOST}account/view-profile/${encodeURIComponent(row.account)}/characters?characterName=${encodeURIComponent(row.name)}`}>
-            POE
-          </a>
-        {row.pob&&<a
-        style={{    backgroundColor: '#4c1362', textAlign:'center', cursor:'pointer',
-        display: 'inline-block', padding: '2px 10px', borderRadius: 5}}
-        onClick={()=>{
-          const text = row.pob.POB
-          navigator.clipboard.writeText(text).then(function() {
-            alert('복사완료');
-          }, function(err) {
-            alert('복사가 안됬어요.ㅠㅠ : '+text)
-          });
-        }}
-        >POB</a>}
+            <span>{`전체 랭킹: ${row.rank}`}</span>
+            {row.ancestor&&<span>{`조상님 랭크: ${row.ancestor}`}</span>}
+            {row.depth&&<span>{`팡산: ${row.depth.default} / solo:${row.depth.solo}`}</span>}
+
+            <span >{`챌: ${row.challenges?.completed} `}</span>
+            <span>{`계정: ${row.account}`}</span>
+            <span >{`Exp.${row.experience} `}</span>
+            <div>
+                <a style={{    backgroundColor: '#133d62', textAlign:'center',
+                display: 'inline-block', padding: '2px 10px', borderRadius: 5}} 
+                target='_blank' href={`${POEHOST}account/view-profile/${encodeURIComponent(row.account)}/characters?characterName=${encodeURIComponent(row.name)}`}>
+                    POE
+                </a>
+            </div>
         </div>
+        {userInfo.pob&&<div style={{color:'white', display:'grid', gridTemplateColumns:'120px 120px auto 140px 100px'}}>
+            <div style={{ display:'flex', flexDirection:'column', textAlign:'left'}}>
+                <span>회피: {userInfo.pob.Evasion}</span>
+                <span>방어: {userInfo.pob.Armour}</span>
+            </div>
+            <div style={{ display:'flex', flexDirection:'column', textAlign:'left'}}>
+                <span>블럭: {userInfo.pob.BlockChance}%</span>
+                <span>주문블럭: {userInfo.pob.SpellBlockChance}%</span>
+            </div>
+            <div style={{ display:'flex', flexDirection:'column', textAlign:'left'}}>
+                <div style={{display:'flex', justifyContent: 'space-evenly' }}>저항: 
+                    <span style={{color:'#b9b9b9'}}>{`${row.pob.PhysicalDamageReduction}% `}</span>
+                    <span style={{color:'red'}}>{`${row.pob.FireResist}% `}</span>
+                    <span style={{color:'cyan'}}>{`${row.pob.ColdResist}% `}</span>
+                    <span style={{color:'yellow'}}>{`${row.pob.LightningResist}% `}</span>
+                    <span style={{color:'#c35dff'}}>{`${row.pob.ChaosResist}%`}</span>
+                </div>
+                <div style={{display:'flex', justifyContent: 'space-evenly' }}>한방컷: 
+                <span style={{color:'#b9b9b9'}}>{`${row.pob.PhysicalMaximumHitTaken} `}</span>
+                    <span style={{color:'red'}}>{`${row.pob.FireMaximumHitTaken} `}</span>
+                    <span style={{color:'cyan'}}>{`${row.pob.ColdMaximumHitTaken} `}</span>
+                    <span style={{color:'yellow'}}>{`${row.pob.LightningMaximumHitTaken} `}</span>
+                    <span style={{color:'#c35dff'}}>{`${row.pob.ChaosMaximumHitTaken}`}</span>
+                </div>
+            </div>
+            <div style={{ display:'flex', flexDirection:'column', textAlign:'left'}}>
+                <span>주문억제: {userInfo.pob.EffectiveSpellSuppressionChance}%</span>
+                <span>이속: {userInfo.pob.EffectiveMovementSpeedMod*100}%</span>
+            </div>
+            <div style={{padding:8}}>
+                <a
+                style={{    backgroundColor: '#4c1362', textAlign:'center', cursor:'pointer',
+                display: 'inline-block', padding: '2px 10px', borderRadius: 5}}
+                onClick={()=>{
+                const text = userInfo.pob.POB
+                navigator.clipboard.writeText(text).then(function() {
+                    alert('복사완료');
+                }, function(err) {
+                    alert('복사가 안됬어요.ㅠㅠ : '+text)
+                });
+                }}
+                >POB</a>
+            </div>
+            </div>}
     </AccordionDetails>
     </Accordion>
 )}

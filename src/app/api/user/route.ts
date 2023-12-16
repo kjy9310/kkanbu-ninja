@@ -61,9 +61,11 @@ export async function GET(request: Request, param:{league:string}) {
         depth: '$depth',
         info: '$info',
         pob: {$arrayElemAt: ['$pob', 0 ]},
-    }
+    },
 },
-
+{
+    $unset:'pob.POB'
+}
       ]).sort( { rank: 1 } ).toArray()
       client.close()
       console.log('userData', userData.length)

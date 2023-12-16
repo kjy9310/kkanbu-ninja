@@ -98,6 +98,18 @@ const sortSelect = (sortType:string)=>{
         const aInfo = (new Date(aDeathCam?.updatedAt).getTime()||0)
         return bInfo-aInfo===0?a.rank-b.rank:bInfo-aInfo
       }
+    case 'life':
+      return (a:any, b:any)=>{
+        return (b.pob?.Life||0)-(a.pob?.Life||0)===0?a.rank-b.rank:(b.pob?.Life||0)-(a.pob?.Life||0)
+      }
+    case 'es':
+      return (a:any, b:any)=>{
+        return (b.pob?.EnergyShield||0)-(a.pob?.EnergyShield||0)===0?a.rank-b.rank:(b.pob?.EnergyShield||0)-(a.pob?.EnergyShield||0)
+      }
+    case 'ehp':
+      return (a:any, b:any)=>{
+        return (b.pob?.TotalEHP||0)-(a.pob?.TotalEHP||0)===0?a.rank-b.rank:(b.pob?.TotalEHP||0)-(a.pob?.TotalEHP||0)
+      }
     case'rank':
     default:
     return (a:any,b:any)=>{
@@ -135,7 +147,7 @@ const handleSort=(e:any)=>{
  
     a.click()
   }
-  const csvheader = ["rank", "level", "dead","name","class", "challenges","account","experience","has5Link","has6Link","mainSkills","allGems"]
+  const csvheader = ["rank", "level", "dead","name","class", "challenges","account","experience","has5Link","has6Link","life","es","mana","ehp","dps","mainSkills","allGems"]
   const getCsv = ()=>{
     const header= csvheader.join()
 
@@ -152,6 +164,16 @@ const handleSort=(e:any)=>{
           return row.items?.mainSkills.map((gem:any)=>gem.baseType).join('|')
         } else if(key==="allGems"){
           return row.items?.allGems.join('|')
+        } else if(key==="life"){
+          return row.pob?.Life
+        } else if(key==="es"){
+          return row.pob?.EnergyShield
+        } else if(key==="mana"){
+          return row.pob?.Mana
+        } else if(key==="ehp"){
+          return row.pob?.TotalEHP
+        } else if(key==="combinedDPS"){
+          return row.pob?.CombinedDPS
         }
         return row[key]
       })
@@ -375,6 +397,9 @@ const handleSort=(e:any)=>{
           <MenuItem value={'depth_solo'}>팡산솔로</MenuItem>
           <MenuItem value={'ancestor'}>선조</MenuItem>
           <MenuItem value={'death_cam'}>데스캠최신순</MenuItem>
+          <MenuItem value={'life'}>피돼지</MenuItem>
+          <MenuItem value={'es'}>에실돼지</MenuItem>
+          <MenuItem value={'ehp'}>eHP</MenuItem>
         </Select>
         </FormControl>
       </div>
@@ -420,14 +445,14 @@ const handleSort=(e:any)=>{
   </div>
   <div style={{overflowAnchor: 'none'}}>
     <div ref={startTag}>
-    {[...startArr].map((e,index)=><div key={'start'+index} style={{height:70, width:'100%'}}></div>)}
+    {[...startArr].map((e,index)=><div key={'start'+index} style={{height:38, width:'100%'}}></div>)}
     </div>
     
     {filtered&&filtered.length&&filtered.length>0&&filtered.slice(start, start+limit).map((row:any, index:number) => <Row key={row.id} row={row} index={start+index} session={session} openAccordId={openAccordId} setOpenAccordId={setOpenAccordId} />)}
     
     <div ref={endTag}>
     {[...bottomArr].map((e,index)=>{
-      return <div key={'end'+index} style={{height:70, width:'100%'}}>t</div>
+      return <div key={'end'+index} style={{height:38, width:'100%'}}>t</div>
     })} 
     </div>
   </div>

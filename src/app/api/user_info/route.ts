@@ -16,10 +16,14 @@ export async function GET(request: Request, param:any) {
         const dbName = process.env.db_name;
         await client.connect();
         const db = client.db(dbName);
-        const collection = db.collection(`${process.env.collection_prefix}_user_info`);
-        const userInfo = await collection.find({userId:userId}).toArray()
+        const userinfoCol = db.collection(`${process.env.collection_prefix}_user_info`);
+        const userInfo = await userinfoCol.find({userId:userId}).toArray()
+
+        const pobCol = db.collection(`${process.env.collection_prefix}_pob`);
+        const pob = await pobCol.findOne({id:userId})
+        
         client.close()
-        return NextResponse.json(userInfo)
+        return NextResponse.json({userInfo,pob})
     }catch(e){
         console.log('DB error', e)
         return []
