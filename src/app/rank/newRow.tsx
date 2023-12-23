@@ -132,10 +132,10 @@ export default function Row(props:any) {
             <span>{row.name}</span>
         </div>
         <div>
-            {row.pob&&<Stats pobInfo={row.pob}/>}
+            {row.pob&&row.pob.Life!=null&&<Stats pobInfo={row.pob}/>}
         </div>
         <div style={{padding:4,textAlign: 'left'}}>
-            {row.pob&&<Tooltip title={<div style={{whiteSpace: 'pre-line'}}>
+            {row.pob&&row.pob.Life!=null&&<Tooltip title={<div style={{whiteSpace: 'pre-line'}}>
                 {`Res / Max Hit\n`}
                 <span style={{color:'#b9b9b9'}}>{`${row.pob.PhysicalDamageReduction}% / ${row.pob.PhysicalMaximumHitTaken}\n`}</span>
                 <span style={{color:'red'}}>{`${row.pob.FireResist}% / ${row.pob.FireMaximumHitTaken}\n`}</span>
@@ -150,7 +150,7 @@ export default function Row(props:any) {
         </div>
         <div style={{padding:4,textAlign: 'left'}}>
             <span>
-            {row.pob&&"DPS: "+(isNaN(parseInt(row.pob.CombinedDPS))||parseInt(row.pob.CombinedDPS)===0?"ㅁ?ㄹ":parseInt(row.pob.CombinedDPS))}
+            {row.pob&&row.pob.Life!=null&&"DPS: "+(isNaN(parseInt(row.pob.CombinedDPS))||parseInt(row.pob.CombinedDPS)===0?"ㅁ?ㄹ":parseInt(row.pob.CombinedDPS))}
             </span>
         </div>
         <div>
@@ -180,7 +180,7 @@ export default function Row(props:any) {
                 </a>
             </div>
         </div>
-        {userInfo.pob&&<div style={{color:'white', display:'grid', gridTemplateColumns:'120px 120px auto 140px 100px'}}>
+        {userInfo.pob&&userInfo.pob.POB!=null&&<div style={{color:'white', display:'grid', gridTemplateColumns:'120px 120px auto 140px 100px'}}>
             <div style={{ display:'flex', flexDirection:'column', textAlign:'left'}}>
                 <span>회피: {userInfo.pob.Evasion}</span>
                 <span>방어: {userInfo.pob.Armour}</span>

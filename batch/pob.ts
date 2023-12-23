@@ -37,7 +37,7 @@ const getJson = async (type:typeJson, user:any ) =>{
                 success:false,
                 retryDelay
             }
-        } else if (res.status !==404 && res.status !== 403){
+        } else if (res.status ===404 || res.status === 403){
             return {
                 success:false,
                 deleted:true
@@ -96,6 +96,10 @@ const batchMain = async () => {
         }
         console.log(`pobDatum?.isDead ${!pobDatum?.isDead} / pobDatum?.isDeleted ${!pobDatum?.isDeleted} - isOverTheLimit ${isOverTheLimit}`)
         if(!pobDatum?.isDead && !pobDatum?.isDeleted && isOverTheLimit){
+            //reset files
+            await new Promise((r)=>fs.writeFile(ItemJsonPath, "", 'utf8', r))
+            await new Promise((r)=>fs.writeFile(TreeJsonPath, "", 'utf8',r))
+
             let Ires = await getJson(typeJson.ITEM,user)
             const { success:successI, retryDelay:retryDelayI } = Ires||{}
             if (!successI){
@@ -149,8 +153,8 @@ const batchMain = async () => {
             const pobResult = await new Promise((r)=>{
                 execute("cd /app/PathOfBuilding/src/ && sh kkanbu.sh",(err:any, std:string, stderr:any)=>{
                     console.log(err)
-                    console.log(std)
-                    console.log(stderr)
+                    // console.log(std)
+                    // console.log(stderr)
                     const line = std.split("\n")
                     const regex = /\[\((.*)\)\]/
                     const filtered = line.reduce((acc:any, oneLine:string, index:number)=>{
