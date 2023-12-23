@@ -141,6 +141,10 @@ const batchMain = async () => {
                 console.log('saved')
             }
             console.log('executing')
+            const timeoutCheck = setTimeout(()=>{
+                console.log('pob timeout passed')
+                process.exit(0)
+            },1000)
             const pobResult = await new Promise((r)=>{
                 execute("cd /app/PathOfBuilding/src/ && sh kkanbu.sh",(err:any, std:string, stderr:any)=>{
                     console.log(err)
@@ -160,6 +164,9 @@ const batchMain = async () => {
                         }
                         return acc
                     },{})
+                    console.log('got user pob stop timeout check')
+                    clearTimeout(timeoutCheck)
+                    
                     r(filtered)
                 })
             })
