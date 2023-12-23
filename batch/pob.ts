@@ -145,11 +145,12 @@ const batchMain = async () => {
                 console.log('pob timeout passed')
                 process.exit(0)
             },1000)
+            await new Promise(r=>{setTimeout(()=>r,500)})
             const pobResult = await new Promise((r)=>{
                 execute("cd /app/PathOfBuilding/src/ && sh kkanbu.sh",(err:any, std:string, stderr:any)=>{
                     console.log(err)
-                    // console.log(std)
-                    // console.log(stderr)
+                    console.log(std)
+                    console.log(stderr)
                     const line = std.split("\n")
                     const regex = /\[\((.*)\)\]/
                     const filtered = line.reduce((acc:any, oneLine:string, index:number)=>{
@@ -170,6 +171,7 @@ const batchMain = async () => {
                     r(filtered)
                 })
             })
+            await new Promise(r=>{setTimeout(()=>r,1500)})
             const {
                 LifeUnreserved,
                 Life,
@@ -252,7 +254,7 @@ const batchMain = async () => {
                 isDead:user.dead,
                 isDeleted:deletedI||deletedT
             }
-            newPobDatum
+            // newPobDatum
             pob.deleteOne({id:user.id})
             pob.insertOne(newPobDatum)
         }
