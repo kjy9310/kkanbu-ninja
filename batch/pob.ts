@@ -148,13 +148,16 @@ const batchMain = async () => {
             await new Promise(r=>{setTimeout(()=>r(null),500)})
             const timeoutCheck = setTimeout(()=>{
                 console.log('pob timeout passed')
+                const delta = new Date().getTime() - startTime
+                console.log('delta time : ', delta)
+                client.close()
                 process.exit(0)
-            },3000)
+            },29000)
             const pobResult = await new Promise((r)=>{
                 execute("cd /app/PathOfBuilding/src/ && sh kkanbu.sh",(err:any, std:string, stderr:any)=>{
                     console.log("err:",err)
-                    console.log(std)
-                    console.log(stderr)
+                    // console.log(std)
+                    // console.log(stderr)
                     const line = std.split("\n")
                     const regex = /\[\((.*)\)\]/
                     const filtered = line.reduce((acc:any, oneLine:string, index:number)=>{
@@ -175,7 +178,7 @@ const batchMain = async () => {
                     r(filtered)
                 })
             })
-            await new Promise(r=>{setTimeout(()=>r(null),3500)})
+            await new Promise(r=>{setTimeout(()=>r(null),500)})
             const {
                 LifeUnreserved,
                 Life,
@@ -203,7 +206,8 @@ const batchMain = async () => {
                 CombinedDPS,
                 POB
             } = pobResult as any
-            console.log("got data : ",{LifeUnreserved,
+            console.log("got data : ",JSON.stringify({isDead:user.dead,
+                isDeleted:deletedI||deletedT,LifeUnreserved,
             Life,
             LifeRecoverable,
             ManaUnreserved,
@@ -226,7 +230,7 @@ const batchMain = async () => {
             ColdMaximumHitTaken,
             ChaosMaximumHitTaken,
             EffectiveMovementSpeedMod,
-            CombinedDPS})
+            CombinedDPS}))
             const newPobDatum={
                 id: user.id,
                 LifeUnreserved,
