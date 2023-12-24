@@ -153,8 +153,8 @@ const batchMain = async () => {
             const pobResult = await new Promise((r)=>{
                 execute("cd /app/PathOfBuilding/src/ && sh kkanbu.sh",(err:any, std:string, stderr:any)=>{
                     console.log("err:",err)
-                    // console.log(std)
-                    // console.log(stderr)
+                    console.log(std)
+                    console.log(stderr)
                     const line = std.split("\n")
                     const regex = /\[\((.*)\)\]/
                     const filtered = line.reduce((acc:any, oneLine:string, index:number)=>{
