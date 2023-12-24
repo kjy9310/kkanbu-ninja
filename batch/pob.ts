@@ -145,7 +145,7 @@ const batchMain = async () => {
                 console.log('saved')
             }
             console.log('executing')
-            await new Promise(r=>{setTimeout(()=>r,500)})
+            await new Promise(r=>{setTimeout(()=>r(null),500)})
             const timeoutCheck = setTimeout(()=>{
                 console.log('pob timeout passed')
                 process.exit(0)
@@ -175,7 +175,7 @@ const batchMain = async () => {
                     r(filtered)
                 })
             })
-            await new Promise(r=>{setTimeout(()=>r,3500)})
+            await new Promise(r=>{setTimeout(()=>r(null),3500)})
             const {
                 LifeUnreserved,
                 Life,
