@@ -145,14 +145,14 @@ const batchMain = async () => {
                 console.log('saved')
             }
             console.log('executing')
+            await new Promise(r=>{setTimeout(()=>r,500)})
             const timeoutCheck = setTimeout(()=>{
                 console.log('pob timeout passed')
                 process.exit(0)
-            },1000)
-            await new Promise(r=>{setTimeout(()=>r,500)})
+            },3000)
             const pobResult = await new Promise((r)=>{
                 execute("cd /app/PathOfBuilding/src/ && sh kkanbu.sh",(err:any, std:string, stderr:any)=>{
-                    console.log(err)
+                    console.log("err:",err)
                     // console.log(std)
                     // console.log(stderr)
                     const line = std.split("\n")
@@ -175,7 +175,7 @@ const batchMain = async () => {
                     r(filtered)
                 })
             })
-            await new Promise(r=>{setTimeout(()=>r,1500)})
+            await new Promise(r=>{setTimeout(()=>r,3500)})
             const {
                 LifeUnreserved,
                 Life,
