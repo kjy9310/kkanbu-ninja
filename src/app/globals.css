@@ -145,16 +145,15 @@ body {
   border-radius: 5px;
 }
 @keyframes newColor {
-  from {color: red;}
+  from {color: magenta;}
   50% {color: rgb(248, 198, 62);}
-  to {color: red;}
+  to {color: magenta;}
 }
 .new::before {
   transform: rotate(-15deg);
   content: "new";
   position: absolute;
   margin: -15px;
-  color: red;
   font-weight: 600;
   animation-name: newColor;
   animation-duration: 1s;

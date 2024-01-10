@@ -97,9 +97,18 @@ const batchMain = async () => {
         console.log(`pobDatum?.isDead ${!pobDatum?.isDead} / pobDatum?.isDeleted ${!pobDatum?.isDeleted} - isOverTheLimit ${isOverTheLimit}`)
         if(!pobDatum?.isDead && !pobDatum?.isDeleted && isOverTheLimit){
             //reset files
-            await new Promise((r)=>fs.writeFile(ItemJsonPath, "", 'utf8', r))
-            await new Promise((r)=>fs.writeFile(TreeJsonPath, "", 'utf8',r))
+            try{
+                await new Promise((r)=>fs.writeFile(ItemJsonPath, "", 'utf8', r))
+                await new Promise((r)=>fs.writeFile(TreeJsonPath, "", 'utf8',r))
+            }catch(e){
+                const delta = new Date().getTime() - startTime
+                console.log('delta time : ', delta)
+                client.close()
 
+                console.log("file writing error", e)
+                process.exit()
+            }
+            
             let Ires = await getJson(typeJson.ITEM,user)
             const { success:successI, retryDelay:retryDelayI } = Ires||{}
             if (!successI){
