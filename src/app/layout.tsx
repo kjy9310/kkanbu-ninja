@@ -19,10 +19,10 @@ export default function RootLayout({
         <div style={{position:'sticky'}}>
       <h2 style={{fontSize:50, marginBottom:10, textAlign: 'center',color:'#ff9cea'}}>깐부 Ha<span style={{fontSize: 38,letterSpacing: '-0.14em'}}>nin</span>{' '}ja</h2>
       <div style={{padding: '0 0 10px', textAlign: 'center'}}>
-        <a className="topButton"  style={{    backgroundColor: '#b34afb',
+        {/* <a className="topButton"  style={{    backgroundColor: '#b34afb',
         }} target='_blank' href="https://www.twitch.tv/ham_90">twitch</a>
         <a className="topButton" style={{    backgroundColor: '#fb4ab0',
-        }} target='_blank' href="https://tgd.kr/s/ham_90/">햄게더</a>
+        }} target='_blank' href="https://tgd.kr/s/ham_90/">햄게더</a> */}
         <a className="topButton new"  style={{    backgroundColor: '#32bf34',
         }} target='_blank' href="https://chzzk.naver.com/888bdc1e2fbe68322574cbe883b34ee4">치지직</a>
         <a className="topButton new"  style={{    backgroundColor: '#eea3aa',
@@ -34,6 +34,7 @@ export default function RootLayout({
           <div className="topButton hidden">
             <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/1">1회</a>
             <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/2">2회</a>
+            <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/3">3회</a>
           </div>
         </span>
         <a className="topButton"  style={{    backgroundColor: '#3c0c9b'}} href="/request">{`"해줘"판`}</a>
