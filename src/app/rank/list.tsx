@@ -46,7 +46,7 @@ function useIsVisible(ref:any) {
 
 
 
-export default function (props:any) {
+export default function Page(props:any) {
   const limit = 140
   const tick = 10
   const {userData, session, current} = props
