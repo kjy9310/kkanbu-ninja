@@ -78,7 +78,7 @@ const Stats = ({pobInfo}:any) => {
 }
 
 export default function Row(props:any) {
-    const {row, index, session, openAccordId, setOpenAccordId} = props
+    const {row, index, session, openAccordId, setOpenAccordId, pipStart} = props
 
     const [expanded, setExpanded] = useState(false)
     const [userInfo, setUserInfo] = useState<any>([])
@@ -165,6 +165,9 @@ export default function Row(props:any) {
     </div>
     <AccordionDetails>
         <div style={{color:'white', display:'flex', justifyContent: 'space-evenly'}}>
+            <div style={{backgroundColor:'red', padding:5, borderRadius:5}} onClick={
+                ()=>pipStart(row.id)
+            }>오버레이</div>
             <span>{`전체 랭킹: ${row.rank}`}</span>
             {row.ancestor&&<span>{`조상님 랭크: ${row.ancestor}`}</span>}
             {row.depth&&<span>{`팡산: ${row.depth.default} / solo:${row.depth.solo}`}</span>}

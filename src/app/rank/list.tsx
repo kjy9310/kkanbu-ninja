@@ -44,10 +44,12 @@ function useIsVisible(ref:any) {
   return isIntersecting;
 }
 
-export default function Page(props:any) {
+
+
+export default function (props:any) {
   const limit = 140
   const tick = 10
-    const {userData, session} = props
+  const {userData, session, current} = props
   const [original, setOriginal] = useState<any[]>(userData)
   const [filtered, setFilter] = useState<any[]>(userData)
   const [gemList, setGemList] = useState<any[]>([])
@@ -75,6 +77,22 @@ export default function Page(props:any) {
   const [classCounts, setClassCounts] = useState<any>([])
   const [sortString, setSortString] = useState<string>('rank')
 
+  const pip = useRef<any>(null)
+
+  async function getUserData(leagueString?:string) {
+    try{
+      const res = await fetch(`/api/user?league=${leagueString}`); //10 min cache
+    
+      if (!res.ok) {
+        return []
+      }
+  
+      return res.json();
+    } catch(e){
+      console.log('rank page getUserData error:', e)
+      return []
+    }
+  }
 
 const sortSelect = (sortType:string)=>{
   switch(sortType){
@@ -151,7 +169,7 @@ const handleSort=(e:any)=>{
   const getCsv = ()=>{
     const header= csvheader.join()
 
-    const commaSeperated = userData.map((row:any)=>{
+    const commaSeperated = original.map((row:any)=>{
       
       const targets = csvheader.map((key)=>{
         if (key==="challenges"){
@@ -225,12 +243,12 @@ const handleSort=(e:any)=>{
 
   useEffect(()=>{
     (async () => {
-      // setOriginal(userData)
+      
       const gemListSet = await getGemList(filtered)
       setGemList(gemListSet)
       const uniqueListSet = await getUniqueList(filtered)
       setUniqueList(uniqueListSet)
-      // setFilter(userData)
+      
       setClassCounts(filtered.reduce((acc:any,user:any)=>{
         if (acc[user.class]){
           acc[user.class] = acc[user.class]+1
@@ -268,6 +286,19 @@ const handleSort=(e:any)=>{
     })()
   },[filtered])
   
+  useEffect(()=>{
+    console.log('current', current)
+      const refresh = current && setInterval(async()=>{
+        const newOriginal = await getUserData()
+        if (pip.current && !pip.current.closed && pip.current.pipId){
+          const currentTargetdata = newOriginal.find((e:any)=>e.id===pip.current?.pipId)
+          currentTargetdata && createPIPdocument(currentTargetdata)
+        }
+        setOriginal(newOriginal)
+      },1000*60*3)
+      
+    return ()=>refresh&&clearInterval(refresh)
+  },[])
   
   const findName = (e:any)=>{
     setName(e.target.value||'')
@@ -297,10 +328,10 @@ const handleSort=(e:any)=>{
 
   useEffect(()=>{
     if (filterName==='' && (filterGems.length===0) && filterDeath==='all' && filterUniques.length===0 && filterLink==='' && filterClass==='' && sortString==='rank'){
-      setFilter(userData)
+      setFilter(original)
       return
     }else{
-      const newFiltered = userData.filter((user:any)=>{
+      const newFiltered = original.filter((user:any)=>{
         const gemCheck = filterGems.length>0 
         ? gemSelectedCheck(user.items?.allGems)
         // ? user.items?.allGems?.findIndex((gem:any)=>gem===filterGem)>-1 
@@ -326,7 +357,7 @@ const handleSort=(e:any)=>{
       setOpenAccordId('')
     }
     
-  },[filterGems, filterName, filterDeath, filterUniques,filterLink, filterClass, userData, sortString])
+  },[filterGems, filterName, filterDeath, filterUniques,filterLink, filterClass, original, sortString])
   
   const handleChange = (event: SelectChangeEvent) => {
     setLink(event.target.value as string);
@@ -336,10 +367,62 @@ const handleSort=(e:any)=>{
   const bottomArr = new Array(bottomCount)
   const startArr = new Array(start)
   
+  const createPIPdocument = (userObject:any) =>{
+    const target = pip.current
+    target.document.body.innerHTML=''
+    const dateOptions = {
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    };
+    const document =  `<div style="width:100%;height:100%;display:flex;justify-content:space-evenly;flex-direction: column;">
+    <div style="display:flex;justify-content:space-evenly;">
+    <span>${userObject.name}</span>
+    </div>
+    <div style="display:flex;justify-content:space-evenly;">
+    <span>
+    랭크 : ${userObject.rank}
+    </span>
+    <span>
+    팡산 : ${userObject.depth?.default||''} / solo:${userObject.depth?.solo||''}
+    </span>
+    </div>
+    <div style="display:flex;justify-content:space-evenly;">
+    <span>
+    최근갱신 : ${new Date(userObject.createdAt).toLocaleDateString("ko-KR",dateOptions as any)}
+    </span>
+    </div>
+    </div>`
+    target.document.write(document)
+    target.document.body.style="background-color:#000000;color:#ffffff;padding:0"
+  }
+  const pipStart=async(id:string)=>{
+    // documentPictureInPicture.window
+    const options = {
+      width:350,
+      height:100,
+      disallowReturnToOpener:false
+    }
+    // pip.current.requestWindow()
+    // documentPictureInPicture.onenter event
+    // pip.current.requestWindow(options)
+    // pip.current.requestPictureInPicture();
+    // const prompt = window.prompt("character name?")
+    if((window as any).documentPictureInPicture){
+      const target = await (window as any).documentPictureInPicture.requestWindow(options)
+      const selected = original.find(e=>e.id===id)
+      pip.current = target
+      pip.current.pipId = id
+      createPIPdocument(selected)
+    }
+    // document.getElementById("pip")&& document.getElementById("pip").requestWindow(options)
+  }
+  
   return (<ThemeProvider theme={theme}>
   <TableContainer component={Paper} className="listContent">
   <SessionProvider session={session}>
-    <SignButton/>
+    {/* <SignButton/> */}
   <div className="search">
     <TextField color="primary" style={{minWidth:150}} 
       id="outlined-basic" label="검색" 
@@ -440,15 +523,15 @@ const handleSort=(e:any)=>{
         lineHeight:'10px',
         width: '100%'
       }}
-      >{parseInt(((count / userData.length * 1000) as unknown) as string)/10||'0'}%</span>
+      >{parseInt(((count / original.length * 1000) as unknown) as string)/10||'0'}%</span>
     </div>})}
   </div>
-  <div style={{overflowAnchor: 'none'}}>
+  <div style={{overflowAnchor: 'none'}} id="pip">
     <div ref={startTag}>
     {[...startArr].map((e,index)=><div key={'start'+index} style={{height:38, width:'100%'}}></div>)}
     </div>
     
-    {filtered&&filtered.length&&filtered.length>0&&filtered.slice(start, start+limit).map((row:any, index:number) => <Row key={row.id} row={row} index={start+index} session={session} openAccordId={openAccordId} setOpenAccordId={setOpenAccordId} />)}
+    {filtered&&filtered.length&&filtered.length>0&&filtered.slice(start, start+limit).map((row:any, index:number) => <Row key={row.id} row={row} index={start+index} session={session} openAccordId={openAccordId} setOpenAccordId={setOpenAccordId} pipStart={pipStart}/>)}
     
     <div ref={endTag}>
     {[...bottomArr].map((e,index)=>{

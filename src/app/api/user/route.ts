@@ -61,6 +61,7 @@ export async function GET(request: Request, param:{league:string}) {
         depth: '$depth',
         info: '$info',
         pob: {$arrayElemAt: ['$pob', 0 ]},
+        createdAt: '$createdAt'
     },
 },
 {
