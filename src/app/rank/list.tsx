@@ -49,7 +49,7 @@ function useIsVisible(ref:any) {
 export default function Page(props:any) {
   const limit = 140
   const tick = 10
-  const {userData, session, current} = props
+  const {userData, session, currentLeague} = props
   const [original, setOriginal] = useState<any[]>(userData)
   const [filtered, setFilter] = useState<any[]>(userData)
   const [gemList, setGemList] = useState<any[]>([])
@@ -287,8 +287,7 @@ const handleSort=(e:any)=>{
   },[filtered])
   
   useEffect(()=>{
-    console.log('current', current)
-      const refresh = current && setInterval(async()=>{
+      const refresh = currentLeague && setInterval(async()=>{
         const newOriginal = await getUserData()
         if (pip.current && !pip.current.closed && pip.current.pipId){
           const currentTargetdata = newOriginal.find((e:any)=>e.id===pip.current?.pipId)
@@ -296,7 +295,6 @@ const handleSort=(e:any)=>{
         }
         setOriginal(newOriginal)
       },1000*60*3)
-      
     return ()=>refresh&&clearInterval(refresh)
   },[])
   

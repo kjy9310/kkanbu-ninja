@@ -22,6 +22,6 @@ export default async function Page() {
     const data = await getUserData1('KKANBUAffliction (PL43448)')
     const session = await getServerSession(authOptions)
     return <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    <RankList userData={data||[]}  session={session}/>
+    <RankList userData={data||[]} session={session}/>
   </main>
 }
