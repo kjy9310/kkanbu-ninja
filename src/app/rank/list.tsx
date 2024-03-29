@@ -79,9 +79,9 @@ export default function Page(props:any) {
 
   const pip = useRef<any>(null)
 
-  async function getUserData(leagueString?:string) {
+  async function getUserData() {
     try{
-      const res = await fetch(`/api/user?league=${leagueString}`); //10 min cache
+      const res = await fetch(`/api/user`); //10 min cache
     
       if (!res.ok) {
         return []
