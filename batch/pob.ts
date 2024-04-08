@@ -94,8 +94,8 @@ const batchMain = async () => {
         }else{
             isOverTheLimit = true
         }
-        console.log(`pobDatum?.isDead ${!pobDatum?.isDead} / pobDatum?.isDeleted ${!pobDatum?.isDeleted} - isOverTheLimit ${isOverTheLimit}`)
-        if(!pobDatum?.isDead && !pobDatum?.isDeleted && isOverTheLimit){
+        console.log(`pobDatum?.isDead ${pobDatum?.isDead===false} / pobDatum?.isDeleted ${pobDatum?.isDeleted!==true} - isOverTheLimit ${isOverTheLimit}`)
+        if(pobDatum?.isDead===false && pobDatum?.isDeleted!==true && isOverTheLimit){
             //reset files
             try{
                 await new Promise((r)=>fs.writeFile(ItemJsonPath, "", 'utf8', r))
@@ -215,6 +215,10 @@ const batchMain = async () => {
                 CombinedDPS,
                 POB
             } = pobResult as any
+            if (POB==null){
+                console.log("POB is null -> continue")
+                continue
+            }
             console.log("got data : ",JSON.stringify({isDead:user.dead,
                 isDeleted:deletedI||deletedT,LifeUnreserved,
             Life,
@@ -269,7 +273,7 @@ const batchMain = async () => {
                 POB,
                 createdAt: new Date(),
                 isDead:user.dead,
-                isDeleted:deletedI||deletedT
+                isDeleted:deletedI||deletedT||false
             }
             // newPobDatum
             pob.deleteOne({id:user.id})
