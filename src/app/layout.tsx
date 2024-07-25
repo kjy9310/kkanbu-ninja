@@ -23,9 +23,9 @@ export default function RootLayout({
         }} target='_blank' href="https://www.twitch.tv/ham_90">twitch</a>
         <a className="topButton" style={{    backgroundColor: '#fb4ab0',
         }} target='_blank' href="https://tgd.kr/s/ham_90/">햄게더</a> */}
-        <a className="topButton new"  style={{    backgroundColor: '#32bf34',
+        <a className="topButton"  style={{    backgroundColor: '#32bf34',
         }} target='_blank' href="https://chzzk.naver.com/888bdc1e2fbe68322574cbe883b34ee4">치지직</a>
-        <a className="topButton new"  style={{    backgroundColor: '#eea3aa',
+        <a className="topButton"  style={{    backgroundColor: '#eea3aa',
         }} target='_blank' href="https://cafe.naver.com/peachhipsfamily">복방단</a>
         <a className="topButton"  style={{    backgroundColor: '#626262',
         }} target='_blank' href="https://docs.google.com/spreadsheets/d/1mQ-QUtPBI_T4sTcI1SBgl1QOdtiq_ONgxqzO6FyCpaY/edit#gid=2071372347">깐부시트</a>
@@ -35,6 +35,7 @@ export default function RootLayout({
             <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/1">1회</a>
             <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/2">2회</a>
             <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/3">3회</a>
+            <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/4">4회</a>
           </div>
         </span>
         <a className="topButton"  style={{    backgroundColor: '#3c0c9b'}} href="/request">{`"해줘"판`}</a>
