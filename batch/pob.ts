@@ -97,8 +97,8 @@ const batchMain = async () => {
         }else{
             isOverTheLimit = true
         }
-        console.log(`pobDatum?.isDead ${pobDatum?.isDead!==true} / pobDatum?.isDeleted ${pobDatum?.isDeleted!==true} - isOverTheLimit ${isOverTheLimit}`)
-        if(pobDatum?.isDead!==true && pobDatum?.isDeleted!==true && isOverTheLimit){
+        console.log(`pobDatum?.isDead ${(pobDatum?.isDead)!==true} / pobDatum?.isDeleted ${(pobDatum?.isDeleted)!==true} - isOverTheLimit ${isOverTheLimit}`)
+        if((pobDatum?.isDead)!==true && (pobDatum?.isDeleted)!==true && isOverTheLimit){
             //reset files
             try{
                 await new Promise((r)=>fs.writeFile(ItemJsonPath, "", 'utf8', r))
