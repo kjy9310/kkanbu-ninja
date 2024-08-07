@@ -129,7 +129,7 @@ export default function Row(props:any) {
             whiteSpace: 'nowrap',
             opacity:row.dead?0.4:1
         }}>
-            <span>{row.name}</span>
+            <span>{row.name}</span>{(row.challenges?.completed>=38)&&<span style={{color:'magenta'}}>{' [38]'}</span>}
         </div>
         <div>
             {row.pob&&row.pob.Life!=null&&<Stats pobInfo={row.pob}/>}

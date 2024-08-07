@@ -62,7 +62,7 @@ type rankObj ={
   account: {
     name:string;
     realm: string;
-    challenges: Object;
+    challenges?: {completed:number};
     twitch:Object
   }
 }
@@ -153,6 +153,24 @@ const LEAGUE_STRING=process.env.LEAGUE_STRING||'KKANBU (PL38521)'
       depth: charInfo.depth
     };
     formattedList.push(formattedUser)
+
+    // check event
+    if (ranker.account.challenges&&ranker.account.challenges.completed>=38){
+      const event = db.collection('kkanbu_event');
+      const eventSuccess = event.findOne({
+        id: ranker.character.id,
+        league: LEAGUE_STRING,
+      })
+      if(!eventSuccess){
+        event.insertOne({
+          id: ranker.character.id,
+          challenges: ranker.account.challenges,
+          league: LEAGUE_STRING,
+          createdAt: new Date(),
+        })
+      }
+      
+    }
   }
   
     const bulk = user.initializeUnorderedBulkOp();
