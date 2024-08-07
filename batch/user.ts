@@ -62,7 +62,7 @@ type rankObj ={
   account: {
     name:string;
     realm: string;
-    challenges?: {completed:number};
+    challenges?: {completed:number; set:string; max:number;}
     twitch:Object
   }
 }
@@ -122,7 +122,7 @@ const LEAGUE_STRING=process.env.LEAGUE_STRING||'KKANBU (PL38521)'
   await client.connect();
   const db = client.db(dbName);
   const user = db.collection('kkanbu_users');
-
+  const event = db.collection('kkanbu_event');
   let formattedList:any[] = []
   for (let index = 0; index < rankList.length; index++) {
     const ranker = rankList[index];
@@ -155,19 +155,21 @@ const LEAGUE_STRING=process.env.LEAGUE_STRING||'KKANBU (PL38521)'
     formattedList.push(formattedUser)
 
     // check event
-    if (ranker.account.challenges&&ranker.account.challenges.completed>=38){
-      const event = db.collection('kkanbu_event');
-      const eventSuccess = event.findOne({
+    if (ranker.account.challenges&&ranker.account.challenges.set==='Village'&&ranker.account.challenges.completed>=38){
+      console.log('event success account:',ranker.account )
+      const eventSuccess = await event.findOne({
         id: ranker.character.id,
         league: LEAGUE_STRING,
       })
+      console.log('eventSuccess', eventSuccess)
       if(!eventSuccess){
-        event.insertOne({
+        const insertRes = await event.insertOne({
           id: ranker.character.id,
           challenges: ranker.account.challenges,
           league: LEAGUE_STRING,
           createdAt: new Date(),
         })
+        console.log('insertRes', insertRes)
       }
       
     }

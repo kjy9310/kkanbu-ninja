@@ -529,7 +529,7 @@ const handleSort=(e:any)=>{
     {[...startArr].map((e,index)=><div key={'start'+index} style={{height:38, width:'100%'}}></div>)}
     </div>
     
-    {filtered&&filtered.length&&filtered.length>0&&filtered.slice(start, start+limit).map((row:any, index:number) => <Row key={row.id} row={row} index={start+index} session={session} openAccordId={openAccordId} setOpenAccordId={setOpenAccordId} pipStart={pipStart}/>)}
+    {filtered&&filtered.length&&filtered.length>0&&filtered.slice(start, start+limit).map((row:any, index:number) => <Row key={row.id} row={row} index={start+index} session={session} openAccordId={openAccordId} setOpenAccordId={setOpenAccordId} pipStart={pipStart} currentLeague={currentLeague}/>)}
     
     <div ref={endTag}>
     {[...bottomArr].map((e,index)=>{

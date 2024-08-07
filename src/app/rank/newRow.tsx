@@ -78,7 +78,7 @@ const Stats = ({pobInfo}:any) => {
 }
 
 export default function Row(props:any) {
-    const {row, index, session, openAccordId, setOpenAccordId, pipStart} = props
+    const {row, index, session, openAccordId, setOpenAccordId, pipStart, currentLeague} = props
 
     const [expanded, setExpanded] = useState(false)
     const [userInfo, setUserInfo] = useState<any>([])
@@ -129,7 +129,7 @@ export default function Row(props:any) {
             whiteSpace: 'nowrap',
             opacity:row.dead?0.4:1
         }}>
-            <span>{row.name}</span>{(row.challenges?.completed>=38)&&<span style={{color:'magenta'}}>{' [38]'}</span>}
+            <span>{row.name}</span>{(row.event)&&<span style={{color:'magenta'}}>{` [${row.event.challenges.completed}]`}</span>}
         </div>
         <div>
             {row.pob&&row.pob.Life!=null&&<Stats pobInfo={row.pob}/>}
@@ -165,9 +165,9 @@ export default function Row(props:any) {
     </div>
     <AccordionDetails>
         <div style={{color:'white', display:'flex', justifyContent: 'space-evenly'}}>
-            <div style={{backgroundColor:'red', padding:5, borderRadius:5}} onClick={
+            {currentLeague&&<div style={{backgroundColor:'red', padding:5, borderRadius:5}} onClick={
                 ()=>pipStart(row.id)
-            }>오버레이</div>
+            }>오버레이</div>}
             <span>{`전체 랭킹: ${row.rank}`}</span>
             {row.ancestor&&<span>{`조상님 랭크: ${row.ancestor}`}</span>}
             {row.depth&&<span>{`팡산: ${row.depth.default} / solo:${row.depth.solo}`}</span>}
@@ -227,6 +227,11 @@ export default function Row(props:any) {
                 >POB</a>
             </div>
             </div>}
+        {
+           row.event&&<div style={{color:'white', display:'grid'}}>
+                        <span>이벤트 : {row.event.challenges.completed}챌  {(new Date(row.event.createdAt)).toISOString().split('T')[0]}</span>
+                    </div>
+        }
     </AccordionDetails>
     </Accordion>
 )}

@@ -22,6 +22,6 @@ export default async function Page() {
     const data = await getUserData()
     const session = await getServerSession(authOptions)
     return <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    <RankList userData={data||[]} currentLeague={!!data.length} session={session}/>
+    <RankList userData={data||[]} currentLeague={true} session={session}/>
   </main>
 }

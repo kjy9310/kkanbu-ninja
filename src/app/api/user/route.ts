@@ -43,6 +43,16 @@ export async function GET(request: Request, param:{league:string}) {
         as: 'pob'
     }
 },{
+    '$lookup':{
+        from: `${process.env.collection_prefix}_event`,
+        localField: 'id',
+        foreignField: 'id',
+        pipeline: [
+            {'$match':{league}}
+        ],
+        as: 'event'
+    }
+},{
     $project:{
         rank:'$rank',
         challenges:'$challenges',
@@ -61,6 +71,7 @@ export async function GET(request: Request, param:{league:string}) {
         depth: '$depth',
         info: '$info',
         pob: {$arrayElemAt: ['$pob', 0 ]},
+        event: {$arrayElemAt: ['$event', 0 ]},
         createdAt: '$createdAt'
     },
 },
