@@ -36,6 +36,7 @@ export default function RootLayout({
             <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/2">2회</a>
             <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/3">3회</a>
             <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/4">4회</a>
+            <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/5">5회</a>
           </div>
         </span>
         <a className="topButton"  style={{    backgroundColor: '#3c0c9b'}} href="/request">{`"해줘"판`}</a>

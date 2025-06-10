@@ -175,13 +175,13 @@ export default function Row(props:any) {
             <span >{`챌: ${row.challenges?.completed} `}</span>
             <span>{`계정: ${row.account}`}</span>
             <span >{`Exp.${row.experience} `}</span>
-            <div>
+            {/* <div>
                 <a style={{    backgroundColor: '#133d62', textAlign:'center',
                 display: 'inline-block', padding: '2px 10px', borderRadius: 5}} 
                 target='_blank' href={`${POEHOST}account/view-profile/${encodeURIComponent(row.account)}/characters?characterName=${encodeURIComponent(row.name)}`}>
                     POE
                 </a>
-            </div>
+            </div> */}
         </div>
         {userInfo.pob&&userInfo.pob.POB!=null&&<div style={{color:'white', display:'grid', gridTemplateColumns:'120px 120px auto 140px 100px'}}>
             <div style={{ display:'flex', flexDirection:'column', textAlign:'left'}}>
