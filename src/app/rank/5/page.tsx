@@ -21,7 +21,8 @@ async function getUserData1(leagueString?:string) {
 export default async function Page() {
     const data = await getUserData1('KKANBU SC Settlers (PL49353)')
     const session = await getServerSession(authOptions)
-    return <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    return <main className="flex min-h-screen flex-col items-center p-24">
+    <span>5회 KKANBU SC Settlers (PL49353)</span>
     <RankList userData={data||[]} session={session}/>
   </main>
 }

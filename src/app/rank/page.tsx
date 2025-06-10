@@ -21,7 +21,8 @@ async function getUserData() {
 export default async function Page() {
     const data = await getUserData()
     const session = await getServerSession(authOptions)
-    return <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    return <main className="flex min-h-screen flex-col items-center p-24">
+    <span>6회 KKANBU SC Mercenaries (PL70880)</span>
     <RankList userData={data||[]} currentLeague={true} session={session}/>
   </main>
 }
