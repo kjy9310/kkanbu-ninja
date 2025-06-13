@@ -262,7 +262,7 @@ const handleSort=(e:any)=>{
         "Champion":0,
         "Pathfinder":0,
         "Necromancer":0,
-        "Raider":0,
+        "Warden":0,
         "Occultist":0,
         "Ascendant":0,
         "Hierophant":0,

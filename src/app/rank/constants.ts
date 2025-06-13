@@ -16,7 +16,7 @@ export const CLASS:any = {
     Gladiator:'https://i.imgur.com/F3FQxV4.png',
     Champion:'https://i.imgur.com/ltGrJ1K.png',
     Deadeye:'https://i.imgur.com/NCybIiO.png',
-    Raider:'https://i.imgur.com/oFwpUJO.png',
+    Warden:'https://i.imgur.com/oFwpUJO.png',
     Pathfinder:'https://i.imgur.com/EVg7lhR.png',
     Assassin:'https://i.imgur.com/0tURSJ4.png',
     Saboteur:'https://i.imgur.com/7dNJPM4.png',
