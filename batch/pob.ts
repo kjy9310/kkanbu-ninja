@@ -80,9 +80,9 @@ const batchMain = async () => {
     const pob = db.collection('kkanbu_pob');
     for (let index = 0; index < userList.length; index++) {
         const user = userList[index];
-        if (user.name!="포커삼_아라칼리생각보다재미가없네"){
-            continue
-        }
+        // if (user.name!="포커삼_아라칼리생각보다재미가없네"){
+        //     continue
+        // }
         const reqData = {
             accountName: user.account,
             realm: user.realm
