@@ -1,12 +1,83 @@
+# --- 빌드 스테이지: LuaJIT과 필요한 빌드 도구 설치 ---
+# buildbase 대신 'build_stage'라는 이름을 사용했습니다.
+FROM alpine:3.18 AS build_stage
+
+# 빌드에 필요한 기본 도구 및 LuaJIT과 LuaRocks 의존성 설치
+RUN apk add --no-cache \
+    git \
+    build-base \
+    zlib-dev \
+    readline-dev \
+    libffi-dev \
+    wget \
+    tar \
+    unzip \
+    # 새로 추가: MD5 체크섬 도구 제공 (openssl 또는 coreutils)
+    openssl
+
+WORKDIR /tmp
+
+# LuaJIT 소스 클론 및 특정 커밋 체크아웃
+# 이 커밋은 PoB가 호환성을 보장하는 LuaJIT 버전입니다.
+RUN git clone https://github.com/LuaJIT/LuaJIT.git && \
+    cd LuaJIT && \
+    git checkout c7db8255e1eb59f933fac7bc9322f0e4f8ddc6e6 && \
+    make && \
+    make install 
+
+RUN wget https://luarocks.org/releases/luarocks-3.7.0.tar.gz && \
+    tar xf luarocks-3.7.0.tar.gz && \
+    cd luarocks-3.7.0 && \
+    # configure 시, LuaJIT이 설치된 /usr/local 경로를 알려줍니다.
+    # --with-lua-include=/usr/local/include/luajit-2.1 로 명시해도 되지만,
+    # --with-lua=/usr/local 로 하면 LuaJIT이 /usr/local에 설치되었음을 알 수 있습니다.
+    ./configure --lua-suffix=jit --with-lua=/usr/local && \
+    make && \
+    make install && \
+    # 설치 후 임시 파일 정리
+    cd / && rm -rf /tmp/luarocks-3.7.0* /tmp/LuaJIT
+# 3-1. lua-zlib 설치
+# GitHub 리포지토리: https://github.com/brimworks/lua-zlib
+# 대부분의 LuaRocks 모듈은 'luarocks make'로 빌드/설치 가능합니다.
+RUN git clone https://github.com/brimworks/lua-zlib.git && \
+    cd lua-zlib && \
+    # 특정 버전이나 브랜치를 체크아웃할 수 있습니다.
+    luarocks make && \
+    cd / && rm -rf /tmp/lua-zlib
+
+# 3-2. luautf8 설치
+# GitHub 리포지토리: https://github.com/starwing/luautf8
+RUN git clone https://github.com/starwing/luautf8.git && \
+    cd luautf8 && \
+    # 특정 버전이나 브랜치를 체크아웃할 수 있습니다.
+    luarocks make && \
+    cd / && rm -rf /tmp/luautf8
+
 FROM node:20-alpine
 
 ENV LUA_PATH "/app/PathOfBuilding/runtime/lua/?.lua;;/app/PathOfBuilding/runtime/lua/?/init.lua;;"
 
-RUN apk add --update git gcc musl-dev zlib-dev luajit lua5.1 lua5.1-dev luarocks5.1
-RUN luarocks-5.1 install lua-zlib ZLIB_DIR=/usr
+# 빌드 스테이지에서 설치된 luajit 바이너리 (및 luarocks) 복사
+# 빌드 스테이지에서 설치된 luajit, luarocks 및 관련 Lua 모듈 복사
+COPY --from=build_stage /usr/local/bin/luajit /usr/local/bin/luajit
+COPY --from=build_stage /usr/local/bin/luarocks /usr/local/bin/luarocks
+# Lua 모듈들이 설치되는 경로를 모두 복사해야 합니다.
+# 일반적으로 /usr/local/share/lua/5.1/ (lua-zlib, luautf8)
+# 그리고 /usr/local/lib/lua/5.1/ (C-바인딩된 .so 파일들)
+COPY --from=build_stage /usr/local/share/lua /usr/local/share/lua
+COPY --from=build_stage /usr/local/lib/lua /usr/local/lib/lua
+
+# 기본 패키지 설치
+RUN apk add --no-cache git unzip curl zlib
 
 WORKDIR /app/
 RUN git clone https://github.com/PathOfBuildingCommunity/PathOfBuilding.git
+
+RUN /usr/local/bin/luajit /app/PathOfBuilding/Launch.lua --config "AppDataPath=/app/PathOfBuilding/Data" || true
+# PoB 데이터 디렉토리 생성 및 권한 부여
+# 이 단계는 PoB 데이터를 저장할 디렉토리가 없으면 나중에 에러가 나므로 미리 생성하고 권한을 부여합니다.
+# 보안상 매우 취약하므로, 문제 해결 후에는 더 적절한 권한 설정으로 변경해야 합니다.
+RUN mkdir -p /app/PathOfBuilding/Data && chmod 777 /app/PathOfBuilding/Data
 
 COPY . .
 COPY ./package.json ./
@@ -14,5 +85,8 @@ RUN npm install
 RUN mkdir json
 RUN chmod 777 /app/json
 VOLUME /app/json
+
 CMD [ "npm", "run", "batch:all"]
+
 # CMD [ "npm", "run", "batch:pob"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]

@@ -58,7 +58,7 @@ const batchMain = async () => {
     const dotenv = require('dotenv');
     dotenv.config();
 
-    const updateHourLimit = 1/2 * 60 // min
+    const updateHourLimit = 1/4 * 60 // min
 
     // Connection URL
     const client = new MongoClient(process.env.mongodb||'no db env');
@@ -80,9 +80,9 @@ const batchMain = async () => {
     const pob = db.collection('kkanbu_pob');
     for (let index = 0; index < userList.length; index++) {
         const user = userList[index];
-        // if (user.name!="깐부_막가_네크로폴리스"){
-        //     continue
-        // }
+        if (user.name!="포커삼_아라칼리생각보다재미가없네"){
+            continue
+        }
         const reqData = {
             accountName: user.account,
             realm: user.realm

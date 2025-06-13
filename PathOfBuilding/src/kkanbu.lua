@@ -98,13 +98,13 @@ function GetTime()
 	return 0
 end
 function GetScriptPath()
-	return ""
+	return "/app/PathOfBuilding/src"
 end
 function GetRuntimePath()
-	return ""
+	return "/app/PathOfBuilding/src"
 end
 function GetUserPath()
-	return ""
+	return "/app/PathOfBuilding/src"
 end
 function MakeDir(path) end
 function RemoveDir(path) end
