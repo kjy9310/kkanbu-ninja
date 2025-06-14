@@ -58,7 +58,7 @@ const batchMain = async () => {
     const dotenv = require('dotenv');
     dotenv.config();
 
-    const updateHourLimit = 1/4 * 60 // min
+    const updateHourLimit = 1/2 * 60 // min
 
     // Connection URL
     const client = new MongoClient(process.env.mongodb||'no db env');
