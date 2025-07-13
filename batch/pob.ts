@@ -58,7 +58,8 @@ const batchMain = async () => {
     const dotenv = require('dotenv');
     dotenv.config();
 
-    const updateHourLimit = 1/2 * 60 // min
+    const updateHourLimit = 2 * 60 // 1/2 * 60 min default
+    const delayLimit = 300 // 600 : 10min default
 
     // Connection URL
     const client = new MongoClient(process.env.mongodb||'no db env');
@@ -116,9 +117,9 @@ const batchMain = async () => {
             const { success:successI, retryDelay:retryDelayI } = Ires||{}
             if (!successI){
                 if (retryDelayI){
-                    if (parseInt(retryDelayI||'')>=600){
+                    if (parseInt(retryDelayI||'')>=delayLimit){
                         client.close()
-                        console.log('retryDelay over 600 stop for now ', new Date() )
+                        console.log('retryDelay over ',delayLimit,' stop for now ', new Date() )
                         const delta = new Date().getTime() - startTime
                         console.log('delta time : ', delta)
                         process.exit(0)

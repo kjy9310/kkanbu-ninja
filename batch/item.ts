@@ -8,7 +8,8 @@ const fetchingItemData = async () => {
 const dotenv = require('dotenv');
 dotenv.config();
 
-const updateHourLimit = 1/2 * 60 // min
+const updateHourLimit = 2 * 60 // 30 min -> 2 hour  
+const delayLimit = 300 // 10 min default 
 
 // Connection URL
 const client = new MongoClient(process.env.mongodb||'no db env');
@@ -45,7 +46,7 @@ const user = db.collection('kkanbu_users');
         const isOverTheLimit = updatedSince/1000/60 > updateHourLimit
 
         if(!itemDatum.isDead && !itemDatum.isDeleted && isOverTheLimit){
-            const {charItems, index:newIndex} = await getCharItem(user, startTime, index)
+            const {charItems, index:newIndex} = await getCharItem(user, startTime, index, delayLimit)
             index = newIndex
             item.deleteOne({id:user.id})
             item.insertOne(charItems)
@@ -57,7 +58,7 @@ const user = db.collection('kkanbu_users');
         }
     } else {
         console.log('add new item Data')
-        const {charItems, index:newIndex} = await getCharItem(user, startTime, index)
+        const {charItems, index:newIndex} = await getCharItem(user, startTime, index, delayLimit)
         index = newIndex
         item.insertOne(charItems)
     }
@@ -120,7 +121,7 @@ const getLinkedItemFromItems = (items:any):{has5Link:boolean, has6Link:boolean,m
       },{has5Link:false, has6Link:false, mainSkills:[]})
 }
 
-const getCharItem = async (user:any, startTime: number, index:number) =>{
+const getCharItem = async (user:any, startTime: number, index:number, delayLimit:number) =>{
     let items = []
             try{
                 const res = await fetch(`${POEHOST}character-window/get-items?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`, {
@@ -140,8 +141,8 @@ const getCharItem = async (user:any, startTime: number, index:number) =>{
                     const state = res.headers.get('x-rate-limit-ip-state')
                      
                     console.log('retryDelay : ', retryDelay, 'state - ',state )
-                    if (parseInt(retryDelay||'')>=600){
-                        console.log('retryDelay over 600 stop for now ', new Date() )
+                    if (parseInt(retryDelay||'')>=delayLimit){
+                        console.log('retryDelay over ',delayLimit,' stop for now ', new Date() )
                         const delta = new Date().getTime() - startTime
                         console.log('delta time : ', delta)
                         process.exit(0)
