@@ -277,10 +277,10 @@ build.configTab.varControls['enemyEvasion']:SetPlaceholder(round(data.monsterEva
 runCallback("OnFrame")
 -- { stat = "Life", label = "Total Life", fmt = "d", color = colorCodes.LIFE, compPercent = true },
 for key, value in pairs(build.displayStats) do
-	-- if value ~= nil then
-	-- 	printTable(value)
-	-- end
-	-- printTable(value)
+	if value ~= nil then
+		printTable(value)
+	end
+	printTable(value)
     local valueKey = value.stat
     local valueStat = build.calcsTab.mainOutput[value.stat]
     print(valueKey)
