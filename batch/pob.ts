@@ -16,11 +16,28 @@ enum typeJson {
 
 const getJson = async (type:typeJson, user:any ) =>{
     try{
-        const res = await fetch(`${POEHOST_Original}character-window/${(type===typeJson.ITEM?"get-items":"get-passive-skills")}?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        });
+        const formData = new FormData();
+        // Add text fields
+        formData.append("accountName", encodeURIComponent(user.account));
+        formData.append("realm", 'pc');
+        formData.append("character", encodeURIComponent(user.name));
+        const res = type===typeJson.ITEM? (
+            await fetch(`${POEHOST_Original}character-window/get-items?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0'
+                },
+            }) 
+        ) : (
+            await fetch(
+                `${POEHOST_Original}character-window/get-passive-skills?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0'
+                },
+            })
+        );
     if(res.status===200){
         const resData = await res.json()
         return {
@@ -37,12 +54,17 @@ const getJson = async (type:typeJson, user:any ) =>{
                 success:false,
                 retryDelay
             }
-        } else if (res.status ===404 || res.status === 403){
+        } else if (res.status ===404 
+            //|| res.status === 403
+            ){
             return {
                 success:false,
                 deleted:true
             }
+        }else {
+            console.log('res : ',res)
         }
+
     }
     }catch(e){
         console.log('error!!!',e)
