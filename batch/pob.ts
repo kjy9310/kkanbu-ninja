@@ -54,9 +54,7 @@ const getJson = async (type:typeJson, user:any ) =>{
                 success:false,
                 retryDelay
             }
-        } else if (res.status ===404 
-            //|| res.status === 403
-            ){
+        } else if (res.status ===404 || res.status === 403){
             return {
                 success:false,
                 deleted:true
