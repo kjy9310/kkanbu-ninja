@@ -8,7 +8,7 @@ const fetchingItemData = async () => {
 const dotenv = require('dotenv');
 dotenv.config();
 
-const updateHourLimit = 1/2 * 60 // 30 min -> 2 hour  
+const updateHourLimit = 2 * 60 // 30 min -> 2 hour  
 const delayLimit = 300 // 10 min default 
 
 // Connection URL
