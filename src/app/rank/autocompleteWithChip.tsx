@@ -26,7 +26,7 @@ export const AutocompleteWithChip = (props:any) => {
 //   });
 
   return (
-    <div style={{ width: 500 }}>
+    <div style={{ width: '100%' }}>
       <Autocomplete
         multiple
         id="tags-standard"
@@ -38,7 +38,6 @@ export const AutocompleteWithChip = (props:any) => {
             props.onChange(newValue)
         }}
         getOptionLabel={(option:any) => option.name}
-        // renderTags={() => {}}
         value={val}
         renderInput={params => (
           <TextField
@@ -47,8 +46,20 @@ export const AutocompleteWithChip = (props:any) => {
             placeholder={props.name}
             margin="normal"
             fullWidth
+            sx={{
+              '& .MuiInput-underline:before': { borderBottomColor: '#333' },
+              '& .MuiInput-underline:hover:before': { borderBottomColor: '#555' },
+              '& .MuiInput-underline:after': { borderBottomColor: '#133d62' },
+              '& .MuiInputBase-input': { color: '#eee', fontSize: '0.875rem' },
+              '& .MuiInputLabel-root': { color: '#888' },
+            }}
           />
         )}
+        sx={{
+          '& .MuiAutocomplete-tag': {
+            display: 'none', // We'll show tags in the main header instead
+          },
+        }}
       />
     </div>
   );

@@ -113,54 +113,67 @@ export default function Row(props:any) {
         }
     }
   >
-    <div style={{color:'white', display:'grid', gridTemplateColumns:'50px 74px 25% 310px 120px 200px auto', margin:2}}>
-        <div style={{padding:4}}>
-            <span>{index+1}</span>
+    <div style={{
+        color: 'white', 
+        display: 'grid', 
+        gridTemplateColumns: '40px 60px 1.5fr 2fr 1fr 1fr 1.5fr', 
+        alignItems: 'center',
+        padding: '8px 12px',
+        gap: '12px'
+    }}>
+        <div className="text-gray-500 font-mono text-sm">
+            {index + 1}
         </div>
-        <div style={{backgroundColor:'#ffffff4d', padding: 4, opacity:row.dead?0.4:1}}>
-            <span>{row.level} </span>
-            <img style={{border: '1px solid black', width:32, height:25, display:'inline-block'}} src={CLASS[row.class]}/>
+        <div className={`flex items-center justify-center rounded bg-gray-800/50 py-1 ${row.dead ? 'opacity-40' : ''}`}>
+            <span className="text-sm font-bold mr-1">{row.level}</span>
+            <img className="w-6 h-5 border border-black/20" src={CLASS[row.class]} alt={row.class} />
         </div>
-        <div style={{
-            padding:4,
-            textAlign: 'left',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            opacity:row.dead?0.4:1
-        }}>
-            <span>{row.name}</span>{(row.event)&&<span style={{color:'magenta'}}>{` [${row.event.challenges.completed}]`}</span>}
+        <div className={`truncate text-left ${row.dead ? 'opacity-40' : ''}`}>
+            <span className="font-bold hover:text-blue-400 transition-colors">{row.name}</span>
+            {row.event && <span className="text-magenta-400 text-xs ml-1">[{row.event.challenges.completed}]</span>}
         </div>
-        <div>
-            {row.pob&&row.pob.Life!=null&&<Stats pobInfo={row.pob}/>}
+        <div className="min-w-0">
+            {row.pob && row.pob.Life != null ? <Stats pobInfo={row.pob} /> : <div className="text-gray-600 text-xs text-left">No PoB Data</div>}
         </div>
-        <div style={{padding:4,textAlign: 'left'}}>
-            {row.pob&&row.pob.Life!=null&&<Tooltip title={<div style={{whiteSpace: 'pre-line'}}>
-                {`Res / Max Hit\n`}
-                <span style={{color:'#b9b9b9'}}>{`${row.pob.PhysicalDamageReduction}% / ${row.pob.PhysicalMaximumHitTaken}\n`}</span>
-                <span style={{color:'red'}}>{`${row.pob.FireResist}% / ${row.pob.FireMaximumHitTaken}\n`}</span>
-                <span style={{color:'cyan'}}>{`${row.pob.ColdResist}% / ${row.pob.ColdMaximumHitTaken}\n`}</span>
-                <span style={{color:'yellow'}}>{`${row.pob.LightningResist}% / ${row.pob.LightningMaximumHitTaken}\n`}</span>
-                <span style={{color:'#c35dff'}}>{`${row.pob.ChaosResist}% / ${row.pob.ChaosMaximumHitTaken}\n`}</span>
-            </div>}>
-                <span>
-                {"eHP: "+(isNaN(parseInt(row.pob.TotalEHP))?"ㅁ?ㄹ":parseInt(row.pob.TotalEHP))}
-                </span>
-            </Tooltip>}
-        </div>
-        <div style={{padding:4,textAlign: 'left'}}>
-            <span>
-            {row.pob&&row.pob.Life!=null&&"DPS: "+(isNaN(parseInt(row.pob.CombinedDPS))||parseInt(row.pob.CombinedDPS)===0?"ㅁ?ㄹ":parseInt(row.pob.CombinedDPS))}
-            </span>
-        </div>
-        <div>
-            <span style={{display:'flex', height:36, overflow:'hidden'}}>
-                {row.items?.mainSkills?.map((skillgem:any)=>{
-                return <Tooltip key={skillgem.id} title={skillgem.baseType}>
-                <img src={skillgem.icon}/>
+        <div className="text-left">
+            {row.pob && row.pob.Life != null && (
+                <Tooltip title={
+                    <div className="whitespace-pre-line p-1">
+                        <div className="font-bold border-b border-gray-600 mb-1 pb-1">Max Hit / Resist</div>
+                        <div className="grid grid-cols-2 gap-x-4">
+                            <span className="text-gray-400">Physical:</span> <span className="text-right font-mono">{row.pob.PhysicalMaximumHitTaken} ({row.pob.PhysicalDamageReduction}%)</span>
+                            <span className="text-red-400">Fire:</span> <span className="text-right font-mono">{row.pob.FireMaximumHitTaken} ({row.pob.FireResist}%)</span>
+                            <span className="text-cyan-400">Cold:</span> <span className="text-right font-mono">{row.pob.ColdMaximumHitTaken} ({row.pob.ColdResist}%)</span>
+                            <span className="text-yellow-400">Light:</span> <span className="text-right font-mono">{row.pob.LightningMaximumHitTaken} ({row.pob.LightningResist}%)</span>
+                            <span className="text-purple-400">Chaos:</span> <span className="text-right font-mono">{row.pob.ChaosMaximumHitTaken} ({row.pob.ChaosResist}%)</span>
+                        </div>
+                    </div>
+                }>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">eHP</span>
+                        <span className="text-blue-300 font-mono leading-none">
+                            {isNaN(parseInt(row.pob.TotalEHP)) ? "N/A" : parseInt(row.pob.TotalEHP).toLocaleString()}
+                        </span>
+                    </div>
                 </Tooltip>
-                })}
-            </span>
+            )}
+        </div>
+        <div className="text-left">
+            {row.pob && row.pob.Life != null && (
+                <div className="flex flex-col">
+                    <span className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">DPS</span>
+                    <span className="text-orange-300 font-mono leading-none">
+                        {isNaN(parseInt(row.pob.CombinedDPS)) || parseInt(row.pob.CombinedDPS) === 0 ? "N/A" : parseInt(row.pob.CombinedDPS).toLocaleString()}
+                    </span>
+                </div>
+            )}
+        </div>
+        <div className="flex items-center gap-1 overflow-hidden">
+            {row.items?.mainSkills?.slice(0, 5).map((skillgem: any) => (
+                <Tooltip key={skillgem.id} title={skillgem.baseType}>
+                    <img className="w-8 h-8 rounded bg-black/40 p-0.5 border border-gray-800" src={skillgem.icon} alt={skillgem.baseType} />
+                </Tooltip>
+            ))}
         </div>
     </div>
     <AccordionDetails>
