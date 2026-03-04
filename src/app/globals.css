@@ -193,7 +193,8 @@ body {
 }
 
 .background{
-  background-image: url(https://web.poecdn.com/protected/image/promo/keepers/topbg.png?v=1761277621937&key=rz3uBRtcicYWolfn80Uveg);
+  /* keeper https://web.poecdn.com/protected/image/promo/keepers/topbg.png?v=1761277621937&key=rz3uBRtcicYWolfn80Uveg */
+  background-image: url(https://web.poecdn.com/protected/image/promo/mirage/topbg.png?v=1770675456005&key=TA87678YGLlK02W-np-uyA);
   background-size: cover;
   background-position: center center;
   position: fixed;

@@ -41,6 +41,7 @@ export default function RootLayout({
             </div>
             <div style={{flexDirection:"row", textAlign:"left"}}>
               <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/6">6회</a>
+              <a className="topButton" style={{ backgroundColor: '#621462'}} href="/rank/7">7회</a>
             </div>
           </div>
         </span>
