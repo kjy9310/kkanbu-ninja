@@ -27,5 +27,6 @@ export const CLASS:any = {
     Inquisitor:'https://i.imgur.com/PyzEPzP.png',
     Hierophant:'https://i.imgur.com/8iu1k86.png',
     Guardian:'https://i.imgur.com/sHiE02Y.png',
-    Ascendant:'https://i.imgur.com/Th9qGrm.png'
+    Ascendant:'https://i.imgur.com/Th9qGrm.png',
+    Reliquarian: 'https://i.imgur.com/FrQ22YK.png'
   }
