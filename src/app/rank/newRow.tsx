@@ -130,7 +130,16 @@ export default function Row(props:any) {
         </div>
         <div className={`truncate text-left ${row.dead ? 'opacity-40' : ''}`}>
             <span className="font-bold hover:text-blue-400 transition-colors">{row.name}</span>
-            {row.event && <span className="text-magenta-400 text-xs ml-1">[{row.event.challenges.completed}]</span>}
+            {row.challenges && (
+                <span className="text-yellow-500 text-[11px] ml-1.5 font-mono font-bold" title="League Challenges">
+                    {row.challenges.completed}
+                </span>
+            )}
+            {row.event && (
+                <span className="text-magenta-400 text-[10px] ml-1 font-bold" title="Event Progress">
+                    [{row.event.challenges.completed}]
+                </span>
+            )}
         </div>
         <div className="min-w-0">
             {row.pob && row.pob.Life != null ? <Stats pobInfo={row.pob} /> : <div className="text-gray-600 text-xs text-left">No PoB Data</div>}
