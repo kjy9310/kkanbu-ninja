@@ -58,6 +58,7 @@ export default function Page(props:any) {
   const [popularUniques, setPopularUniques] = useState<any[]>([])
   
   const [filterClass, setClass] = useState<string>('')
+  const [filterMainSkill, setMainSkill] = useState<string>('')
   const [filterName, setName] = useState<string>('')
   const [filterLink, setLink] = useState<string>('')
   
@@ -77,9 +78,22 @@ export default function Page(props:any) {
   const isEnd = useIsVisible(endTag)
 
   const [classCounts, setClassCounts] = useState<any>([])
+  const [mainSkillCounts, setMainSkillCounts] = useState<any>([])
   const [sortString, setSortString] = useState<string>('rank')
 
   const pip = useRef<any>(null)
+
+  const getMainSkill = (user: any) => {
+    if (!user.items?.mainSkills || user.items.mainSkills.length === 0) return null;
+    const sorted = [...user.items.mainSkills].sort((a: any, b: any) => b.linkCount - a.linkCount);
+    return sorted[0].baseType;
+  }
+
+  const getMainSkillIcon = (user: any) => {
+    if (!user.items?.mainSkills || user.items.mainSkills.length === 0) return null;
+    const sorted = [...user.items.mainSkills].sort((a: any, b: any) => b.linkCount - a.linkCount);
+    return sorted[0].icon;
+  }
 
   async function getUserData() {
     try{
@@ -205,47 +219,49 @@ const handleSort=(e:any)=>{
   }
 
   const getGemList= async (data:any)=>{
-    const filterGemNames = filterGems.map((e:any)=>e.name)
-    const gemSet = await data?.reduce((acc:any, user:any)=>{
-      // Process main skills for icons
+    const gemSet: any = {}
+    data?.forEach((user:any)=>{
+      const userGems = new Set<string>()
       user.items?.mainSkills?.forEach((gem:any)=>{
-        if (!acc[gem.baseType]) {
-          acc[gem.baseType] = { name: gem.baseType, count: 0, icon: gem.icon }
+        const name = gem.baseType
+        if (!gemSet[name]) {
+          gemSet[name] = { name: name, count: 0, icon: gem.icon }
+        } else if (gem.icon && !gemSet[name].icon) {
+          gemSet[name].icon = gem.icon
         }
-        acc[gem.baseType].count += 1
+        userGems.add(name)
       })
-      // Process all gems for search
-      user.items?.allGems?.forEach((gemName:any)=>{
-        if (filterGemNames.includes(gemName)){
-        }else if (acc[gemName]){
-          acc[gemName].count = (acc[gemName].count || 0) + 1
-        }else{
-          acc[gemName] = {name:gemName, count: 1}
+      user.items?.allGems?.forEach((name:string) => userGems.add(name))
+      
+      userGems.forEach(name => {
+        if (!gemSet[name]) {
+          gemSet[name] = { name: name, count: 0 }
         }
+        gemSet[name].count += 1
       })
-      return acc
-    },{} as any)
+    })
+    
     const orderedGemSetList = Object.values(gemSet).sort((a:any,b:any)=>{
-      return (b as any).count - (a as any).count
+      if ((b as any).count !== (a as any).count) return (b as any).count - (a as any).count
+      return (a as any).name.localeCompare((b as any).name)
     })
     return orderedGemSetList
   }
 
   const getUniqueList = async (data:any) =>{
-    const filterUniqueNames = filterUniques.map((e:any)=>e.name)
-    const uniqueSet = await data?.reduce((acc:any, user:any)=>{
-      user.items?.allUniques?.forEach((unique:string)=>{
-        if (filterUniqueNames.includes(unique)){
-        }else if (acc[unique]){
-          acc[unique] = {name:unique, count: acc[unique].count+1}
-        }else{
-          acc[unique] = {name:unique, count: 1}
+    const uniqueSet: any = {}
+    data?.forEach((user:any)=>{
+      const userUniques = new Set<string>(user.items?.allUniques || [])
+      userUniques.forEach(name => {
+        if (!uniqueSet[name]) {
+          uniqueSet[name] = { name: name, count: 0 }
         }
+        uniqueSet[name].count += 1
       })
-      return acc
-    },{} as any)
+    })
     const orderedUniqueSetList = Object.values(uniqueSet).sort((a:any,b:any)=>{
-      return (b as any).count - (a as any).count
+      if ((b as any).count !== (a as any).count) return (b as any).count - (a as any).count
+      return (a as any).name.localeCompare((a as any).name)
     })
     return orderedUniqueSetList
   }
@@ -261,12 +277,22 @@ const handleSort=(e:any)=>{
       setUniqueList(uniqueListSet)
       setPopularUniques(uniqueListSet.slice(0, 12))
       
-      setClassCounts(filtered.reduce((acc:any,user:any)=>{
+      const msCounts: any = {}
+      const cCounts = filtered.reduce((acc:any,user:any)=>{
         if (acc[user.class]){
           acc[user.class] = acc[user.class]+1
         } else {
           acc[user.class] = 1
         }
+
+        const mainSkill = getMainSkill(user)
+        if (mainSkill) {
+          if (!msCounts[mainSkill]) {
+            msCounts[mainSkill] = { name: mainSkill, count: 0, icon: getMainSkillIcon(user) }
+          }
+          msCounts[mainSkill].count += 1
+        }
+
         return acc
       },{
         "Juggernaut":0,
@@ -294,7 +320,10 @@ const handleSort=(e:any)=>{
         "Witch":0,
         "Templar":0,
         "Marauder":0,
-        "Scion":0}))
+        "Scion":0})
+        
+      setClassCounts(cCounts)
+      setMainSkillCounts(Object.values(msCounts).sort((a: any, b: any) => b.count - a.count))
     })()
   },[filtered])
   
@@ -337,7 +366,7 @@ const handleSort=(e:any)=>{
   }
 
   useEffect(()=>{
-    if (filterName==='' && (filterGems.length===0) && filterDeath==='all' && filterUniques.length===0 && filterLink==='' && filterClass==='' && sortString==='rank'){
+    if (filterName==='' && (filterGems.length===0) && filterDeath==='all' && filterUniques.length===0 && filterLink==='' && filterClass==='' && filterMainSkill==='' && sortString==='rank'){
       setFilter(original)
       return
     }else{
@@ -353,6 +382,7 @@ const handleSort=(e:any)=>{
         : true
         const deathCheck = filterDeath === 'all'? true : filterDeath==='dead'?user.dead:!user.dead
         const classCheck = filterClass ? filterClass===user.class :true
+        const mainSkillCheck = filterMainSkill ? getMainSkill(user) === filterMainSkill : true
         const nameCheck = filterName ? (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName)) : true
         const linkCheck = filterLink ? (
           filterLink==='6'? user.items?.has6Link : (
@@ -361,13 +391,13 @@ const handleSort=(e:any)=>{
             )
           )
         ): true
-        return Boolean(gemCheck&&nameCheck&&deathCheck&&uniqueCheck&&linkCheck&&classCheck)
+        return Boolean(gemCheck&&nameCheck&&deathCheck&&uniqueCheck&&linkCheck&&classCheck&&mainSkillCheck)
       }).sort(sortSelect(sortString))
       setFilter(newFiltered)
       setOpenAccordId('')
     }
     
-  },[filterGems, filterName, filterDeath, filterUniques,filterLink, filterClass, original, sortString])
+  },[filterGems, filterName, filterDeath, filterUniques,filterLink, filterClass, filterMainSkill, original, sortString])
   
   const handleChange = (event: SelectChangeEvent) => {
     setLink(event.target.value as string);
@@ -437,7 +467,7 @@ const handleSort=(e:any)=>{
     <aside className="w-full lg:w-80 flex-shrink-0 space-y-6">
       <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-lg border border-gray-800">
         <h3 className="text-sm font-bold text-gray-400 mb-4 uppercase tracking-wider border-b border-gray-800 pb-2">Classes</h3>
-        <div className="flex flex-col gap-1 overflow-y-auto max-h-[500px] pr-2 custom-scrollbar">
+        <div className="flex flex-col gap-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
           {Object.keys(classCounts).sort((a:string,b:string)=>{
             const classA = classCounts[a]
             const classB = classCounts[b]
@@ -445,7 +475,7 @@ const handleSort=(e:any)=>{
           }).map(className=>{
             const count = classCounts[className]
             const isSelected = filterClass === className
-            const percentage = original.length > 0 ? (count / original.length * 100).toFixed(1) : '0'
+            const percentage = filtered.length > 0 ? (count / filtered.length * 100).toFixed(1) : '0'
             if (count === 0 && !isSelected) return null;
 
             return (
@@ -465,13 +495,37 @@ const handleSort=(e:any)=>{
         </div>
       </div>
 
+      {/* Main Skills List */}
+      <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-lg border border-gray-800">
+        <h3 className="text-sm font-bold text-gray-400 mb-4 uppercase tracking-wider border-b border-gray-800 pb-2">Main Skills</h3>
+        <div className="flex flex-col gap-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
+          {mainSkillCounts.map((skill: any) => {
+            const isSelected = filterMainSkill === skill.name
+            const percentage = filtered.length > 0 ? (skill.count / filtered.length * 100).toFixed(1) : '0'
+            return (
+              <div 
+                key={`main-skill-${skill.name}`} 
+                onClick={()=>setMainSkill(isSelected ? '' : skill.name)}
+                className={`flex items-center p-2 cursor-pointer hover:bg-[#2a2a2a] rounded transition-all group ${isSelected ? 'bg-[#133d62] ring-1 ring-[#2a6fb3]' : ''}`}
+              >
+                <div className={`w-8 h-8 rounded overflow-hidden mr-3 border ${isSelected ? 'border-[#2a6fb3]' : 'border-gray-700 group-hover:border-gray-500'}`}>
+                  <img src={skill.icon} alt={skill.name} className="w-full h-full object-cover" />
+                </div>
+                <span className={`flex-grow text-sm ${isSelected ? 'text-white font-bold' : 'text-gray-300'}`}>{skill.name}</span>
+                <span className="text-gray-500 text-xs font-mono">{percentage}%</span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
       {/* Popular Skills Grid */}
       <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-lg border border-gray-800">
-        <h3 className="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wider border-b border-gray-800 pb-2">Popular Skills</h3>
+        <h3 className="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wider border-b border-gray-800 pb-2">Popular Gems</h3>
         <div className="grid grid-cols-4 gap-2">
           {popularGems.map((gem) => {
             const isSelected = filterGems.some((g:any) => g.name === gem.name)
-            const percentage = original.length > 0 ? (gem.count / original.length * 100).toFixed(1) : '0'
+            const percentage = filtered.length > 0 ? (gem.count / filtered.length * 100).toFixed(1) : '0'
             return (
               <Tooltip key={gem.name} title={`${gem.name} (${percentage}%)`}>
                 <div 
@@ -501,6 +555,7 @@ const handleSort=(e:any)=>{
         <div className="flex flex-wrap gap-1">
           {popularUniques.slice(0, 10).map((item) => {
             const isSelected = filterUniques.some((u:any) => u.name === item.name)
+            const percentage = filtered.length > 0 ? (item.count / filtered.length * 100).toFixed(1) : '0'
             return (
               <div 
                 key={item.name}
@@ -511,9 +566,10 @@ const handleSort=(e:any)=>{
                     setUniques([...filterUniques, item])
                   }
                 }}
-                className={`text-[10px] px-2 py-1 rounded cursor-pointer border transition-all ${isSelected ? 'bg-[#ef6c00] border-[#ffb74d] text-white' : 'bg-[#222] border-gray-800 text-gray-400 hover:border-gray-600'}`}
+                className={`text-[10px] px-2 py-1 rounded cursor-pointer border transition-all flex items-center gap-1 ${isSelected ? 'bg-[#ef6c00] border-[#ffb74d] text-white' : 'bg-[#222] border-gray-800 text-gray-400 hover:border-gray-600'}`}
               >
-                {item.name.replace(/^(The\s|A\s)/, '')}
+                <span>{item.name.replace(/^(The\s|A\s)/, '')}</span>
+                <span className={`text-[9px] ${isSelected ? 'text-orange-100' : 'text-gray-500'}`}>{Math.round(parseFloat(percentage))}%</span>
               </div>
             )
           })}
@@ -614,6 +670,7 @@ const handleSort=(e:any)=>{
             onClick={()=>{
               setDeath('all')
               setClass('')
+              setMainSkill('')
               setName('')
               setLink('')
               setGems([])
@@ -659,6 +716,15 @@ const handleSort=(e:any)=>{
               label={filterClass} 
               onDelete={() => setClass('')} 
               color="primary" 
+              size="small" 
+              sx={{ borderRadius: '4px' }}
+            />
+          )}
+          {filterMainSkill && (
+            <Chip 
+              label={filterMainSkill} 
+              onDelete={() => setMainSkill('')} 
+              color="secondary" 
               size="small" 
               sx={{ borderRadius: '4px' }}
             />
