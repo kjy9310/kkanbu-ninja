@@ -40,6 +40,7 @@ export default function RootLayout({
             <a className="topButton" style={{ backgroundColor: '#621462', fontSize: '12px', padding: '2px 8px'}} href="/rank/5">5회</a>
             <a className="topButton" style={{ backgroundColor: '#621462', fontSize: '12px', padding: '2px 8px'}} href="/rank/6">6회</a>
             <a className="topButton" style={{ backgroundColor: '#621462', fontSize: '12px', padding: '2px 8px'}} href="/rank/7">7회</a>
+            <a className="topButton" style={{ backgroundColor: '#621462', fontSize: '12px', padding: '2px 8px'}} href="/rank/8">8회</a>
         </div>
       </div>
         {children}

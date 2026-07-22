@@ -107,11 +107,17 @@ const getLinkedItemFromItems = (items:any):{has5Link:boolean, has6Link:boolean,m
         const has5Link = (is56Link.group0Count===5||is56Link.group1Count===5)
         const has6Link = (is56Link.group0Count===6)
         if (is56Link.group0Count===5){
-            acc.mainSkills = [...acc.mainSkills,...item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false && gem.socket<5)]
+            const gems = item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false && gem.socket<5)
+                .map((gem:any) => ({...gem, linkCount: 5})) || []
+            acc.mainSkills = [...acc.mainSkills,...gems]
         } else if (is56Link.group1Count===5){
-            acc.mainSkills = [...acc.mainSkills,...item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false && gem.socket>0)]
+            const gems = item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false && gem.socket>0)
+                .map((gem:any) => ({...gem, linkCount: 5})) || []
+            acc.mainSkills = [...acc.mainSkills,...gems]
         } else if (is56Link.group0Count===6){
-            acc.mainSkills = [...acc.mainSkills, ...item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false)]
+            const gems = item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false)
+                .map((gem:any) => ({...gem, linkCount: 6})) || []
+            acc.mainSkills = [...acc.mainSkills, ...gems]
         }
         return {
             has5Link: acc.has5Link|| has5Link,
