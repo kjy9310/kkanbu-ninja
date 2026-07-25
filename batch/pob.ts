@@ -16,11 +16,6 @@ enum typeJson {
 
 const getJson = async (type:typeJson, user:any ) =>{
     try{
-        const formData = new FormData();
-        // Add text fields
-        formData.append("accountName", encodeURIComponent(user.account));
-        formData.append("realm", 'pc');
-        formData.append("character", encodeURIComponent(user.name));
         const res = type===typeJson.ITEM? (
             await fetch(`${POEHOST_Original}character-window/get-items?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`, {
                 method: "POST",
@@ -40,6 +35,14 @@ const getJson = async (type:typeJson, user:any ) =>{
         );
     if(res.status===200){
         const resData = await res.json()
+        const isValidPayload = resData && typeof resData === 'object' && !Array.isArray(resData)
+        if (!isValidPayload) {
+            console.log('invalid payload type', type, typeof resData, resData)
+            return {
+                success:false,
+                error:'invalid_payload'
+            }
+        }
         return {
             success:true,
             json:resData
@@ -154,9 +157,11 @@ const batchMain = async () => {
                 const itemError = await new Promise((r)=>fs.writeFile(ItemJsonPath, JSON.stringify(jsonI), 'utf8', r))
                 console.log('itemError', itemError)
                 console.log('saved')
+            } else {
+                console.log('item payload unavailable', { errorI, deletedI })
             }
             let Tres = await getJson(typeJson.TREE,user)
-            const { success:successT, retryDelay:retryDelayT } = Ires||{}
+            const { success:successT, retryDelay:retryDelayT } = Tres||{}
             if (!successT){
                 if (retryDelayT){
                     if (parseInt(retryDelayT||'')>=600){
@@ -176,6 +181,8 @@ const batchMain = async () => {
                 const treeError = await new Promise((r)=>fs.writeFile(TreeJsonPath, JSON.stringify(jsonT), 'utf8',r))
                 console.log('treeError',treeError)
                 console.log('saved')
+            } else {
+                console.log('tree payload unavailable', { errorT, deletedT })
             }
             console.log('executing')
             await new Promise(r=>{setTimeout(()=>r(null),500)})
@@ -186,12 +193,11 @@ const batchMain = async () => {
                 client.close()
                 process.exit(0)
             },29000)
-            const pobResult = await new Promise((r)=>{
+            const pobResult = await new Promise((resolve)=>{
                 execute("cd /app/PathOfBuilding/src/ && sh kkanbu.sh",(err:any, std:string, stderr:any)=>{
                     console.log("err:",err)
-                    // console.log(std)
-                    // console.log(stderr)
-                    const line = std.split("\n")
+                    const output = `${std || ''}${stderr ? `\n${stderr}` : ''}`.trim()
+                    const line = (std || '').split("\n")
                     const regex = /\[\((.*)\)\]/
                     const filtered = line.reduce((acc:any, oneLine:string, index:number)=>{
                         const matches = oneLine.match(regex)
@@ -205,13 +211,22 @@ const batchMain = async () => {
                         }
                         return acc
                     },{})
+                    const isExecutionFailed = !!err || !!stderr || Object.keys(filtered).length === 0
+                    if (isExecutionFailed) {
+                        console.log('pob execution failed', {
+                            error: err,
+                            stderr: stderr?.toString?.() || stderr,
+                            stdoutPreview: output.slice(0, 1000)
+                        })
+                    }
                     console.log('got user pob stop timeout check')
                     clearTimeout(timeoutCheck)
                     
-                    r(filtered)
+                    resolve({ ...filtered, __executionFailed: isExecutionFailed, stderr: stderr?.toString?.() || stderr, stdout: output })
                 })
             })
             await new Promise(r=>{setTimeout(()=>r(null),500)})
+            const result = pobResult as any
             const {
                 LifeUnreserved,
                 Life,
@@ -237,10 +252,15 @@ const batchMain = async () => {
                 ChaosMaximumHitTaken,
                 EffectiveMovementSpeedMod,
                 CombinedDPS,
-                POB
-            } = pobResult as any
-            if (POB==null){
-                console.log("POB is null -> continue")
+                POB,
+                __executionFailed
+            } = result
+            if (__executionFailed || POB==null){
+                console.log("pob execution failed or POB output missing -> continue", {
+                    __executionFailed,
+                    hasPOB: POB != null,
+                    stderr: result.stderr
+                })
                 continue
             }
             console.log("got data : ",JSON.stringify({isDead:user.dead,

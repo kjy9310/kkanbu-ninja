@@ -171,6 +171,21 @@ end
 
 dofile("Launch.lua")
 
+local originalCopyTable = copyTable
+local originalCopyTableSafe = copyTableSafe
+function copyTable(tbl, noRecurse)
+	if type(tbl) ~= "table" then
+		return tbl
+	end
+	return originalCopyTable(tbl, noRecurse)
+end
+function copyTableSafe(tbl, noRecurse, preserveMeta, isSubTable)
+	if type(tbl) ~= "table" then
+		return tbl
+	end
+	return originalCopyTableSafe(tbl, noRecurse, preserveMeta, isSubTable)
+end
+
 -- Prevents loading of ModCache
 -- Allows running mod parsing related tests without pushing ModCache
 -- The CI env var will be true when run from github workflows but should be false for other tools using the headless wrapper 
