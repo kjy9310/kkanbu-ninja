@@ -69,7 +69,66 @@ function GetAsyncCount()
 end
 
 -- Search Handles
-function NewFileSearch() end
+function NewFileSearch(pattern, findSubDirectories)
+	if not pattern then return nil end
+	local cleanPattern = pattern:gsub("^/", "")
+	if cleanPattern:sub(1, 1) == "." and cleanPattern:sub(2, 2) == "/" then
+		cleanPattern = cleanPattern:sub(3)
+	end
+	
+	-- Handle glob pattern for .zip.part*
+	if cleanPattern:match("%.zip%.part%*$") then
+		local basePath = cleanPattern:gsub("%.zip%.part%*$", "")
+		local files = {}
+		for i = 0, 20 do
+			local partPath = basePath .. ".zip.part" .. i
+			local f = io.open(partPath, "rb")
+			if f then
+				f:close()
+				local fileName = partPath:match("([^/]+)$")
+				table.insert(files, fileName)
+			end
+		end
+		if #files == 0 then
+			return nil
+		end
+		local idx = 1
+		local searchHandle = {}
+		function searchHandle:GetFileName()
+			return files[idx]
+		end
+		function searchHandle:GetFileModifiedTime()
+			return 1
+		end
+		function searchHandle:NextFile()
+			idx = idx + 1
+			if idx <= #files then
+				return true
+			end
+			return false
+		end
+		return searchHandle
+	end
+
+	-- Direct file search (.bin or .zip)
+	local f = io.open(cleanPattern, "rb")
+	if f then
+		f:close()
+		local fileName = cleanPattern:match("([^/]+)$")
+		local searchHandle = {}
+		function searchHandle:GetFileName()
+			return fileName
+		end
+		function searchHandle:GetFileModifiedTime()
+			return 1
+		end
+		function searchHandle:NextFile()
+			return false
+		end
+		return searchHandle
+	end
+	return nil
+end
 
 -- General Functions
 function SetWindowTitle(title) end
@@ -98,7 +157,7 @@ function GetTime()
 	return 0
 end
 function GetScriptPath()
-	return ""
+	return "."
 end
 function GetRuntimePath()
 	return ""
