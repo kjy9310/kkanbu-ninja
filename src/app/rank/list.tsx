@@ -278,11 +278,14 @@ const handleSort=(e:any)=>{
       setPopularUniques(uniqueListSet.slice(0, 12))
       
       const msCounts: any = {}
+      const initialCounts = Object.keys(CLASS).reduce((acc: any, clsName: string) => {
+        acc[clsName] = 0
+        return acc
+      }, {})
+
       const cCounts = filtered.reduce((acc:any,user:any)=>{
-        if (acc[user.class]){
-          acc[user.class] = acc[user.class]+1
-        } else {
-          acc[user.class] = 1
+        if (user.class) {
+          acc[user.class] = (acc[user.class] || 0) + 1
         }
 
         const mainSkill = getMainSkill(user)
@@ -294,33 +297,7 @@ const handleSort=(e:any)=>{
         }
 
         return acc
-      },{
-        "Juggernaut":0,
-        "Guardian":0,
-        "Champion":0,
-        "Pathfinder":0,
-        "Necromancer":0,
-        "Warden":0,
-        "Occultist":0,
-        "Ascendant":0,
-        "Hierophant":0,
-        "Saboteur":0,
-        "Chieftain":0,
-        "Elementalist":0,
-        "Deadeye":0,
-        "Inquisitor":0,
-        "Gladiator":0,
-        "Slayer":0,
-        "Trickster":0,
-        "Berserker":0,
-        "Assassin":0,
-        "Duelist":0,
-        "Shadow":0,
-        "Ranger":0,
-        "Witch":0,
-        "Templar":0,
-        "Marauder":0,
-        "Scion":0})
+      }, initialCounts)
         
       setClassCounts(cCounts)
       setMainSkillCounts(Object.values(msCounts).sort((a: any, b: any) => b.count - a.count))
@@ -465,33 +442,48 @@ const handleSort=(e:any)=>{
     
     {/* Sidebar - Filters */}
     <aside className="w-full lg:w-80 flex-shrink-0 space-y-6">
-      <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-lg border border-gray-800">
-        <h3 className="text-sm font-bold text-gray-400 mb-4 uppercase tracking-wider border-b border-gray-800 pb-2">Classes</h3>
-        <div className="flex flex-col gap-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
-          {Object.keys(classCounts).sort((a:string,b:string)=>{
-            const classA = classCounts[a]
-            const classB = classCounts[b]
-            return classB-classA
-          }).map(className=>{
-            const count = classCounts[className]
-            const isSelected = filterClass === className
-            const percentage = filtered.length > 0 ? (count / filtered.length * 100).toFixed(1) : '0'
-            if (count === 0 && !isSelected) return null;
+      <div className="bg-[#1a1a1a] p-3 rounded-lg shadow-lg border border-gray-800 space-y-2.5">
+        <div className="flex items-center justify-between border-b border-gray-800 pb-1.5">
+          <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Classes</h3>
+          {filterClass && (
+            <button 
+              onClick={() => setClass('')}
+              className="text-[10px] text-gray-400 hover:text-white transition-colors underline"
+            >
+              Clear filter
+            </button>
+          )}
+        </div>
+        
+        <div className="grid grid-cols-2 gap-1.5 max-h-[380px] overflow-y-auto pr-1 custom-scrollbar">
+          {Object.keys(classCounts)
+            .sort((a, b) => (classCounts[b] - classCounts[a]) || a.localeCompare(b))
+            .map((className) => {
+              const count = classCounts[className];
+              const isSelected = filterClass === className;
+              const percentage = filtered.length > 0 ? (count / filtered.length * 100).toFixed(1) : '0';
+              const isZero = count === 0;
 
-            return (
-              <div 
-                key={`search-${className}`} 
-                onClick={()=>setClass(isSelected ? '' : className)}
-                className={`flex items-center p-2 cursor-pointer hover:bg-[#2a2a2a] rounded transition-all group ${isSelected ? 'bg-[#133d62] ring-1 ring-[#2a6fb3]' : ''}`}
-              >
-                <div className={`w-8 h-8 rounded-full overflow-hidden mr-3 border-2 ${isSelected ? 'border-[#2a6fb3]' : 'border-gray-700 group-hover:border-gray-500'}`}>
-                  <div className="w-full h-full bg-cover bg-center" style={{backgroundImage: `url(${CLASS[className]})`}}></div>
+              return (
+                <div 
+                  key={`search-${className}`} 
+                  onClick={() => setClass(isSelected ? '' : className)}
+                  className={`flex items-center px-2 py-1.5 cursor-pointer rounded transition-all group border ${
+                    isSelected 
+                      ? 'bg-[#133d62] border-[#2a6fb3] ring-1 ring-[#2a6fb3]' 
+                      : isZero
+                        ? 'bg-[#0d0d0d] border-gray-900 opacity-50 hover:opacity-100 hover:border-gray-700'
+                        : 'bg-[#121212] border-gray-800/80 hover:bg-[#222] hover:border-gray-700'
+                  }`}
+                >
+                  <div className={`w-5 h-5 rounded-full overflow-hidden mr-1.5 flex-shrink-0 border ${isSelected ? 'border-[#2a6fb3]' : isZero ? 'border-gray-800' : 'border-gray-700'}`}>
+                    <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${CLASS[className] || CLASS['Scion']})` }} />
+                  </div>
+                  <span className={`text-xs truncate flex-grow ${isSelected ? 'text-white font-bold' : isZero ? 'text-gray-500' : 'text-gray-300'}`}>{className}</span>
+                  <span className={`text-[10px] font-mono ml-1 flex-shrink-0 ${isZero ? 'text-gray-600 font-bold' : 'text-gray-400'}`}>{percentage}%</span>
                 </div>
-                <span className={`flex-grow text-sm ${isSelected ? 'text-white font-bold' : 'text-gray-300'}`}>{className}</span>
-                <span className="text-gray-500 text-xs font-mono">{percentage}%</span>
-              </div>
-            )
-          })}
+              );
+            })}
         </div>
       </div>
 
