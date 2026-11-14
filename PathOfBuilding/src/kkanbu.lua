@@ -258,13 +258,19 @@ function loadBuildFromXML(xmlText, name)
 	mainObject.main:SetMode("BUILD", false, name or "", xmlText)
 	runCallback("OnFrame")
 end
-local function decodeJsonPayload(payloadText)
+local function decodeJsonPayload(payloadText, payloadName)
+	if type(payloadText) ~= "string" or payloadText == "" then
+		error("Missing " .. payloadName .. " JSON payload")
+	end
 	local dkjson = require "dkjson"
-	local ok, decoded = pcall(function()
+	local ok, decoded, _, decodeError = pcall(function()
 		return dkjson.decode(payloadText)
 	end)
 	if not ok then
 		error("Failed to decode import payload: " .. tostring(decoded))
+	end
+	if type(decoded) ~= "table" then
+		error("Invalid " .. payloadName .. " JSON payload: " .. tostring(decodeError or "expected an object"))
 	end
 	return decoded
 end
@@ -332,8 +338,8 @@ function loadBuildFromJSON(getItemsJSON, getPassiveSkillsJSON)
 	mainObject.main:SetMode("BUILD", false, "")
     print("loadBuildFromJSON -build")
 	runCallback("OnFrame")
-	local itemPayload = decodeJsonPayload(getItemsJSON)
-	local treePayload = decodeJsonPayload(getPassiveSkillsJSON)
+	local itemPayload = decodeJsonPayload(getItemsJSON, "item")
+	local treePayload = decodeJsonPayload(getPassiveSkillsJSON, "passive tree")
 	debugPayload("itemPayload", itemPayload)
 	debugPayload("treePayload", treePayload)
 	local itemImportData, passiveImportData = buildImportPayloads(itemPayload, treePayload)

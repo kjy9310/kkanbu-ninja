@@ -73,6 +73,14 @@ RUN apk add --no-cache git unzip curl zlib
 WORKDIR /app/
 RUN git clone https://github.com/PathOfBuildingCommunity/PathOfBuilding.git
 
+# PoB dev uses compound assignment here, which LuaJIT does not support.
+RUN sed -i 's/count += 1/count = count + 1/' /app/PathOfBuilding/src/Modules/Main.lua && \
+    /usr/local/bin/luajit -e "assert(loadfile('/app/PathOfBuilding/src/Modules/Main.lua'))"
+
+# Copy our custom headless entrypoint into the latest PoB source tree.
+COPY ./PathOfBuilding/src/kkanbu.lua /app/PathOfBuilding/src/kkanbu.lua
+COPY ./PathOfBuilding/src/kkanbu.sh /app/PathOfBuilding/src/kkanbu.sh
+
 RUN /usr/local/bin/luajit /app/PathOfBuilding/Launch.lua --config "AppDataPath=/app/PathOfBuilding/Data" || true
 # PoB 데이터 디렉토리 생성 및 권한 부여
 # 이 단계는 PoB 데이터를 저장할 디렉토리가 없으면 나중에 에러가 나므로 미리 생성하고 권한을 부여합니다.

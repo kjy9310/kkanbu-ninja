@@ -16,8 +16,10 @@ enum typeJson {
 
 const getJson = async (type:typeJson, user:any ) =>{
     try{
+        const characterQuery = `accountName=${encodeURIComponent(user.account)}&realm=${'pc'}&character=${encodeURIComponent(user.name)}`
+        console.log('characterQuery : ',characterQuery)
         const res = type===typeJson.ITEM? (
-            await fetch(`${POEHOST_Original}character-window/get-items?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`, {
+            await fetch(`${POEHOST_Original}character-window/get-items?${characterQuery}`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -26,7 +28,7 @@ const getJson = async (type:typeJson, user:any ) =>{
             }) 
         ) : (
             await fetch(
-                `${POEHOST_Original}character-window/get-passive-skills?accountName=${encodeURIComponent(user.account)}&character=${encodeURIComponent(user.name)}`,{
+                `${POEHOST_Original}character-window/get-passive-skills?${characterQuery}`,{
                 headers: {
                     'Content-Type': 'application/json',
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0'
@@ -64,6 +66,10 @@ const getJson = async (type:typeJson, user:any ) =>{
             }
         }else {
             console.log('res : ',res)
+            return {
+                success:false,
+                error:`http_${res.status}`
+            }
         }
 
     }
@@ -152,11 +158,13 @@ const batchMain = async () => {
                 }
             }
             let { success:successI2, json:jsonI, error:errorI, deleted:deletedI } = Ires||{}
+            let itemSaved = false
             if(successI2 && jsonI){
                 console.log('got item saving file...', JSON.stringify(jsonI).slice(0,100))
                 const itemError = await new Promise((r)=>fs.writeFile(ItemJsonPath, JSON.stringify(jsonI), 'utf8', r))
                 console.log('itemError', itemError)
                 console.log('saved')
+                itemSaved = !itemError
             } else {
                 console.log('item payload unavailable', { errorI, deletedI })
             }
@@ -176,13 +184,22 @@ const batchMain = async () => {
                 }
             }
             let { success:successT2, json:jsonT, error:errorT, deleted:deletedT } = Tres||{}
+            let treeSaved = false
             if(successT2 && jsonT){
                 console.log('got Tree saving file...', JSON.stringify(jsonT).slice(0,100))
                 const treeError = await new Promise((r)=>fs.writeFile(TreeJsonPath, JSON.stringify(jsonT), 'utf8',r))
                 console.log('treeError',treeError)
                 console.log('saved')
+                treeSaved = !treeError
             } else {
                 console.log('tree payload unavailable', { errorT, deletedT })
+            }
+            if (!itemSaved || !treeSaved) {
+                console.log('skipping POB: required character payloads were not saved', {
+                    itemSaved,
+                    treeSaved
+                })
+                continue
             }
             console.log('executing')
             await new Promise(r=>{setTimeout(()=>r(null),500)})

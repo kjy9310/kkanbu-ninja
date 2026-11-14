@@ -1,0 +1,14 @@
+.git
+**/.git
+node_modules
+**/node_modules
+.next
+out
+coverage
+db
+configdb
+pobTest
+logs
+*.log
+.env
+.env.*
