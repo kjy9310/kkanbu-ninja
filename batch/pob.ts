@@ -87,7 +87,7 @@ const batchMain = async () => {
     const dotenv = require('dotenv');
     dotenv.config();
 
-    const updateHourLimit = 1 * 60 // 1/2 * 60 min default 2 * 60 max
+    const updateHourLimit = 2 * 60 // 1/2 * 60 min default 2 * 60 max
     const delayLimit = 600 // 600 : 10min default
 
     // Connection URL
