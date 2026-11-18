@@ -15,6 +15,7 @@ export const KOREAN_TO_ENGLISH_TAG: Record<string, string> = {
   '타격': 'Strike',
   '강타': 'Slam',
   '토템': 'Totem',
+  '쇠뇌': 'Totem',
   '낙인': 'Brand',
   '덫': 'Trap',
   '지뢰': 'Mine',
@@ -213,14 +214,39 @@ export const getMainSkillInfo = (user: any): MainSkillInfo | null => {
         };
       }
 
-      // D) Archmage Support
+      // D) Totem / Ballista Support (주문 토템, 쇠뇌 토템, 대지분쇄자 보조 등)
+      const isTotemSupport = supportNames.some((n) =>
+        n.includes('Spell Totem') || n.includes('주문 토템') ||
+        n.includes('Ballista') || n.includes('쇠뇌') ||
+        n.includes('Earthbreaker') || n.includes('대지분쇄자')
+      );
+
+      // E) Archmage Support
       const isArchmage = supportNames.some((n) => n.includes('Archmage') || n.includes('대마법사'));
       if (activeGems.length > 0) {
         const sortedActive = [...activeGems].sort(
           (a, b) => getSkillPriority(b) - getSkillPriority(a)
         );
         const best = sortedActive[0];
-        const tags = extractGemTags(best);
+        let tags = extractGemTags(best);
+
+        if (isTotemSupport) {
+          if (!tags.includes('Totem')) {
+            tags = [...tags, 'Totem'];
+          }
+          const isBallista = supportNames.some((n) => n.includes('Ballista') || n.includes('쇠뇌'));
+          const prefix = isBallista ? '[쇠뇌] ' : '[토템] ';
+          const arch = isBallista ? '쇠뇌' : '토템';
+          return {
+            name: `${prefix}${best.baseType}`,
+            baseType: best.baseType,
+            icon: best.icon,
+            tags: tags,
+            linkCount: linkGroup.linkCount || 6,
+            archetype: arch,
+          };
+        }
+
         if (isArchmage) {
           return {
             name: `[대마법사] ${best.baseType}`,
@@ -231,12 +257,15 @@ export const getMainSkillInfo = (user: any): MainSkillInfo | null => {
             archetype: '대마법사',
           };
         }
+
+        const isNativeTotem = tags.includes('Totem');
         return {
           name: best.baseType,
           baseType: best.baseType,
           icon: best.icon,
           tags: tags,
           linkCount: linkGroup.linkCount || 6,
+          archetype: isNativeTotem ? '토템' : undefined,
         };
       }
     }
@@ -252,12 +281,14 @@ export const getMainSkillInfo = (user: any): MainSkillInfo | null => {
     });
     const best = sorted[0];
     const tags = extractGemTags(best);
+    const isNativeTotem = tags.includes('Totem');
     return {
       name: best.baseType,
       baseType: best.baseType,
       icon: best.icon,
       tags: tags,
       linkCount: best.linkCount || 5,
+      archetype: isNativeTotem ? '토템' : undefined,
     };
   }
 

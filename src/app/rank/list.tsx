@@ -86,11 +86,13 @@ export default function Page(props:any) {
   const [metaRatio, setMetaRatio] = useState<{
     spellCount: number;
     attackCount: number;
+    totemCount: number;
     totalWithSkill: number;
     elementCounts: Record<string, number>;
   }>({
     spellCount: 0,
     attackCount: 0,
+    totemCount: 0,
     totalWithSkill: 0,
     elementCounts: { Lightning: 0, Fire: 0, Cold: 0, Chaos: 0, Physical: 0 }
   })
@@ -288,6 +290,7 @@ const handleSort=(e:any)=>{
       const tCounts: Record<string, number> = {}
       let spellCount = 0
       let attackCount = 0
+      let totemCount = 0
       let totalWithSkill = 0
       const elementCounts: Record<string, number> = {
         Lightning: 0,
@@ -317,6 +320,9 @@ const handleSort=(e:any)=>{
           msCounts[mainSkill].count += 1
 
           const tags = skillInfo.tags || []
+          if (tags.includes('Totem') || skillInfo.archetype === '토템' || skillInfo.archetype === '쇠뇌') {
+            totemCount += 1
+          }
           tags.forEach((tag: string) => {
             tCounts[tag] = (tCounts[tag] || 0) + 1
             if (tag === 'Spell') spellCount += 1
@@ -340,6 +346,7 @@ const handleSort=(e:any)=>{
       setMetaRatio({
         spellCount,
         attackCount,
+        totemCount,
         totalWithSkill,
         elementCounts,
       })
@@ -496,7 +503,7 @@ const handleSort=(e:any)=>{
           )}
         </div>
         
-        <div className="grid grid-cols-2 gap-1.5 max-h-[380px] overflow-y-auto pr-1 custom-scrollbar">
+        <div className="grid grid-cols-2 gap-1.5 max-h-[680px] overflow-y-auto pr-1 custom-scrollbar">
           {Object.keys(classCounts)
             .sort((a, b) => (classCounts[b] - classCounts[a]) || a.localeCompare(b))
             .map((className) => {
@@ -796,7 +803,7 @@ const handleSort=(e:any)=>{
             <span className="text-gray-400 font-bold uppercase tracking-wider text-[11px] whitespace-nowrap">
               Archetype:
             </span>
-            <div className="flex items-center gap-1.5 flex-grow sm:flex-grow-0">
+            <div className="flex items-center gap-1.5 flex-grow sm:flex-grow-0 flex-wrap">
               <button
                 type="button"
                 onClick={() => setTag(filterTag === 'Spell' ? '' : 'Spell')}
@@ -808,7 +815,7 @@ const handleSort=(e:any)=>{
               >
                 <span>🪄 주문 (Spell)</span>
                 <span className="font-mono text-[11px] font-bold">
-                  {((metaRatio.spellCount / metaRatio.totalWithSkill) * 100).toFixed(1)}%
+                  {metaRatio.totalWithSkill > 0 ? ((metaRatio.spellCount / metaRatio.totalWithSkill) * 100).toFixed(1) : '0'}%
                 </span>
               </button>
               <span className="text-gray-600 font-bold text-xs">/</span>
@@ -823,7 +830,22 @@ const handleSort=(e:any)=>{
               >
                 <span>⚔️ 공격 (Attack)</span>
                 <span className="font-mono text-[11px] font-bold">
-                  {((metaRatio.attackCount / metaRatio.totalWithSkill) * 100).toFixed(1)}%
+                  {metaRatio.totalWithSkill > 0 ? ((metaRatio.attackCount / metaRatio.totalWithSkill) * 100).toFixed(1) : '0'}%
+                </span>
+              </button>
+              <span className="text-gray-600 font-bold text-xs">/</span>
+              <button
+                type="button"
+                onClick={() => setTag(filterTag === 'Totem' ? '' : 'Totem')}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded transition-all cursor-pointer ${
+                  filterTag === 'Totem'
+                    ? 'bg-amber-600 text-white font-bold ring-1 ring-amber-400'
+                    : 'bg-amber-950/40 text-amber-300 hover:bg-amber-900/50 border border-amber-900/60'
+                }`}
+              >
+                <span>🗿 토템 (Totem)</span>
+                <span className="font-mono text-[11px] font-bold">
+                  {metaRatio.totalWithSkill > 0 ? ((metaRatio.totemCount / metaRatio.totalWithSkill) * 100).toFixed(1) : '0'}%
                 </span>
               </button>
             </div>
