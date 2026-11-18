@@ -1,4 +1,4 @@
-export const POEHOST = 'https://poe.game.daum.net/'
+export const POEHOST = 'https://poe.kakaogames.com/'
 // const POEHOST = 'https://www.pathofexile.com/'
 
 export const CLASS:any = {

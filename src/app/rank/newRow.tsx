@@ -6,6 +6,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import { CLASS, POEHOST} from './constants'
+import { extractGemTags, getMainSkillInfo } from './skillUtils'
 
 const putUserInfo = async (objectWithData:any)=>{
     const res = await fetch('/api/user_info', {
@@ -178,11 +179,39 @@ export default function Row(props:any) {
             )}
         </div>
         <div className="flex items-center gap-1 overflow-hidden">
-            {row.items?.mainSkills?.slice(0, 5).map((skillgem: any) => (
-                <Tooltip key={skillgem.id} title={skillgem.baseType}>
-                    <img className="w-8 h-8 rounded bg-black/40 p-0.5 border border-gray-800" src={skillgem.icon} alt={skillgem.baseType} />
-                </Tooltip>
-            ))}
+            {row.items?.mainSkills?.slice(0, 5).map((skillgem: any, idx: number) => {
+                const tags = extractGemTags(skillgem);
+                const skillInfo = getMainSkillInfo(row);
+                const isMain = skillInfo && (skillInfo.baseType === skillgem.baseType || skillgem.baseType === skillInfo.name);
+                return (
+                    <Tooltip key={skillgem.id || idx} title={
+                        <div className="p-1">
+                            <div className="font-bold text-white text-xs">
+                                {skillgem.baseType} {skillgem.linkCount ? `(${skillgem.linkCount}L)` : ''}
+                            </div>
+                            {tags.length > 0 && (
+                                <div className="text-[10px] text-gray-300 mt-0.5">
+                                    {tags.join(', ')}
+                                </div>
+                            )}
+                            {isMain && skillInfo?.archetype && (
+                                <div className="text-[10px] text-amber-300 font-semibold mt-0.5">
+                                    아키타입: [{skillInfo.archetype}]
+                                </div>
+                            )}
+                        </div>
+                    }>
+                        <div className="relative">
+                            <img className={`w-8 h-8 rounded bg-black/40 p-0.5 border ${isMain ? 'border-[#2a6fb3] ring-1 ring-[#2a6fb3]' : 'border-gray-800'}`} src={skillgem.icon} alt={skillgem.baseType} />
+                            {isMain && skillInfo?.archetype && (
+                                <span className="absolute -top-1.5 -right-1.5 bg-blue-600 text-white text-[8px] font-bold px-1 rounded shadow">
+                                    {skillInfo.archetype}
+                                </span>
+                            )}
+                        </div>
+                    </Tooltip>
+                );
+            })}
         </div>
     </div>
     <AccordionDetails>

@@ -8,8 +8,8 @@ const fetchingItemData = async () => {
 const dotenv = require('dotenv');
 dotenv.config();
 
-const updateHourLimit = 30 // 120 //30 // 30 min (default) -> 2 hour  
-const delayLimit = 300 // 600 = 10 min default 
+const updateHourLimit = 30 // 30 min -> 2 hour  
+const delayLimit = 300 // 10 min default 
 
 // Connection URL
 const client = new MongoClient(process.env.mongodb||'no db env');
@@ -92,9 +92,24 @@ const getUniqueFromItems = (items:any) =>{
       },[])
 }
 
-const getLinkedItemFromItems = (items:any):{has5Link:boolean, has6Link:boolean,mainSkills:any[]} => {
-    //sockets group 0 or 1
-    return items.reduce((acc: {has5Link:boolean, has6Link:boolean, mainSkills:any[]}, item:any)=>{
+const extractGemTags = (gem: any): string[] => {
+    const tagProp = gem.properties?.find((p: any) => p.values?.length === 0 && p.name && !p.name.includes(':'));
+    return tagProp ? tagProp.name.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
+}
+
+const getLinkedItemFromItems = (items:any):{has5Link:boolean, has6Link:boolean, mainSkills:any[], mainLinks:any[], allGemTags:string[]} => {
+    const allTagsSet = new Set<string>();
+
+    items.forEach((item: any) => {
+        item.socketedItems?.forEach((gem: any) => {
+            if (gem.frameType === 4) {
+                const tags = extractGemTags(gem);
+                tags.forEach((t: string) => allTagsSet.add(t));
+            }
+        });
+    });
+
+    const result = items.reduce((acc: {has5Link:boolean, has6Link:boolean, mainSkills:any[], mainLinks:any[]}, item:any)=>{
         const is56Link = item.sockets?.reduce(
             (acc:{group0Count:number; group1Count:number}, socket:{group:number; attr:string, sColour:string})=>{
                 if (socket.group===0){
@@ -106,25 +121,47 @@ const getLinkedItemFromItems = (items:any):{has5Link:boolean, has6Link:boolean,m
             },{group0Count:0, group1Count:0})||{}
         const has5Link = (is56Link.group0Count===5||is56Link.group1Count===5)
         const has6Link = (is56Link.group0Count===6)
+
+        const processLinkedGems = (linkCount: number, filterFn: (gem: any) => boolean) => {
+            const socketedGems = item.socketedItems?.filter((gem: any) => gem.frameType === 4 && filterFn(gem)) || [];
+            const enrichedGems = socketedGems.map((gem: any) => ({
+                ...gem,
+                tags: extractGemTags(gem),
+                linkCount
+            }));
+
+            const activeGems = enrichedGems.filter((g: any) => !g.support);
+            const supportGems = enrichedGems.filter((g: any) => g.support);
+
+            acc.mainSkills = [...acc.mainSkills, ...activeGems];
+            acc.mainLinks.push({
+                linkCount,
+                activeGems,
+                supportGems,
+                allGems: enrichedGems
+            });
+        };
+
         if (is56Link.group0Count===5){
-            const gems = item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false && gem.socket<5)
-                .map((gem:any) => ({...gem, linkCount: 5})) || []
-            acc.mainSkills = [...acc.mainSkills,...gems]
+            processLinkedGems(5, (gem) => gem.socket < 5);
         } else if (is56Link.group1Count===5){
-            const gems = item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false && gem.socket>0)
-                .map((gem:any) => ({...gem, linkCount: 5})) || []
-            acc.mainSkills = [...acc.mainSkills,...gems]
+            processLinkedGems(5, (gem) => gem.socket > 0);
         } else if (is56Link.group0Count===6){
-            const gems = item.socketedItems?.filter((gem:any)=>gem.frameType===4 && gem.support===false)
-                .map((gem:any) => ({...gem, linkCount: 6})) || []
-            acc.mainSkills = [...acc.mainSkills, ...gems]
+            processLinkedGems(6, () => true);
         }
+
         return {
-            has5Link: acc.has5Link|| has5Link,
-            has6Link: acc.has6Link|| has6Link,
-            mainSkills: acc.mainSkills
+            has5Link: acc.has5Link || has5Link,
+            has6Link: acc.has6Link || has6Link,
+            mainSkills: acc.mainSkills,
+            mainLinks: acc.mainLinks
         }
-      },{has5Link:false, has6Link:false, mainSkills:[]})
+      },{has5Link:false, has6Link:false, mainSkills:[], mainLinks:[]})
+
+    return {
+        ...result,
+        allGemTags: Array.from(allTagsSet)
+    };
 }
 
 const getCharItem = async (user:any, startTime: number, index:number, delayLimit:number) =>{
@@ -163,6 +200,8 @@ const getCharItem = async (user:any, startTime: number, index:number, delayLimit
                             has5Link:false,
                             has6Link:false,
                             mainSkills:[],
+                            mainLinks:[],
+                            allGemTags:[],
                             createdAt: new Date(),
                             isDead:user.dead,
                             isDeleted:res.status ===404?true:false
@@ -178,7 +217,7 @@ const getCharItem = async (user:any, startTime: number, index:number, delayLimit
             // get info
             const allGems = getGemFromItems(items)
             const allUniques = getUniqueFromItems(items)
-            const {has5Link, has6Link, mainSkills} = getLinkedItemFromItems(items)
+            const {has5Link, has6Link, mainSkills, mainLinks, allGemTags} = getLinkedItemFromItems(items)
             
             const charItems = {
                 id: user.id,
@@ -187,6 +226,8 @@ const getCharItem = async (user:any, startTime: number, index:number, delayLimit
                 has5Link,
                 has6Link,
                 mainSkills,
+                mainLinks,
+                allGemTags,
                 createdAt: new Date(),
                 isDead:user.dead
             }

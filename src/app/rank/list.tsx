@@ -14,6 +14,7 @@ import SignButton from '../sign/button'
 import { SessionProvider } from "next-auth/react"
 import { CLASS } from './constants'
 import {AutocompleteWithChip} from './autocompleteWithChip'
+import { getMainSkillName, getMainSkillIcon, getMainSkillTags, getMainSkillInfo, TAG_COLORS, ENGLISH_TO_KOREAN_TAG } from './skillUtils'
 
 const theme = createTheme({
   palette: {
@@ -59,6 +60,8 @@ export default function Page(props:any) {
   
   const [filterClass, setClass] = useState<string>('')
   const [filterMainSkill, setMainSkill] = useState<string>('')
+  const [filterTag, setTag] = useState<string>('')
+  const [skillTab, setSkillTab] = useState<'skills' | 'tags'>('skills')
   const [filterName, setName] = useState<string>('')
   const [filterLink, setLink] = useState<string>('')
   
@@ -79,21 +82,25 @@ export default function Page(props:any) {
 
   const [classCounts, setClassCounts] = useState<any>([])
   const [mainSkillCounts, setMainSkillCounts] = useState<any>([])
+  const [tagCounts, setTagCounts] = useState<any[]>([])
+  const [metaRatio, setMetaRatio] = useState<{
+    spellCount: number;
+    attackCount: number;
+    totalWithSkill: number;
+    elementCounts: Record<string, number>;
+  }>({
+    spellCount: 0,
+    attackCount: 0,
+    totalWithSkill: 0,
+    elementCounts: { Lightning: 0, Fire: 0, Cold: 0, Chaos: 0, Physical: 0 }
+  })
   const [sortString, setSortString] = useState<string>('rank')
 
   const pip = useRef<any>(null)
 
-  const getMainSkill = (user: any) => {
-    if (!user.items?.mainSkills || user.items.mainSkills.length === 0) return null;
-    const sorted = [...user.items.mainSkills].sort((a: any, b: any) => b.linkCount - a.linkCount);
-    return sorted[0].baseType;
-  }
+  const getMainSkill = (user: any) => getMainSkillName(user)
 
-  const getMainSkillIcon = (user: any) => {
-    if (!user.items?.mainSkills || user.items.mainSkills.length === 0) return null;
-    const sorted = [...user.items.mainSkills].sort((a: any, b: any) => b.linkCount - a.linkCount);
-    return sorted[0].icon;
-  }
+  const getSkillIcon = (user: any) => getMainSkillIcon(user)
 
   async function getUserData() {
     try{
@@ -278,6 +285,18 @@ const handleSort=(e:any)=>{
       setPopularUniques(uniqueListSet.slice(0, 12))
       
       const msCounts: any = {}
+      const tCounts: Record<string, number> = {}
+      let spellCount = 0
+      let attackCount = 0
+      let totalWithSkill = 0
+      const elementCounts: Record<string, number> = {
+        Lightning: 0,
+        Fire: 0,
+        Cold: 0,
+        Chaos: 0,
+        Physical: 0,
+      }
+
       const initialCounts = Object.keys(CLASS).reduce((acc: any, clsName: string) => {
         acc[clsName] = 0
         return acc
@@ -288,19 +307,42 @@ const handleSort=(e:any)=>{
           acc[user.class] = (acc[user.class] || 0) + 1
         }
 
-        const mainSkill = getMainSkill(user)
-        if (mainSkill) {
+        const skillInfo = getMainSkillInfo(user)
+        if (skillInfo) {
+          totalWithSkill += 1
+          const mainSkill = skillInfo.name
           if (!msCounts[mainSkill]) {
-            msCounts[mainSkill] = { name: mainSkill, count: 0, icon: getMainSkillIcon(user) }
+            msCounts[mainSkill] = { name: mainSkill, count: 0, icon: skillInfo.icon }
           }
           msCounts[mainSkill].count += 1
+
+          const tags = skillInfo.tags || []
+          tags.forEach((tag: string) => {
+            tCounts[tag] = (tCounts[tag] || 0) + 1
+            if (tag === 'Spell') spellCount += 1
+            if (tag === 'Attack') attackCount += 1
+            if (elementCounts[tag] !== undefined) {
+              elementCounts[tag] += 1
+            }
+          })
         }
 
         return acc
       }, initialCounts)
         
+      const sortedTagCounts = Object.entries(tCounts)
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count)
+
       setClassCounts(cCounts)
       setMainSkillCounts(Object.values(msCounts).sort((a: any, b: any) => b.count - a.count))
+      setTagCounts(sortedTagCounts)
+      setMetaRatio({
+        spellCount,
+        attackCount,
+        totalWithSkill,
+        elementCounts,
+      })
     })()
   },[filtered])
   
@@ -343,23 +385,22 @@ const handleSort=(e:any)=>{
   }
 
   useEffect(()=>{
-    if (filterName==='' && (filterGems.length===0) && filterDeath==='all' && filterUniques.length===0 && filterLink==='' && filterClass==='' && filterMainSkill==='' && sortString==='rank'){
+    if (filterName==='' && (filterGems.length===0) && filterDeath==='all' && filterUniques.length===0 && filterLink==='' && filterClass==='' && filterMainSkill==='' && filterTag==='' && sortString==='rank'){
       setFilter(original)
       return
     }else{
       const newFiltered = original.filter((user:any)=>{
         const gemCheck = filterGems.length>0 
         ? gemSelectedCheck(user.items?.allGems)
-        // ? user.items?.allGems?.findIndex((gem:any)=>gem===filterGem)>-1 
         : true
 
         const uniqueCheck = filterUniques.length>0 
         ? uniqueSelectedCheck(user.items?.allUniques)
-        //? user.items?.allUniques?.findIndex((unique:any)=>unique===filterUnique)>-1 
         : true
         const deathCheck = filterDeath === 'all'? true : filterDeath==='dead'?user.dead:!user.dead
         const classCheck = filterClass ? filterClass===user.class :true
         const mainSkillCheck = filterMainSkill ? getMainSkill(user) === filterMainSkill : true
+        const tagCheck = filterTag ? getMainSkillTags(user).includes(filterTag) : true
         const nameCheck = filterName ? (user.name.includes(filterName) || user.account?.includes(filterName) || user.class.includes(filterName)) : true
         const linkCheck = filterLink ? (
           filterLink==='6'? user.items?.has6Link : (
@@ -368,13 +409,13 @@ const handleSort=(e:any)=>{
             )
           )
         ): true
-        return Boolean(gemCheck&&nameCheck&&deathCheck&&uniqueCheck&&linkCheck&&classCheck&&mainSkillCheck)
+        return Boolean(gemCheck&&nameCheck&&deathCheck&&uniqueCheck&&linkCheck&&classCheck&&mainSkillCheck&&tagCheck)
       }).sort(sortSelect(sortString))
       setFilter(newFiltered)
       setOpenAccordId('')
     }
     
-  },[filterGems, filterName, filterDeath, filterUniques,filterLink, filterClass, filterMainSkill, original, sortString])
+  },[filterGems, filterName, filterDeath, filterUniques, filterLink, filterClass, filterMainSkill, filterTag, original, sortString])
   
   const handleChange = (event: SelectChangeEvent) => {
     setLink(event.target.value as string);
@@ -487,28 +528,97 @@ const handleSort=(e:any)=>{
         </div>
       </div>
 
-      {/* Main Skills List */}
+      {/* Main Skills / Gem Tags Tabs */}
       <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-lg border border-gray-800">
-        <h3 className="text-sm font-bold text-gray-400 mb-4 uppercase tracking-wider border-b border-gray-800 pb-2">Main Skills</h3>
-        <div className="flex flex-col gap-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
-          {mainSkillCounts.map((skill: any) => {
-            const isSelected = filterMainSkill === skill.name
-            const percentage = filtered.length > 0 ? (skill.count / filtered.length * 100).toFixed(1) : '0'
-            return (
-              <div 
-                key={`main-skill-${skill.name}`} 
-                onClick={()=>setMainSkill(isSelected ? '' : skill.name)}
-                className={`flex items-center p-2 cursor-pointer hover:bg-[#2a2a2a] rounded transition-all group ${isSelected ? 'bg-[#133d62] ring-1 ring-[#2a6fb3]' : ''}`}
-              >
-                <div className={`w-8 h-8 rounded overflow-hidden mr-3 border ${isSelected ? 'border-[#2a6fb3]' : 'border-gray-700 group-hover:border-gray-500'}`}>
-                  <img src={skill.icon} alt={skill.name} className="w-full h-full object-cover" />
-                </div>
-                <span className={`flex-grow text-sm ${isSelected ? 'text-white font-bold' : 'text-gray-300'}`}>{skill.name}</span>
-                <span className="text-gray-500 text-xs font-mono">{percentage}%</span>
-              </div>
-            )
-          })}
+        <div className="flex items-center justify-between border-b border-gray-800 pb-2 mb-3">
+          <div className="flex gap-3">
+            <button
+              onClick={() => setSkillTab('skills')}
+              className={`text-xs font-bold uppercase tracking-wider pb-1 transition-all ${
+                skillTab === 'skills'
+                  ? 'text-white border-b-2 border-[#2a6fb3]'
+                  : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              Skills
+            </button>
+            <button
+              onClick={() => setSkillTab('tags')}
+              className={`text-xs font-bold uppercase tracking-wider pb-1 transition-all ${
+                skillTab === 'tags'
+                  ? 'text-white border-b-2 border-[#2a6fb3]'
+                  : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              Gem Tags
+            </button>
+          </div>
+          <span className="text-[10px] text-gray-500 font-mono">
+            {skillTab === 'skills' ? `${mainSkillCounts.length} skills` : `${tagCounts.length} tags`}
+          </span>
         </div>
+
+        {skillTab === 'skills' ? (
+          <div className="flex flex-col gap-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
+            {mainSkillCounts.map((skill: any) => {
+              const isSelected = filterMainSkill === skill.name
+              const percentage = filtered.length > 0 ? (skill.count / filtered.length * 100).toFixed(1) : '0'
+              return (
+                <div 
+                  key={`main-skill-${skill.name}`} 
+                  onClick={()=>setMainSkill(isSelected ? '' : skill.name)}
+                  className={`flex items-center p-2 cursor-pointer hover:bg-[#2a2a2a] rounded transition-all group ${isSelected ? 'bg-[#133d62] ring-1 ring-[#2a6fb3]' : ''}`}
+                >
+                  <div className={`w-8 h-8 rounded overflow-hidden mr-3 border flex-shrink-0 ${isSelected ? 'border-[#2a6fb3]' : 'border-gray-700 group-hover:border-gray-500'}`}>
+                    <img src={skill.icon} alt={skill.name} className="w-full h-full object-cover" />
+                  </div>
+                  <span className={`flex-grow text-sm truncate ${isSelected ? 'text-white font-bold' : 'text-gray-300'}`}>{skill.name}</span>
+                  <span className="text-gray-500 text-xs font-mono ml-2">{percentage}%</span>
+                </div>
+              )
+            })}
+          </div>
+        ) : (
+          <div className="flex flex-col gap-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
+            {tagCounts.map((tagItem: any) => {
+              const isSelected = filterTag === tagItem.name;
+              const total = metaRatio.totalWithSkill || filtered.length || 1;
+              const percentage = ((tagItem.count / total) * 100).toFixed(1);
+              const tagStyle = TAG_COLORS[tagItem.name] || {
+                bg: 'bg-gray-800/40',
+                text: 'text-gray-300',
+                border: 'border-gray-700/50',
+              };
+
+              return (
+                <div
+                  key={`tag-${tagItem.name}`}
+                  onClick={() => setTag(isSelected ? '' : tagItem.name)}
+                  className={`relative overflow-hidden flex items-center justify-between p-2 cursor-pointer hover:bg-[#2a2a2a] rounded transition-all group ${
+                    isSelected ? 'bg-[#133d62] ring-1 ring-[#2a6fb3]' : 'bg-[#161616]'
+                  }`}
+                >
+                  {/* Progress bar background */}
+                  <div
+                    className="absolute left-0 top-0 bottom-0 bg-[#1e3a5f]/40 transition-all pointer-events-none"
+                    style={{ width: `${Math.min(100, parseFloat(percentage))}%` }}
+                  />
+                  <div className="relative z-10 flex items-center gap-2">
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded border font-semibold ${tagStyle.bg} ${tagStyle.text} ${tagStyle.border}`}
+                    >
+                      {ENGLISH_TO_KOREAN_TAG[tagItem.name] ? `${ENGLISH_TO_KOREAN_TAG[tagItem.name]} (${tagItem.name})` : tagItem.name}
+                    </span>
+                  </div>
+                  <div className="relative z-10 flex items-center gap-2">
+                    <span className="text-gray-500 text-[10px] font-mono">({tagItem.count})</span>
+                    <span className="text-gray-300 text-xs font-mono font-bold">{percentage}%</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Popular Skills Grid */}
@@ -663,6 +773,7 @@ const handleSort=(e:any)=>{
               setDeath('all')
               setClass('')
               setMainSkill('')
+              setTag('')
               setName('')
               setLink('')
               setGems([])
@@ -677,6 +788,83 @@ const handleSort=(e:any)=>{
 
     {/* Main Content - List */}
     <main className="flex-grow flex flex-col gap-4 min-w-0">
+      {/* Meta Summary Bar (Spell vs Attack & Elements) */}
+      {metaRatio.totalWithSkill > 0 && (
+        <div className="bg-[#1a1a1a] p-3 rounded-lg border border-gray-800 shadow-lg flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+          {/* Archetype Ratio: Spell vs Attack */}
+          <div className="flex items-center gap-2.5 w-full md:w-auto">
+            <span className="text-gray-400 font-bold uppercase tracking-wider text-[11px] whitespace-nowrap">
+              Archetype:
+            </span>
+            <div className="flex items-center gap-1.5 flex-grow sm:flex-grow-0">
+              <button
+                type="button"
+                onClick={() => setTag(filterTag === 'Spell' ? '' : 'Spell')}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded transition-all cursor-pointer ${
+                  filterTag === 'Spell'
+                    ? 'bg-blue-600 text-white font-bold ring-1 ring-blue-400'
+                    : 'bg-blue-950/40 text-blue-300 hover:bg-blue-900/50 border border-blue-900/60'
+                }`}
+              >
+                <span>🪄 주문 (Spell)</span>
+                <span className="font-mono text-[11px] font-bold">
+                  {((metaRatio.spellCount / metaRatio.totalWithSkill) * 100).toFixed(1)}%
+                </span>
+              </button>
+              <span className="text-gray-600 font-bold text-xs">/</span>
+              <button
+                type="button"
+                onClick={() => setTag(filterTag === 'Attack' ? '' : 'Attack')}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded transition-all cursor-pointer ${
+                  filterTag === 'Attack'
+                    ? 'bg-orange-600 text-white font-bold ring-1 ring-orange-400'
+                    : 'bg-orange-950/40 text-orange-300 hover:bg-orange-900/50 border border-orange-900/60'
+                }`}
+              >
+                <span>⚔️ 공격 (Attack)</span>
+                <span className="font-mono text-[11px] font-bold">
+                  {((metaRatio.attackCount / metaRatio.totalWithSkill) * 100).toFixed(1)}%
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Elements Breakdown */}
+          <div className="flex items-center gap-1.5 flex-wrap justify-end w-full md:w-auto">
+            <span className="text-gray-400 font-bold uppercase tracking-wider text-[11px] mr-1 hidden sm:inline">
+              Elements:
+            </span>
+            {[
+              { name: 'Lightning', label: '번개', icon: '⚡', color: 'yellow', border: 'border-yellow-700/60', activeBg: 'bg-yellow-600', inactiveBg: 'bg-yellow-950/40', text: 'text-yellow-400' },
+              { name: 'Fire', label: '화염', icon: '🔥', color: 'red', border: 'border-red-700/60', activeBg: 'bg-red-600', inactiveBg: 'bg-red-950/40', text: 'text-red-400' },
+              { name: 'Cold', label: '냉기', icon: '❄️', color: 'cyan', border: 'border-cyan-700/60', activeBg: 'bg-cyan-600', inactiveBg: 'bg-cyan-950/40', text: 'text-cyan-400' },
+              { name: 'Chaos', label: '카오스', icon: '🟣', color: 'purple', border: 'border-purple-700/60', activeBg: 'bg-purple-600', inactiveBg: 'bg-purple-950/40', text: 'text-purple-400' },
+              { name: 'Physical', label: '물리', icon: '⚪', color: 'gray', border: 'border-gray-700/60', activeBg: 'bg-gray-600', inactiveBg: 'bg-gray-800/40', text: 'text-gray-300' },
+            ].map((elem) => {
+              const count = metaRatio.elementCounts[elem.name] || 0;
+              const pct = metaRatio.totalWithSkill > 0 ? ((count / metaRatio.totalWithSkill) * 100).toFixed(1) : '0';
+              const isSelected = filterTag === elem.name;
+              return (
+                <button
+                  type="button"
+                  key={elem.name}
+                  onClick={() => setTag(isSelected ? '' : elem.name)}
+                  className={`flex items-center gap-1 px-2 py-0.5 rounded text-[11px] transition-all border cursor-pointer ${
+                    isSelected
+                      ? `${elem.activeBg} text-white font-bold ring-1 ring-white/50 border-white`
+                      : `${elem.inactiveBg} ${elem.text} ${elem.border} hover:opacity-80`
+                  }`}
+                >
+                  <span>{elem.icon}</span>
+                  <span className="font-semibold">{elem.label}</span>
+                  <span className="font-mono text-[10px] opacity-80 font-bold">{pct}%</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <header className="bg-[#1a1a1a] p-4 rounded-lg shadow-lg border border-gray-800 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="text-xl font-bold text-white">
@@ -717,6 +905,15 @@ const handleSort=(e:any)=>{
               label={filterMainSkill} 
               onDelete={() => setMainSkill('')} 
               color="secondary" 
+              size="small" 
+              sx={{ borderRadius: '4px' }}
+            />
+          )}
+          {filterTag && (
+            <Chip 
+              label={`태그: ${ENGLISH_TO_KOREAN_TAG[filterTag] ? `${ENGLISH_TO_KOREAN_TAG[filterTag]} (${filterTag})` : filterTag}`} 
+              onDelete={() => setTag('')} 
+              color="info" 
               size="small" 
               sx={{ borderRadius: '4px' }}
             />
