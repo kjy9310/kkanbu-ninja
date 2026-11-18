@@ -28,6 +28,19 @@ const theme = createTheme({
   },
 });
 
+const ARCHETYPES = [
+  { name: 'Spell', label: '주문', icon: '🪄', activeBg: 'bg-blue-600', inactiveBg: 'bg-blue-950/40', text: 'text-blue-300', border: 'border-blue-900/60' },
+  { name: 'Attack', label: '공격', icon: '⚔️', activeBg: 'bg-orange-600', inactiveBg: 'bg-orange-950/40', text: 'text-orange-300', border: 'border-orange-900/60' },
+  { name: 'Melee', label: '밀리', icon: '🥊', activeBg: 'bg-rose-600', inactiveBg: 'bg-rose-950/40', text: 'text-rose-300', border: 'border-rose-900/60' },
+  { name: 'Bow', label: '활', icon: '🏹', activeBg: 'bg-emerald-600', inactiveBg: 'bg-emerald-950/40', text: 'text-emerald-300', border: 'border-emerald-900/60' },
+  { name: 'Minion', label: '소환수', icon: '🧟', activeBg: 'bg-violet-600', inactiveBg: 'bg-violet-950/40', text: 'text-violet-300', border: 'border-violet-900/60' },
+  { name: 'Totem', label: '토템', icon: '🗿', activeBg: 'bg-amber-600', inactiveBg: 'bg-amber-950/40', text: 'text-amber-300', border: 'border-amber-900/60' },
+  { name: 'Mine', label: '지뢰', icon: '💣', activeBg: 'bg-sky-600', inactiveBg: 'bg-sky-950/40', text: 'text-sky-300', border: 'border-sky-900/60' },
+  { name: 'Trap', label: '덫', icon: '🪤', activeBg: 'bg-lime-600', inactiveBg: 'bg-lime-950/40', text: 'text-lime-300', border: 'border-lime-900/60' },
+  { name: 'Brand', label: '낙인', icon: '🏷️', activeBg: 'bg-fuchsia-600', inactiveBg: 'bg-fuchsia-950/40', text: 'text-fuchsia-300', border: 'border-fuchsia-900/60' },
+  { name: 'Trigger', label: '발동', icon: '🔄', activeBg: 'bg-teal-600', inactiveBg: 'bg-teal-950/40', text: 'text-teal-300', border: 'border-teal-900/60' },
+];
+
 function useIsVisible(ref:any) {
   const [isIntersecting, setIntersecting] = useState(false);
 
@@ -84,15 +97,22 @@ export default function Page(props:any) {
   const [mainSkillCounts, setMainSkillCounts] = useState<any>([])
   const [tagCounts, setTagCounts] = useState<any[]>([])
   const [metaRatio, setMetaRatio] = useState<{
-    spellCount: number;
-    attackCount: number;
-    totemCount: number;
+    archetypeCounts: Record<string, number>;
     totalWithSkill: number;
     elementCounts: Record<string, number>;
   }>({
-    spellCount: 0,
-    attackCount: 0,
-    totemCount: 0,
+    archetypeCounts: {
+      Spell: 0,
+      Attack: 0,
+      Melee: 0,
+      Bow: 0,
+      Minion: 0,
+      Totem: 0,
+      Mine: 0,
+      Trap: 0,
+      Brand: 0,
+      Trigger: 0,
+    },
     totalWithSkill: 0,
     elementCounts: { Lightning: 0, Fire: 0, Cold: 0, Chaos: 0, Physical: 0 }
   })
@@ -288,9 +308,18 @@ const handleSort=(e:any)=>{
       
       const msCounts: any = {}
       const tCounts: Record<string, number> = {}
-      let spellCount = 0
-      let attackCount = 0
-      let totemCount = 0
+      const archCounts: Record<string, number> = {
+        Spell: 0,
+        Attack: 0,
+        Melee: 0,
+        Bow: 0,
+        Minion: 0,
+        Totem: 0,
+        Mine: 0,
+        Trap: 0,
+        Brand: 0,
+        Trigger: 0,
+      }
       let totalWithSkill = 0
       const elementCounts: Record<string, number> = {
         Lightning: 0,
@@ -320,13 +349,21 @@ const handleSort=(e:any)=>{
           msCounts[mainSkill].count += 1
 
           const tags = skillInfo.tags || []
-          if (tags.includes('Totem') || skillInfo.archetype === '토템' || skillInfo.archetype === '쇠뇌') {
-            totemCount += 1
-          }
+          Object.keys(archCounts).forEach((key) => {
+            if (
+              tags.includes(key) ||
+              (key === 'Melee' && (tags.includes('Strike') || tags.includes('Slam') || skillInfo.archetype === '밀리')) ||
+              (key === 'Totem' && (skillInfo.archetype === '토템' || skillInfo.archetype === '쇠뇌')) ||
+              (key === 'Mine' && skillInfo.archetype === '지뢰') ||
+              (key === 'Trap' && skillInfo.archetype === '덫') ||
+              (key === 'Trigger' && (skillInfo.archetype === 'CoC' || skillInfo.archetype === 'CwC'))
+            ) {
+              archCounts[key] += 1
+            }
+          })
+
           tags.forEach((tag: string) => {
             tCounts[tag] = (tCounts[tag] || 0) + 1
-            if (tag === 'Spell') spellCount += 1
-            if (tag === 'Attack') attackCount += 1
             if (elementCounts[tag] !== undefined) {
               elementCounts[tag] += 1
             }
@@ -344,9 +381,7 @@ const handleSort=(e:any)=>{
       setMainSkillCounts(Object.values(msCounts).sort((a: any, b: any) => b.count - a.count))
       setTagCounts(sortedTagCounts)
       setMetaRatio({
-        spellCount,
-        attackCount,
-        totemCount,
+        archetypeCounts: archCounts,
         totalWithSkill,
         elementCounts,
       })
@@ -795,94 +830,80 @@ const handleSort=(e:any)=>{
 
     {/* Main Content - List */}
     <main className="flex-grow flex flex-col gap-4 min-w-0">
-      {/* Meta Summary Bar (Spell vs Attack & Elements) */}
+      {/* Meta Summary Bar (Archetypes & Elements) */}
       {metaRatio.totalWithSkill > 0 && (
-        <div className="bg-[#1a1a1a] p-3 rounded-lg border border-gray-800 shadow-lg flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
-          {/* Archetype Ratio: Spell vs Attack */}
-          <div className="flex items-center gap-2.5 w-full md:w-auto">
-            <span className="text-gray-400 font-bold uppercase tracking-wider text-[11px] whitespace-nowrap">
-              Archetype:
+        <div className="bg-[#1a1a1a] p-3.5 rounded-lg border border-gray-800 shadow-lg flex flex-col gap-2.5 text-xs">
+          {/* Row 1: Archetypes */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-gray-400 font-bold uppercase tracking-wider text-[11px] whitespace-nowrap mr-1">
+              Archetypes:
             </span>
-            <div className="flex items-center gap-1.5 flex-grow sm:flex-grow-0 flex-wrap">
-              <button
-                type="button"
-                onClick={() => setTag(filterTag === 'Spell' ? '' : 'Spell')}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded transition-all cursor-pointer ${
-                  filterTag === 'Spell'
-                    ? 'bg-blue-600 text-white font-bold ring-1 ring-blue-400'
-                    : 'bg-blue-950/40 text-blue-300 hover:bg-blue-900/50 border border-blue-900/60'
-                }`}
-              >
-                <span>🪄 주문 (Spell)</span>
-                <span className="font-mono text-[11px] font-bold">
-                  {metaRatio.totalWithSkill > 0 ? ((metaRatio.spellCount / metaRatio.totalWithSkill) * 100).toFixed(1) : '0'}%
-                </span>
-              </button>
-              <span className="text-gray-600 font-bold text-xs">/</span>
-              <button
-                type="button"
-                onClick={() => setTag(filterTag === 'Attack' ? '' : 'Attack')}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded transition-all cursor-pointer ${
-                  filterTag === 'Attack'
-                    ? 'bg-orange-600 text-white font-bold ring-1 ring-orange-400'
-                    : 'bg-orange-950/40 text-orange-300 hover:bg-orange-900/50 border border-orange-900/60'
-                }`}
-              >
-                <span>⚔️ 공격 (Attack)</span>
-                <span className="font-mono text-[11px] font-bold">
-                  {metaRatio.totalWithSkill > 0 ? ((metaRatio.attackCount / metaRatio.totalWithSkill) * 100).toFixed(1) : '0'}%
-                </span>
-              </button>
-              <span className="text-gray-600 font-bold text-xs">/</span>
-              <button
-                type="button"
-                onClick={() => setTag(filterTag === 'Totem' ? '' : 'Totem')}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded transition-all cursor-pointer ${
-                  filterTag === 'Totem'
-                    ? 'bg-amber-600 text-white font-bold ring-1 ring-amber-400'
-                    : 'bg-amber-950/40 text-amber-300 hover:bg-amber-900/50 border border-amber-900/60'
-                }`}
-              >
-                <span>🗿 토템 (Totem)</span>
-                <span className="font-mono text-[11px] font-bold">
-                  {metaRatio.totalWithSkill > 0 ? ((metaRatio.totemCount / metaRatio.totalWithSkill) * 100).toFixed(1) : '0'}%
-                </span>
-              </button>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {ARCHETYPES.map((arch) => {
+                const count = metaRatio.archetypeCounts[arch.name] || 0;
+                const pct = metaRatio.totalWithSkill > 0 ? ((count / metaRatio.totalWithSkill) * 100).toFixed(1) : '0';
+                const isSelected = filterTag === arch.name;
+                const isZero = count === 0;
+
+                return (
+                  <button
+                    type="button"
+                    key={arch.name}
+                    onClick={() => setTag(isSelected ? '' : arch.name)}
+                    className={`flex items-center gap-1 px-2.5 py-1 rounded text-[11px] transition-all border cursor-pointer ${
+                      isSelected
+                        ? `${arch.activeBg} text-white font-bold ring-1 ring-white/50 border-white`
+                        : isZero
+                          ? 'bg-[#121212] text-gray-500 border-gray-800/80 opacity-40 hover:opacity-100 hover:border-gray-700'
+                          : `${arch.inactiveBg} ${arch.text} ${arch.border} hover:opacity-90`
+                    }`}
+                  >
+                    <span>{arch.icon}</span>
+                    <span className="font-semibold">{arch.label}</span>
+                    <span className="font-mono text-[10px] opacity-80 font-bold">{pct}%</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Elements Breakdown */}
-          <div className="flex items-center gap-1.5 flex-wrap justify-end w-full md:w-auto">
-            <span className="text-gray-400 font-bold uppercase tracking-wider text-[11px] mr-1 hidden sm:inline">
+          {/* Row 2: Elements */}
+          <div className="flex items-center gap-2 flex-wrap pt-2 border-t border-gray-800/60">
+            <span className="text-gray-400 font-bold uppercase tracking-wider text-[11px] whitespace-nowrap mr-1">
               Elements:
             </span>
-            {[
-              { name: 'Lightning', label: '번개', icon: '⚡', color: 'yellow', border: 'border-yellow-700/60', activeBg: 'bg-yellow-600', inactiveBg: 'bg-yellow-950/40', text: 'text-yellow-400' },
-              { name: 'Fire', label: '화염', icon: '🔥', color: 'red', border: 'border-red-700/60', activeBg: 'bg-red-600', inactiveBg: 'bg-red-950/40', text: 'text-red-400' },
-              { name: 'Cold', label: '냉기', icon: '❄️', color: 'cyan', border: 'border-cyan-700/60', activeBg: 'bg-cyan-600', inactiveBg: 'bg-cyan-950/40', text: 'text-cyan-400' },
-              { name: 'Chaos', label: '카오스', icon: '🟣', color: 'purple', border: 'border-purple-700/60', activeBg: 'bg-purple-600', inactiveBg: 'bg-purple-950/40', text: 'text-purple-400' },
-              { name: 'Physical', label: '물리', icon: '⚪', color: 'gray', border: 'border-gray-700/60', activeBg: 'bg-gray-600', inactiveBg: 'bg-gray-800/40', text: 'text-gray-300' },
-            ].map((elem) => {
-              const count = metaRatio.elementCounts[elem.name] || 0;
-              const pct = metaRatio.totalWithSkill > 0 ? ((count / metaRatio.totalWithSkill) * 100).toFixed(1) : '0';
-              const isSelected = filterTag === elem.name;
-              return (
-                <button
-                  type="button"
-                  key={elem.name}
-                  onClick={() => setTag(isSelected ? '' : elem.name)}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded text-[11px] transition-all border cursor-pointer ${
-                    isSelected
-                      ? `${elem.activeBg} text-white font-bold ring-1 ring-white/50 border-white`
-                      : `${elem.inactiveBg} ${elem.text} ${elem.border} hover:opacity-80`
-                  }`}
-                >
-                  <span>{elem.icon}</span>
-                  <span className="font-semibold">{elem.label}</span>
-                  <span className="font-mono text-[10px] opacity-80 font-bold">{pct}%</span>
-                </button>
-              );
-            })}
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {[
+                { name: 'Lightning', label: '번개', icon: '⚡', color: 'yellow', border: 'border-yellow-700/60', activeBg: 'bg-yellow-600', inactiveBg: 'bg-yellow-950/40', text: 'text-yellow-400' },
+                { name: 'Fire', label: '화염', icon: '🔥', color: 'red', border: 'border-red-700/60', activeBg: 'bg-red-600', inactiveBg: 'bg-red-950/40', text: 'text-red-400' },
+                { name: 'Cold', label: '냉기', icon: '❄️', color: 'cyan', border: 'border-cyan-700/60', activeBg: 'bg-cyan-600', inactiveBg: 'bg-cyan-950/40', text: 'text-cyan-400' },
+                { name: 'Chaos', label: '카오스', icon: '🟣', color: 'purple', border: 'border-purple-700/60', activeBg: 'bg-purple-600', inactiveBg: 'bg-purple-950/40', text: 'text-purple-400' },
+                { name: 'Physical', label: '물리', icon: '⚪', color: 'gray', border: 'border-gray-700/60', activeBg: 'bg-gray-600', inactiveBg: 'bg-gray-800/40', text: 'text-gray-300' },
+              ].map((elem) => {
+                const count = metaRatio.elementCounts[elem.name] || 0;
+                const pct = metaRatio.totalWithSkill > 0 ? ((count / metaRatio.totalWithSkill) * 100).toFixed(1) : '0';
+                const isSelected = filterTag === elem.name;
+                const isZero = count === 0;
+                return (
+                  <button
+                    type="button"
+                    key={elem.name}
+                    onClick={() => setTag(isSelected ? '' : elem.name)}
+                    className={`flex items-center gap-1 px-2.5 py-1 rounded text-[11px] transition-all border cursor-pointer ${
+                      isSelected
+                        ? `${elem.activeBg} text-white font-bold ring-1 ring-white/50 border-white`
+                        : isZero
+                          ? 'bg-[#121212] text-gray-500 border-gray-800/80 opacity-40 hover:opacity-100 hover:border-gray-700'
+                          : `${elem.inactiveBg} ${elem.text} ${elem.border} hover:opacity-90`
+                    }`}
+                  >
+                    <span>{elem.icon}</span>
+                    <span className="font-semibold">{elem.label}</span>
+                    <span className="font-mono text-[10px] opacity-80 font-bold">{pct}%</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

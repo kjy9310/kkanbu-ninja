@@ -221,7 +221,18 @@ export const getMainSkillInfo = (user: any): MainSkillInfo | null => {
         n.includes('Earthbreaker') || n.includes('대지분쇄자')
       );
 
-      // E) Archmage Support
+      // E) Mine Support (연쇄 폭발 지뢰, 고충격 지뢰, 지뢰 보조 등)
+      const isMineSupport = supportNames.some((n) =>
+        n.includes('Mine Support') || n.includes('지뢰 보조') ||
+        n.includes('Blastchain') || n.includes('High-Impact') || n.includes('연쇄 폭발') || n.includes('고충격')
+      );
+
+      // F) Trap Support (덫 보조)
+      const isTrapSupport = supportNames.some((n) =>
+        n.includes('Trap Support') || n.includes('덫 보조')
+      );
+
+      // G) Archmage Support
       const isArchmage = supportNames.some((n) => n.includes('Archmage') || n.includes('대마법사'));
       if (activeGems.length > 0) {
         const sortedActive = [...activeGems].sort(
@@ -229,6 +240,11 @@ export const getMainSkillInfo = (user: any): MainSkillInfo | null => {
         );
         const best = sortedActive[0];
         let tags = extractGemTags(best);
+
+        // Normalize Strike/Slam to Melee
+        if ((tags.includes('Strike') || tags.includes('Slam')) && !tags.includes('Melee')) {
+          tags = [...tags, 'Melee'];
+        }
 
         if (isTotemSupport) {
           if (!tags.includes('Totem')) {
@@ -247,6 +263,34 @@ export const getMainSkillInfo = (user: any): MainSkillInfo | null => {
           };
         }
 
+        if (isMineSupport) {
+          if (!tags.includes('Mine')) {
+            tags = [...tags, 'Mine'];
+          }
+          return {
+            name: `[지뢰] ${best.baseType}`,
+            baseType: best.baseType,
+            icon: best.icon,
+            tags: tags,
+            linkCount: linkGroup.linkCount || 6,
+            archetype: '지뢰',
+          };
+        }
+
+        if (isTrapSupport) {
+          if (!tags.includes('Trap')) {
+            tags = [...tags, 'Trap'];
+          }
+          return {
+            name: `[덫] ${best.baseType}`,
+            baseType: best.baseType,
+            icon: best.icon,
+            tags: tags,
+            linkCount: linkGroup.linkCount || 6,
+            archetype: '덫',
+          };
+        }
+
         if (isArchmage) {
           return {
             name: `[대마법사] ${best.baseType}`,
@@ -258,14 +302,22 @@ export const getMainSkillInfo = (user: any): MainSkillInfo | null => {
           };
         }
 
-        const isNativeTotem = tags.includes('Totem');
+        let nativeArch: string | undefined = undefined;
+        if (tags.includes('Totem')) nativeArch = '토템';
+        else if (tags.includes('Mine')) nativeArch = '지뢰';
+        else if (tags.includes('Trap')) nativeArch = '덫';
+        else if (tags.includes('Minion')) nativeArch = '소환수';
+        else if (tags.includes('Melee')) nativeArch = '밀리';
+        else if (tags.includes('Bow')) nativeArch = '활';
+        else if (tags.includes('Brand')) nativeArch = '낙인';
+
         return {
           name: best.baseType,
           baseType: best.baseType,
           icon: best.icon,
           tags: tags,
           linkCount: linkGroup.linkCount || 6,
-          archetype: isNativeTotem ? '토템' : undefined,
+          archetype: nativeArch,
         };
       }
     }
@@ -280,15 +332,26 @@ export const getMainSkillInfo = (user: any): MainSkillInfo | null => {
       return getSkillPriority(b) - getSkillPriority(a);
     });
     const best = sorted[0];
-    const tags = extractGemTags(best);
-    const isNativeTotem = tags.includes('Totem');
+    let tags = extractGemTags(best);
+    if ((tags.includes('Strike') || tags.includes('Slam')) && !tags.includes('Melee')) {
+      tags = [...tags, 'Melee'];
+    }
+    let nativeArch: string | undefined = undefined;
+    if (tags.includes('Totem')) nativeArch = '토템';
+    else if (tags.includes('Mine')) nativeArch = '지뢰';
+    else if (tags.includes('Trap')) nativeArch = '덫';
+    else if (tags.includes('Minion')) nativeArch = '소환수';
+    else if (tags.includes('Melee')) nativeArch = '밀리';
+    else if (tags.includes('Bow')) nativeArch = '활';
+    else if (tags.includes('Brand')) nativeArch = '낙인';
+
     return {
       name: best.baseType,
       baseType: best.baseType,
       icon: best.icon,
       tags: tags,
       linkCount: best.linkCount || 5,
-      archetype: isNativeTotem ? '토템' : undefined,
+      archetype: nativeArch,
     };
   }
 
